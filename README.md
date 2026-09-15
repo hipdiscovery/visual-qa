@@ -22,7 +22,7 @@ After a render produces its own artifact, a separate narrowly privileged cleanup
 - `mobile`: 375 × 900
 - `mobile-small`: 320 × 900
 
-Only request the viewports needed for the current change when speed matters; use all four for a final responsive pass.
+Optional breakpoint probes are also configured for `mobile-large` (430 × 932), `tablet` (768 × 1024), and `desktop-narrow` (1024 × 768). Only request the viewports relevant to the current change; the four standard sizes remain the normal final pass, while the optional sizes are useful when a layout crosses mobile/tablet/compact-desktop breakpoints.
 
 ## Request format
 
@@ -59,3 +59,5 @@ Deployment probes are capped at 5 MiB each to prevent accidental large downloads
 ## Self-protection
 
 Runner/config changes trigger the same workflow automatically. Before browser setup, `qa/policy-check.mjs` verifies the JavaScript parses and enforces the repository's security contract: no PR/scheduled triggers, render permissions stay empty, only cleanup gets `actions: write`, artifact retention stays one day, the upload action stays commit-pinned, targets remain HTTPS/allowlisted, deployment probes remain mandatory, and the Playwright package matches its integrity-locked package lock.
+
+Each viewport report also records the actual HTTP(S) hostnames contacted while rendering. This is observational rather than a brittle third-party CDN allowlist: private/link-local destinations are still blocked, while legitimate public CDN/API hosts can evolve without silently breaking visual QA.
