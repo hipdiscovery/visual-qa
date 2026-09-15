@@ -18,3 +18,5 @@ This is a **public, disposable rendering repo**, not a source-code mirror.
 - If cleanup or visual rendering cannot be verified, say so. Do not claim a visual pass from source inspection alone.
 - Capture the ordinary viewport before scrolling to a focus selector; focused screenshots are a second, separate view.
 - Keep deployment probes small and byte-stable. The runner enforces a 5 MiB cap per probe.
+- Do not bypass `qa/policy-check.mjs`. If a policy must change, update the policy and documentation deliberately in the same reviewed change.
+- Preserve the last good artifact when a new run cannot produce a replacement; cleanup belongs after rendering.

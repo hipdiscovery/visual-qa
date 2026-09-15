@@ -6,6 +6,10 @@ on:
       - main
     paths:
       - qa-request.json
+      - qa/**
+      - package.json
+      - package-lock.json
+      - .github/workflows/visual-qa.yml
   workflow_dispatch:
 
 permissions: {}
@@ -15,32 +19,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  cleanup:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 2
-    permissions:
-      actions: write
-
-    steps:
-      - name: Fetch cleanup code without credentials
-        shell: bash
-        run: |
-          set -euo pipefail
-          repo_dir="${RUNNER_TEMP}/visual-qa"
-          git init "${repo_dir}"
-          git -C "${repo_dir}" remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
-          git -C "${repo_dir}" fetch --depth=1 origin "${GITHUB_SHA}"
-          git -C "${repo_dir}" checkout --detach FETCH_HEAD
-
-      - name: Purge previous QA output
-        working-directory: ${{ runner.temp }}/visual-qa
-        shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: node qa/cleanup.mjs
-
   render:
-    needs: cleanup
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     permissions: {}
@@ -56,6 +35,14 @@ jobs:
           git -C "${repo_dir}" fetch --depth=1 origin "${GITHUB_SHA}"
           git -C "${repo_dir}" checkout --detach FETCH_HEAD
 
+      - name: Enforce runner security policy
+        working-directory: ${{ runner.temp }}/visual-qa
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --version
+          node qa/policy-check.mjs
+
       - name: Verify preinstalled Chrome
         shell: bash
         run: |
@@ -63,12 +50,12 @@ jobs:
           test -x /usr/bin/google-chrome
           /usr/bin/google-chrome --version
 
-      - name: Install pinned browser controller only
+      - name: Install integrity-locked browser controller
         working-directory: ${{ runner.temp }}/visual-qa
         shell: bash
         run: |
           set -euo pipefail
-          npm install --no-save --ignore-scripts --no-audit --no-fund playwright-core@1.63.0
+          npm ci --ignore-scripts --no-audit --no-fund
           node -e "const v=require('playwright-core/package.json').version;if(v!=='1.63.0')throw new Error('Unexpected playwright-core '+v)"
 
       - name: Render public UI
@@ -108,3 +95,29 @@ jobs:
         if: always() && steps.render.outputs.code != '0'
         shell: bash
         run: exit 1
+
+  cleanup:
+    needs: render
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    permissions:
+      actions: write
+
+    steps:
+      - name: Fetch cleanup code without credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          repo_dir="${RUNNER_TEMP}/visual-qa"
+          git init "${repo_dir}"
+          git -C "${repo_dir}" remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git -C "${repo_dir}" fetch --depth=1 origin "${GITHUB_SHA}"
+          git -C "${repo_dir}" checkout --detach FETCH_HEAD
+
+      - name: Purge older QA output only after current artifact exists
+        working-directory: ${{ runner.temp }}/visual-qa
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node qa/cleanup.mjs

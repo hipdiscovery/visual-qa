@@ -22,7 +22,7 @@ Targets are explicitly allowlisted in `qa/targets.json`. Requests select a targe
 
 The browser uses a fresh context for every viewport with no persisted browser profile. Service workers are blocked. All HTTP(S) page traffic is limited to GET/HEAD, main-frame navigation is confined to the target allowlist, non-web network schemes are blocked, and loopback/link-local/private-network destinations are blocked both when written as literal IPs (including IPv4-mapped IPv6) and when a hostname resolves to them.
 
-The render job has `permissions: {}` and is deliberately isolated from repository write permissions. A separate cleanup job alone receives `actions: write` and passes its scoped token only to the cleanup script. HTTP error pages and common bot/interstitial challenges are treated as failed QA rather than successful renders.
+The render job has `permissions: {}` and is deliberately isolated from repository write permissions. A separate cleanup job runs only after rendering and alone receives `actions: write`; it passes its scoped token only to the cleanup script. Cleanup refuses to remove the previous result unless the current run already produced its own artifact. HTTP error pages and common bot/interstitial challenges are treated as failed QA rather than successful renders.
 
 ## Output lifecycle
 
@@ -31,3 +31,7 @@ Generated screenshots/reports are never committed to Git. Before uploading the c
 Diagnostic console/page-error text is truncated and scrubbed for URLs, labeled secrets, bearer tokens, common GitHub/AWS credential formats, and JWT-shaped values before it reaches an artifact. This is defense in depth; targets must still never expose secrets client-side.
 
 If something sensitive is ever exposed, delete the affected Actions run/artifact immediately and rotate/revoke the exposed credential at its source. GitHub history is not a secrets store.
+
+## Supply-chain and policy guard
+
+`playwright-core` is exact-version pinned and integrity-locked in `package-lock.json`; lifecycle scripts are disabled during installation. The upload action is pinned by full commit SHA. Every runner/config change triggers Visual QA, and `qa/policy-check.mjs` fails closed if critical workflow permissions, triggers, retention, target safety, or dependency-integrity rules drift.

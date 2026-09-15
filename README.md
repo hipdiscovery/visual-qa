@@ -13,7 +13,7 @@ This repository does **not** contain HipDiscovery's private application or websi
 5. **Actually inspect the screenshots.** The JSON diagnostics are a second layer, not a replacement for visual judgement.
 6. Iterate in the source repo if the UI looks wrong.
 
-A new QA run deletes previous Visual QA artifacts and completed Visual QA runs. Cleanup is isolated in its own narrowly privileged job; the browser/render job has no repository permissions. The current artifact has a one-day fallback retention period, so generated screenshots do not become a permanent public archive.
+After a render produces its own artifact, a separate narrowly privileged cleanup job deletes older Visual QA artifacts and completed runs. If rendering fails before a replacement artifact exists, the previous result is preserved. The browser/render job has no repository permissions. The current artifact has a one-day fallback retention period, so generated screenshots do not become a permanent public archive.
 
 ## Standard HipDiscovery viewports
 
@@ -55,3 +55,7 @@ Read `SECURITY.md` before adding another target. The important rule: **if a valu
 This runner intentionally has no support for cookies, auth headers, tokens, private preview URLs, arbitrary URLs, uploaded source trees, or secrets.
 
 Deployment probes are capped at 5 MiB each to prevent accidental large downloads. Use byte-stable public assets (normally CSS/JS; HTML only when the edge does not rewrite it).
+
+## Self-protection
+
+Runner/config changes trigger the same workflow automatically. Before browser setup, `qa/policy-check.mjs` verifies the JavaScript parses and enforces the repository's security contract: no PR/scheduled triggers, render permissions stay empty, only cleanup gets `actions: write`, artifact retention stays one day, the upload action stays commit-pinned, targets remain HTTPS/allowlisted, deployment probes remain mandatory, and the Playwright package matches its integrity-locked package lock.

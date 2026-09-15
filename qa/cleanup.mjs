@@ -28,9 +28,18 @@ let deletedRuns = 0;
 
 try {
   const artifacts = await api(`/repos/${repository}/actions/artifacts?per_page=100`);
+  const currentArtifact = (artifacts?.artifacts || []).find(artifact =>
+    artifact?.name === `visual-qa-${currentRun}` && artifact.workflow_run?.id === currentRun
+  );
+
+  if (!currentArtifact) {
+    console.warn("Cleanup preserved previous QA output because this run did not produce its own artifact.");
+    process.exit(0);
+  }
+
   for (const artifact of artifacts?.artifacts || []) {
     if (!artifact?.name?.startsWith("visual-qa-")) continue;
-    if (artifact.workflow_run?.id === currentRun) continue;
+    if (artifact.id === currentArtifact.id) continue;
     await api(`/repos/${repository}/actions/artifacts/${artifact.id}`, { method: "DELETE" });
     deletedArtifacts++;
   }

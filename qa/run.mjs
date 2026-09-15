@@ -445,6 +445,8 @@ try {
       const clippingRisks = [];
       const edgeCollisions = [];
       const tinyInteractive = [];
+      const upscaledImages = [];
+      const missingAltImages = [];
 
       for (const el of all) {
         const style = getComputedStyle(el);
@@ -494,6 +496,25 @@ try {
             node: selectorHint(el),
             size: [Math.round(rect.width), Math.round(rect.height)]
           });
+        }
+
+        if (el instanceof HTMLImageElement) {
+          if (missingAltImages.length < 20 && !el.hasAttribute("alt")) {
+            missingAltImages.push({ node: selectorHint(el) });
+          }
+          if (upscaledImages.length < 20 && el.naturalWidth > 0 && el.naturalHeight > 0) {
+            const scaleX = rect.width / el.naturalWidth;
+            const scaleY = rect.height / el.naturalHeight;
+            const scale = Math.max(scaleX, scaleY);
+            if (scale > 1.75) {
+              upscaledImages.push({
+                node: selectorHint(el),
+                natural: [el.naturalWidth, el.naturalHeight],
+                rendered: [Math.round(rect.width), Math.round(rect.height)],
+                scale: Number(scale.toFixed(2))
+              });
+            }
+          }
         }
       }
 
@@ -548,6 +569,8 @@ try {
         clippingRisks,
         edgeCollisions,
         tinyInteractive,
+        upscaledImages,
+        missingAltImages,
         brokenImages,
         focusRect,
         focusTree
@@ -581,9 +604,12 @@ try {
 
     const warnings = [...criticalIssues];
     if (diagnostics.horizontalOverflowPx > 2) warnings.push(`horizontal overflow: ${diagnostics.horizontalOverflowPx}px`);
+    if (diagnostics.edgeCollisions.length) warnings.push(`viewport edge collisions: ${diagnostics.edgeCollisions.length}`);
     if (diagnostics.brokenImages.length) warnings.push(`broken visible images: ${diagnostics.brokenImages.length}`);
     if (diagnostics.clippingRisks.length) warnings.push(`content clipping risks: ${diagnostics.clippingRisks.length}`);
     if (diagnostics.tinyInteractive.length) warnings.push(`tiny interactive targets: ${diagnostics.tinyInteractive.length}`);
+    if (diagnostics.upscaledImages.length) warnings.push(`heavily upscaled images: ${diagnostics.upscaledImages.length}`);
+    if (diagnostics.missingAltImages.length) warnings.push(`visible images missing alt attributes: ${diagnostics.missingAltImages.length}`);
     if (consoleEvents.some(e => e.type === "error")) warnings.push(`console errors: ${consoleEvents.filter(e => e.type === "error").length}`);
     if (pageErrors.length) warnings.push(`page errors: ${pageErrors.length}`);
     if (failedRequests.length) warnings.push(`failed first-party requests: ${failedRequests.length}`);
@@ -641,6 +667,10 @@ for (const result of report.results) {
   lines.push(`- Broken visible images: ${result.diagnostics.brokenImages.length}`);
   lines.push(`- Clipping candidates: ${result.diagnostics.clipped.length}`);
   lines.push(`- Content clipping risks: ${result.diagnostics.clippingRisks.length}`);
+  lines.push(`- Edge collisions: ${result.diagnostics.edgeCollisions.length}`);
+  lines.push(`- Tiny interactive targets: ${result.diagnostics.tinyInteractive.length}`);
+  lines.push(`- Heavily upscaled images: ${result.diagnostics.upscaledImages.length}`);
+  lines.push(`- Visible images missing alt: ${result.diagnostics.missingAltImages.length}`);
   if (result.warnings.length) lines.push(`- Warnings: ${result.warnings.join("; ")}`);
   lines.push("");
 }
