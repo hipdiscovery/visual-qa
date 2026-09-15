@@ -335,6 +335,7 @@ try {
         .map(img => ({ node: selectorHint(img), src: img.currentSrc ? new URL(img.currentSrc, location.href).pathname : "" }));
 
       let focusRect = null;
+      let focusTree = [];
       if (selector) {
         const el = document.querySelector(selector);
         if (el) {
@@ -347,6 +348,24 @@ try {
             width: Math.round(r.width),
             height: Math.round(r.height)
           };
+          focusTree = [el, ...el.querySelectorAll("*")].slice(0, 100).map(node => {
+            const rect = node.getBoundingClientRect();
+            const style = getComputedStyle(node);
+            return {
+              node: selectorHint(node),
+              rect: [Math.round(rect.left), Math.round(rect.top), Math.round(rect.width), Math.round(rect.height)],
+              client: [Math.round(node.clientWidth), Math.round(node.clientHeight)],
+              scroll: [Math.round(node.scrollWidth), Math.round(node.scrollHeight)],
+              display: style.display,
+              position: style.position,
+              overflow: [style.overflowX, style.overflowY],
+              gridColumn: style.gridColumn,
+              gridRow: style.gridRow,
+              height: style.height,
+              minHeight: style.minHeight,
+              maxHeight: style.maxHeight
+            };
+          });
         }
       }
 
@@ -362,7 +381,8 @@ try {
         edgeCollisions,
         tinyInteractive,
         brokenImages,
-        focusRect
+        focusRect,
+        focusTree
       };
     }, { selector: request.selector || null });
 
