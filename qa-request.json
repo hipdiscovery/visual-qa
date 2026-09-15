@@ -1,11 +1,15 @@
 {
-  "requestId": "home-gaming-debug-2026-09-15",
+  "requestId": "exact-deploy-home-final-2026-09-15",
   "target": "hipdiscovery",
   "path": "/",
   "selector": ".hero-games",
+  "deploymentFingerprint": "5c410c007e5c5a0345647c26",
   "viewports": [
-    "desktop-compact"
+    "desktop-owner",
+    "desktop-compact",
+    "mobile",
+    "mobile-small"
   ],
   "fullPage": false,
-  "waitMs": 500
+  "waitMs": 700
 }
