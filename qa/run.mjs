@@ -205,7 +205,9 @@ try {
 
     page.on("console", msg => {
       if (msg.type() === "error" || msg.type() === "warning") {
-        consoleEvents.push({ type: msg.type(), message: scrubMessage(msg.text()) });
+        const message = scrubMessage(msg.text());
+        if (message.includes("ERR_BLOCKED_BY_CLIENT")) return;
+        consoleEvents.push({ type: msg.type(), message });
       }
     });
     page.on("pageerror", error => pageErrors.push(scrubMessage(error?.message || error)));
