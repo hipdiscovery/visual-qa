@@ -139,7 +139,6 @@ const report = {
 try {
   for (const viewportName of request.viewports) {
     const viewport = target.viewports[viewportName];
-    const isMobile = viewport.width <= 500;
     const consoleEvents = [];
     const pageErrors = [];
     const failedRequests = [];
@@ -149,8 +148,7 @@ try {
       viewport: { width: viewport.width, height: viewport.height },
       screen: { width: viewport.width, height: viewport.height },
       deviceScaleFactor: 1,
-      isMobile,
-      hasTouch: isMobile,
+      hasTouch: viewport.width <= 500,
       locale: "en-US",
       timezoneId: "America/Chicago",
       colorScheme: "dark",
