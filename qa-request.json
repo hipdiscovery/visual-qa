@@ -1,11 +1,14 @@
 {
-  "requestId": "final-smoke",
+  "requestId": "home-gaming-baseline-2026-09-15",
   "target": "hipdiscovery",
   "path": "/",
   "selector": ".hero-games",
   "viewports": [
-    "desktop-owner"
+    "desktop-owner",
+    "desktop-compact",
+    "mobile",
+    "mobile-small"
   ],
   "fullPage": false,
-  "waitMs": 300
+  "waitMs": 700
 }
