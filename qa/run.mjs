@@ -41,8 +41,8 @@ function validateRequest() {
   if (request.selector != null && (typeof request.selector !== "string" || request.selector.length < 1 || request.selector.length > 220)) {
     fail("selector must be 1-220 characters when supplied.");
   }
-  if (!Array.isArray(request.viewports) || request.viewports.length < 1 || request.viewports.length > 6) {
-    fail("viewports must contain 1-6 configured viewport names.");
+  if (!Array.isArray(request.viewports) || request.viewports.length < 1 || request.viewports.length > 8) {
+    fail("viewports must contain 1-8 configured viewport names.");
   }
   if (new Set(request.viewports).size !== request.viewports.length) fail("viewports cannot contain duplicates.");
   const target = targets[request.target];
@@ -294,6 +294,7 @@ try {
     const pageErrors = [];
     const failedRequests = [];
     const badResponses = [];
+    const networkHosts = new Set();
 
     const context = await browser.newContext({
       viewport: { width: viewport.width, height: viewport.height },
@@ -354,6 +355,14 @@ try {
       }
     });
     page.on("pageerror", error => pageErrors.push(scrubMessage(error?.message || error)));
+    page.on("request", req => {
+      try {
+        const parsed = new URL(req.url());
+        if (parsed.protocol === "http:" || parsed.protocol === "https:") {
+          networkHosts.add(parsed.hostname.toLowerCase());
+        }
+      } catch {}
+    });
     page.on("requestfailed", req => {
       let hostAllowed = false;
       try { hostAllowed = target.allowedHosts.includes(new URL(req.url()).hostname.toLowerCase()); } catch {}
@@ -633,6 +642,7 @@ try {
       pageErrors: pageErrors.slice(0, 20),
       failedRequests: failedRequests.slice(0, 20),
       badResponses: badResponses.slice(0, 20),
+      networkHosts: [...networkHosts].sort().slice(0, 80),
       criticalIssues,
       warnings
     });
@@ -676,6 +686,7 @@ for (const result of report.results) {
   lines.push(`- Tiny interactive targets: ${result.diagnostics.tinyInteractive.length}`);
   lines.push(`- Heavily upscaled images: ${result.diagnostics.upscaledImages.length}`);
   lines.push(`- Visible images missing alt: ${result.diagnostics.missingAltImages.length}`);
+  lines.push(`- Network hosts: ${result.networkHosts.length ? result.networkHosts.join(", ") : "none"}`);
   if (result.warnings.length) lines.push(`- Warnings: ${result.warnings.join("; ")}`);
   lines.push("");
 }
