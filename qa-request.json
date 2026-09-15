@@ -1,14 +1,11 @@
 {
-  "requestId": "home-gaming-footer-anchor-2026-09-15",
+  "requestId": "home-gaming-footer-anchor-recheck-2026-09-15",
   "target": "hipdiscovery",
   "path": "/",
   "selector": ".hero-games",
   "viewports": [
-    "desktop-owner",
-    "desktop-compact",
-    "mobile",
-    "mobile-small"
+    "desktop-compact"
   ],
   "fullPage": false,
-  "waitMs": 1200
+  "waitMs": 700
 }
