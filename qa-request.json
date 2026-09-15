@@ -1,17 +1,15 @@
 {
-  "requestId": "triple-check-mobile-hero-final-2026-09-15",
+  "requestId": "home-fit-short-desktop-final-2026-09-15",
   "target": "hipdiscovery",
   "path": "/",
-  "selector": ".hero",
-  "deploymentProbes": [
-    {
-      "path": "/css/pages/home.css",
-      "gitBlobSha": "51e7c221ce0e5658693042ebedce892c8edba6f2"
-    }
-  ],
+  "selector": ".hero-games",
+  "deploymentFingerprint": "836a162919672e2825fc72dd",
   "viewports": [
+    "desktop-owner",
+    "desktop-compact",
+    "mobile",
     "mobile-small"
   ],
   "fullPage": false,
-  "waitMs": 500
+  "waitMs": 700
 }
