@@ -14,15 +14,15 @@ This repository is intentionally public. Treat **every committed byte, workflow 
 
 The runner has no feature for custom headers, cookies, localStorage injection, login automation, or arbitrary base URLs. Do not add one.
 
-Deployment freshness uses hashes of public assets the site already serves. The request stores only a public path and its Git blob SHA; it does not copy private source content or a private repository commit SHA into this repo.
+Deployment freshness uses hashes of public assets the site already serves. The request stores only a public path and its Git blob SHA; it does not copy private source content or a private repository commit SHA into this repo. Each probe is capped at 5 MiB.
 
 ## Target isolation
 
 Targets are explicitly allowlisted in `qa/targets.json`. Requests select a target key plus a plain URL path. The runner rejects protocol-relative paths, query strings, fragments, credentials, non-HTTPS final navigation, and final hosts outside the target allowlist.
 
-The browser uses a fresh context for every viewport with no persisted browser profile. Service workers are blocked. All HTTP(S) page traffic is limited to GET/HEAD, so a render cannot intentionally submit forms or mutate public APIs. Loopback, link-local, and private-network destinations are blocked both when written as literal IPs and when a hostname resolves to them.
+The browser uses a fresh context for every viewport with no persisted browser profile. Service workers are blocked. All HTTP(S) page traffic is limited to GET/HEAD, main-frame navigation is confined to the target allowlist, non-web network schemes are blocked, and loopback/link-local/private-network destinations are blocked both when written as literal IPs (including IPv4-mapped IPv6) and when a hostname resolves to them.
 
-The rendering step is deliberately not given `GITHUB_TOKEN`. A separate cleanup step receives only the repository-scoped token needed to remove prior Actions output. HTTP error pages and common bot/interstitial challenges are treated as failed QA rather than successful renders.
+The render job has `permissions: {}` and is deliberately isolated from repository write permissions. A separate cleanup job alone receives `actions: write` and passes its scoped token only to the cleanup script. HTTP error pages and common bot/interstitial challenges are treated as failed QA rather than successful renders.
 
 ## Output lifecycle
 

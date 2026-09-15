@@ -22,7 +22,6 @@
         "height": 900
       }
     },
-    "productionUrl": "https://hipdiscovery.com",
     "requireDeploymentProbes": true
   }
 }

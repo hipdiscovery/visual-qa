@@ -29,6 +29,8 @@ let deletedRuns = 0;
 try {
   const artifacts = await api(`/repos/${repository}/actions/artifacts?per_page=100`);
   for (const artifact of artifacts?.artifacts || []) {
+    if (!artifact?.name?.startsWith("visual-qa-")) continue;
+    if (artifact.workflow_run?.id === currentRun) continue;
     await api(`/repos/${repository}/actions/artifacts/${artifact.id}`, { method: "DELETE" });
     deletedArtifacts++;
   }

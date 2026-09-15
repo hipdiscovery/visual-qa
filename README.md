@@ -13,7 +13,7 @@ This repository does **not** contain HipDiscovery's private application or websi
 5. **Actually inspect the screenshots.** The JSON diagnostics are a second layer, not a replacement for visual judgement.
 6. Iterate in the source repo if the UI looks wrong.
 
-A new QA run deletes previous QA artifacts and completed Visual QA runs. The current artifact has a one-day fallback retention period, so generated screenshots do not become a permanent public archive.
+A new QA run deletes previous Visual QA artifacts and completed Visual QA runs. Cleanup is isolated in its own narrowly privileged job; the browser/render job has no repository permissions. The current artifact has a one-day fallback retention period, so generated screenshots do not become a permanent public archive.
 
 ## Standard HipDiscovery viewports
 
@@ -44,7 +44,7 @@ Only request the viewports needed for the current change when speed matters; use
 - `target` must exist in `qa/targets.json`.
 - HipDiscovery requests require `deploymentProbes`. Probe only public assets the target already serves. The runner computes the Git blob SHA from the deployed bytes and waits for an exact match, so no private commit SHA or source content is copied into this public repo.
 - `path` must be a plain path. Query strings, fragments, credentials, protocol-relative URLs, and arbitrary hosts are rejected.
-- `selector` is optional. When supplied, the runner scrolls it into view and also captures a focused element screenshot when possible.
+- `selector` is optional. The normal viewport screenshot is captured **before** any scrolling; when a selector is supplied, the runner then scrolls it into view, lets its images settle, and captures a separate focused screenshot.
 - `fullPage` is optional and defaults to `false`; viewport screenshots are faster and usually better for iterative UI work.
 - `waitMs` is capped to keep runs short.
 
@@ -53,3 +53,5 @@ Only request the viewports needed for the current change when speed matters; use
 Read `SECURITY.md` before adding another target. The important rule: **if a value would be unsafe in a public GitHub commit, workflow log, screenshot, or artifact, it does not belong here.**
 
 This runner intentionally has no support for cookies, auth headers, tokens, private preview URLs, arbitrary URLs, uploaded source trees, or secrets.
+
+Deployment probes are capped at 5 MiB each to prevent accidental large downloads. Use byte-stable public assets (normally CSS/JS; HTML only when the edge does not rewrite it).

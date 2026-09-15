@@ -13,6 +13,8 @@ This is a **public, disposable rendering repo**, not a source-code mirror.
 - Request only the viewports relevant to an iteration; use the full standard matrix for final responsive verification.
 - Keep the runner dependency-light. Use the Chrome already installed on GitHub's Ubuntu runner; do not download a browser on every run.
 - Do not add PR-triggered execution. Public pull requests must never cause this workflow to run with elevated permissions.
-- Keep workflow permissions minimal. The browser-rendering step must not receive a GitHub token. Browser traffic stays read-only (GET/HEAD) and must never be given authentication material.
+- Keep workflow permissions minimal. The render job must remain `permissions: {}`; only the separate cleanup job may receive `actions: write`. Browser traffic stays read-only (GET/HEAD) and must never be given authentication material.
 - Each new run should purge prior QA artifacts/runs; one-day artifact retention is only a fallback.
 - If cleanup or visual rendering cannot be verified, say so. Do not claim a visual pass from source inspection alone.
+- Capture the ordinary viewport before scrolling to a focus selector; focused screenshots are a second, separate view.
+- Keep deployment probes small and byte-stable. The runner enforces a 5 MiB cap per probe.

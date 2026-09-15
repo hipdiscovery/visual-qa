@@ -8,18 +8,42 @@ on:
       - qa-request.json
   workflow_dispatch:
 
-permissions:
-  contents: read
-  actions: write
+permissions: {}
 
 concurrency:
   group: visual-qa
   cancel-in-progress: true
 
 jobs:
+  cleanup:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    permissions:
+      actions: write
+
+    steps:
+      - name: Fetch cleanup code without credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          repo_dir="${RUNNER_TEMP}/visual-qa"
+          git init "${repo_dir}"
+          git -C "${repo_dir}" remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git -C "${repo_dir}" fetch --depth=1 origin "${GITHUB_SHA}"
+          git -C "${repo_dir}" checkout --detach FETCH_HEAD
+
+      - name: Purge previous QA output
+        working-directory: ${{ runner.temp }}/visual-qa
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node qa/cleanup.mjs
+
   render:
+    needs: cleanup
     runs-on: ubuntu-24.04
     timeout-minutes: 5
+    permissions: {}
 
     steps:
       - name: Fetch exact triggering commit without credentials
@@ -68,14 +92,6 @@ jobs:
           if [ -f out/summary.md ]; then
             cat out/summary.md >> "$GITHUB_STEP_SUMMARY"
           fi
-
-      - name: Purge previous QA output
-        if: always()
-        working-directory: ${{ runner.temp }}/visual-qa
-        shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: node qa/cleanup.mjs
 
       - name: Upload current QA result
         if: always()

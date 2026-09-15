@@ -7,6 +7,7 @@ import { chromium } from "playwright-core";
 
 const ROOT = process.cwd();
 const OUT = path.join(ROOT, "out");
+const MAX_PROBE_BYTES = 5 * 1024 * 1024;
 const requestPath = process.argv[2] || "qa-request.json";
 const targets = JSON.parse(fs.readFileSync(path.join(ROOT, "qa/targets.json"), "utf8"));
 const request = JSON.parse(fs.readFileSync(path.resolve(ROOT, requestPath), "utf8"));
@@ -78,6 +79,9 @@ function isBlockedHost(hostname) {
   const host = hostname.toLowerCase().replace(/^\[|\]$/g, "");
   if (!host) return false;
   if (host === "localhost" || host.endsWith(".localhost") || host.endsWith(".local")) return true;
+
+  const mappedV4 = host.match(/^::ffff:(\d+\.\d+\.\d+\.\d+)$/i);
+  if (mappedV4) return isBlockedHost(mappedV4[1]);
 
   const ipVersion = net.isIP(host);
   if (ipVersion === 4) {
@@ -155,6 +159,36 @@ async function gitBlobSha(bytes) {
   return createHash("sha1").update(header).update(bytes).digest("hex");
 }
 
+async function readProbeBytes(response, probePath) {
+  const declared = Number(response.headers.get("content-length"));
+  if (Number.isFinite(declared) && declared > MAX_PROBE_BYTES) {
+    fail(`Deployment probe ${probePath} is too large (${declared} bytes; max ${MAX_PROBE_BYTES}).`);
+  }
+
+  if (!response.body?.getReader) {
+    const bytes = Buffer.from(await response.arrayBuffer());
+    if (bytes.length > MAX_PROBE_BYTES) {
+      fail(`Deployment probe ${probePath} exceeded the ${MAX_PROBE_BYTES}-byte limit.`);
+    }
+    return bytes;
+  }
+
+  const reader = response.body.getReader();
+  const chunks = [];
+  let total = 0;
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    total += value.byteLength;
+    if (total > MAX_PROBE_BYTES) {
+      await reader.cancel().catch(() => {});
+      fail(`Deployment probe ${probePath} exceeded the ${MAX_PROBE_BYTES}-byte limit.`);
+    }
+    chunks.push(Buffer.from(value));
+  }
+  return Buffer.concat(chunks, total);
+}
+
 async function waitForDeploymentProbes(target, probes) {
   if (!probes?.length) return null;
 
@@ -188,7 +222,7 @@ async function waitForDeploymentProbes(target, probes) {
           checked.push({ path: probe.path, status: response.status, match: false });
           continue;
         }
-        const bytes = Buffer.from(await response.arrayBuffer());
+        const bytes = await readProbeBytes(response, probe.path);
         const actual = await gitBlobSha(bytes);
         const match = actual === probe.gitBlobSha;
         allMatch &&= match;
@@ -279,15 +313,27 @@ try {
       const reqUrl = requestObject.url();
       try {
         const parsed = new URL(reqUrl);
-        if (parsed.protocol === "http:" || parsed.protocol === "https:") {
-          if (!["GET", "HEAD"].includes(requestObject.method())) {
-            await route.abort("blockedbyclient");
-            return;
-          }
-          if (!(await hostResolvesSafely(parsed.hostname))) {
-            await route.abort("blockedbyclient");
-            return;
-          }
+        if (parsed.protocol === "data:" || parsed.protocol === "blob:") {
+          await route.continue();
+          return;
+        }
+        if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+          await route.abort("blockedbyclient");
+          return;
+        }
+        if (!["GET", "HEAD"].includes(requestObject.method())) {
+          await route.abort("blockedbyclient");
+          return;
+        }
+        if (requestObject.isNavigationRequest() &&
+            requestObject.frame() === page.mainFrame() &&
+            !targetAllows(target, reqUrl)) {
+          await route.abort("blockedbyclient");
+          return;
+        }
+        if (!(await hostResolvesSafely(parsed.hostname))) {
+          await route.abort("blockedbyclient");
+          return;
         }
       } catch {
         await route.abort("blockedbyclient");
@@ -346,11 +392,36 @@ try {
     const waitMs = request.waitMs ?? 700;
     if (waitMs) await page.waitForTimeout(waitMs);
 
+    const slug = viewportName.replace(/[^A-Za-z0-9_-]/g, "-");
+    const viewportFile = `viewport-${slug}.jpg`;
+    // Capture the natural initial viewport before any focus-selector scrolling.
+    await page.screenshot({
+      path: path.join(OUT, viewportFile),
+      type: "jpeg",
+      quality: 86,
+      fullPage: false,
+      scale: "css"
+    });
+
     let focus = null;
     if (request.selector) {
       const locator = page.locator(request.selector).first();
       if (await locator.count()) {
         await locator.scrollIntoViewIfNeeded().catch(() => {});
+        await locator.evaluate(async el => {
+          const images = [
+            ...(el instanceof HTMLImageElement ? [el] : []),
+            ...el.querySelectorAll("img")
+          ].filter(img => !img.complete);
+          if (!images.length) return;
+          await Promise.race([
+            Promise.all(images.map(img => new Promise(resolve => {
+              img.addEventListener("load", resolve, { once: true });
+              img.addEventListener("error", resolve, { once: true });
+            }))),
+            new Promise(resolve => setTimeout(resolve, 1200))
+          ]);
+        }).catch(() => {});
         await page.waitForTimeout(200);
         focus = locator;
       }
@@ -479,16 +550,6 @@ try {
       };
     }, { selector: request.selector || null });
 
-    const slug = viewportName.replace(/[^A-Za-z0-9_-]/g, "-");
-    const viewportFile = `viewport-${slug}.jpg`;
-    await page.screenshot({
-      path: path.join(OUT, viewportFile),
-      type: "jpeg",
-      quality: 86,
-      fullPage: false,
-      scale: "css"
-    });
-
     let focusFile = null;
     if (focus) {
       focusFile = `focus-${slug}.jpg`;
@@ -503,6 +564,8 @@ try {
     let fullPageFile = null;
     if (request.fullPage === true) {
       fullPageFile = `full-${slug}.jpg`;
+      await page.evaluate(() => window.scrollTo(0, 0)).catch(() => {});
+      await page.waitForTimeout(100);
       await page.screenshot({
         path: path.join(OUT, fullPageFile),
         type: "jpeg",
