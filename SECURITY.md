@@ -35,3 +35,7 @@ If something sensitive is ever exposed, delete the affected Actions run/artifact
 ## Supply-chain and policy guard
 
 `playwright-core` is exact-version pinned and integrity-locked in `package-lock.json`; lifecycle scripts are disabled during installation. The upload action is pinned by full commit SHA. Every runner/config change triggers Visual QA, and `qa/policy-check.mjs` fails closed if critical workflow permissions, triggers, retention, target safety, or dependency-integrity rules drift.
+
+## Repository rules
+
+The repository currently has no GitHub ruleset. Public users still cannot execute this workflow in the upstream repository through pull requests because PR triggers are forbidden by policy and only collaborators with write access can push/dispatch. If additional people are ever granted write access, enable a GitHub branch ruleset for `main` requiring pull-request review/CODEOWNERS before merge; the connected GitHub integration used to build this runner can read rulesets but cannot administer them.
