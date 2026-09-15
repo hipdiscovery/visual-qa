@@ -2,7 +2,7 @@
 
 Public, disposable browser QA for **publicly reachable UI only**.
 
-This repository does **not** contain HipDiscovery's private application or website source. It is a small GitHub-hosted runner that opens an allowlisted public URL in a fresh Chrome session, captures representative screenshots, records lightweight layout/runtime diagnostics, and makes the result available briefly for an agent to inspect.
+This repository does **not** contain HipDiscovery's private application or website source. It is a small GitHub-hosted runner that opens an allowlisted public URL in a fresh Chrome session, captures representative screenshots, records lightweight layout/runtime diagnostics, and makes the result available briefly for an agent to inspect. For HipDiscovery, it renders the public Cloudflare Pages origin (`hipdiscovery-com.pages.dev`) because the custom domain's bot challenge correctly blocks hosted headless browsers; both origins serve the same Pages deployment.
 
 ## Normal agent workflow
 
