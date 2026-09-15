@@ -1,9 +1,14 @@
 {
-  "requestId": "finish-home-exact-deploy-2026-09-15",
+  "requestId": "finish-home-public-asset-probe-2026-09-15",
   "target": "hipdiscovery",
   "path": "/",
   "selector": ".hero-games",
-  "deploymentFingerprint": "646726b3316e0178d54ff3a3",
+  "deploymentProbes": [
+    {
+      "path": "/css/pages/home.css",
+      "gitBlobSha": "af33a718f378a84ff42f265487ec646094fca527"
+    }
+  ],
   "viewports": [
     "desktop-owner",
     "desktop-compact",
