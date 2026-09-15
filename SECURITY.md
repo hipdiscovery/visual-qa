@@ -28,4 +28,6 @@ The render job has `permissions: {}` and is deliberately isolated from repositor
 
 Generated screenshots/reports are never committed to Git. Before uploading the current result, the workflow deletes prior QA artifacts and prior completed Visual QA runs. The current artifact additionally expires after one day if no later run occurs.
 
+Diagnostic console/page-error text is truncated and scrubbed for URLs, labeled secrets, bearer tokens, common GitHub/AWS credential formats, and JWT-shaped values before it reaches an artifact. This is defense in depth; targets must still never expose secrets client-side.
+
 If something sensitive is ever exposed, delete the affected Actions run/artifact immediately and rotate/revoke the exposed credential at its source. GitHub history is not a secrets store.
