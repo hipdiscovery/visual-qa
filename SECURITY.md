@@ -18,9 +18,9 @@ The runner has no feature for custom headers, cookies, localStorage injection, l
 
 Targets are explicitly allowlisted in `qa/targets.json`. Requests select a target key plus a plain URL path. The runner rejects protocol-relative paths, query strings, fragments, credentials, non-HTTPS final navigation, and final hosts outside the target allowlist.
 
-The browser uses a fresh context for every viewport with no persisted browser profile. Service workers are blocked. Literal loopback, link-local, and private-network request targets are blocked from page traffic.
+The browser uses a fresh context for every viewport with no persisted browser profile. Service workers are blocked. All HTTP(S) page traffic is limited to GET/HEAD, so a render cannot intentionally submit forms or mutate public APIs. Loopback, link-local, and private-network destinations are blocked both when written as literal IPs and when a hostname resolves to them.
 
-The rendering step is deliberately not given `GITHUB_TOKEN`. A separate cleanup step receives only the repository-scoped token needed to remove prior Actions output.
+The rendering step is deliberately not given `GITHUB_TOKEN`. A separate cleanup step receives only the repository-scoped token needed to remove prior Actions output. HTTP error pages and common bot/interstitial challenges are treated as failed QA rather than successful renders.
 
 ## Output lifecycle
 
