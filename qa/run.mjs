@@ -679,6 +679,11 @@ lines.push("Automated diagnostics are hints. Visual verification requires inspec
 fs.writeFileSync(path.join(OUT, "summary.md"), lines.join("\n") + "\n");
 
 console.log(`Rendered ${report.results.length} viewport(s); ${warningCount} diagnostic warning(s).`);
+for (const result of report.results) {
+  if (result.warnings.length) {
+    console.warn(`[${result.viewport}] ${result.warnings.join("; ")}`);
+  }
+}
 if (!report.ok) {
   console.error(report.error || "Visual QA failed.");
   process.exit(2);
