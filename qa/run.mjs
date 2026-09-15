@@ -235,6 +235,7 @@ try {
       const body = document.body;
       const all = [...document.querySelectorAll("body *")];
       const clipped = [];
+      const clippingRisks = [];
       const edgeCollisions = [];
       const tinyInteractive = [];
 
@@ -248,13 +249,28 @@ try {
         const overflowY = style.overflowY;
         const hiddenX = overflowX === "hidden" || overflowX === "clip";
         const hiddenY = overflowY === "hidden" || overflowY === "clip";
-        if (clipped.length < 20 && ((hiddenX && el.scrollWidth > el.clientWidth + 2) || (hiddenY && el.scrollHeight > el.clientHeight + 2))) {
-          clipped.push({
+        const clippedX = hiddenX && el.scrollWidth > el.clientWidth + 2;
+        const clippedY = hiddenY && el.scrollHeight > el.clientHeight + 2;
+        if (clippedX || clippedY) {
+          const entry = {
             node: selectorHint(el),
             client: [Math.round(el.clientWidth), Math.round(el.clientHeight)],
             scroll: [Math.round(el.scrollWidth), Math.round(el.scrollHeight)],
+            delta: [
+              Math.max(0, Math.round(el.scrollWidth - el.clientWidth)),
+              Math.max(0, Math.round(el.scrollHeight - el.clientHeight))
+            ],
             overflow: [overflowX, overflowY]
-          });
+          };
+          if (clipped.length < 20) clipped.push(entry);
+
+          const classText = typeof el.className === "string" ? el.className : "";
+          const semanticContent = el.matches("article,button,a,li,[role='article'],[role='button'],[role='link']");
+          const contentClass = /(?:^|[-_\s])(card|game|tile|panel|item|content|copy|footer)(?:$|[-_\s])/i.test(classText);
+          const meaningfulDelta = entry.delta[0] > 4 || entry.delta[1] > 4;
+          if (clippingRisks.length < 20 && meaningfulDelta && (semanticContent || contentClass)) {
+            clippingRisks.push(entry);
+          }
         }
 
         if (edgeCollisions.length < 20 && rect.left < innerWidth && rect.right > 0 && (rect.left < -2 || rect.right > innerWidth + 2)) {
@@ -303,6 +319,7 @@ try {
         },
         horizontalOverflowPx: Math.max(0, Math.max(root.scrollWidth, body?.scrollWidth || 0) - innerWidth),
         clipped,
+        clippingRisks,
         edgeCollisions,
         tinyInteractive,
         brokenImages,
@@ -346,6 +363,7 @@ try {
     const warnings = [];
     if (diagnostics.horizontalOverflowPx > 2) warnings.push(`horizontal overflow: ${diagnostics.horizontalOverflowPx}px`);
     if (diagnostics.brokenImages.length) warnings.push(`broken visible images: ${diagnostics.brokenImages.length}`);
+    if (diagnostics.clippingRisks.length) warnings.push(`content clipping risks: ${diagnostics.clippingRisks.length}`);
     if (consoleEvents.some(e => e.type === "error")) warnings.push(`console errors: ${consoleEvents.filter(e => e.type === "error").length}`);
     if (pageErrors.length) warnings.push(`page errors: ${pageErrors.length}`);
     if (failedRequests.length) warnings.push(`failed first-party requests: ${failedRequests.length}`);
@@ -398,6 +416,7 @@ for (const result of report.results) {
   lines.push(`- Horizontal overflow: ${result.diagnostics.horizontalOverflowPx}px`);
   lines.push(`- Broken visible images: ${result.diagnostics.brokenImages.length}`);
   lines.push(`- Clipping candidates: ${result.diagnostics.clipped.length}`);
+  lines.push(`- Content clipping risks: ${result.diagnostics.clippingRisks.length}`);
   if (result.warnings.length) lines.push(`- Warnings: ${result.warnings.join("; ")}`);
   lines.push("");
 }
