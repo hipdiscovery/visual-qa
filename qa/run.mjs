@@ -234,6 +234,12 @@ try {
     }
 
     const diagnostics = await page.evaluate(({ selector }) => {
+      const selectorHint = el => {
+        if (!(el instanceof Element)) return "";
+        if (el.id) return `#${CSS.escape(el.id)}`;
+        const cls = [...el.classList].slice(0, 2).map(v => `.${CSS.escape(v)}`).join("");
+        return `${el.tagName.toLowerCase()}${cls}`;
+      };
       const root = document.documentElement;
       const body = document.body;
       const all = [...document.querySelectorAll("body *")];
