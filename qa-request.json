@@ -3,7 +3,12 @@
   "target": "hipdiscovery",
   "path": "/",
   "selector": ".hero-games",
-  "deploymentFingerprint": "836a162919672e2825fc72dd",
+  "deploymentProbes": [
+    {
+      "path": "/css/pages/home.css",
+      "gitBlobSha": "5105353f60bc7097bc3209a05125fad28f4707a8"
+    }
+  ],
   "viewports": [
     "desktop-owner",
     "desktop-compact",
