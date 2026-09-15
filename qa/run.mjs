@@ -339,6 +339,7 @@ try {
           await route.abort("blockedbyclient");
           return;
         }
+        networkHosts.add(parsed.hostname.toLowerCase());
       } catch {
         await route.abort("blockedbyclient");
         return;
@@ -355,14 +356,6 @@ try {
       }
     });
     page.on("pageerror", error => pageErrors.push(scrubMessage(error?.message || error)));
-    page.on("request", req => {
-      try {
-        const parsed = new URL(req.url());
-        if (parsed.protocol === "http:" || parsed.protocol === "https:") {
-          networkHosts.add(parsed.hostname.toLowerCase());
-        }
-      } catch {}
-    });
     page.on("requestfailed", req => {
       let hostAllowed = false;
       try { hostAllowed = target.allowedHosts.includes(new URL(req.url()).hostname.toLowerCase()); } catch {}
