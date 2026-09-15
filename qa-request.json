@@ -1,0 +1,14 @@
+{
+  "requestId": "bootstrap",
+  "target": "hipdiscovery",
+  "path": "/",
+  "selector": null,
+  "viewports": [
+    "desktop-owner",
+    "desktop-compact",
+    "mobile",
+    "mobile-small"
+  ],
+  "fullPage": false,
+  "waitMs": 700
+}
