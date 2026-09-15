@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import net from "node:net";
+import dns from "node:dns/promises";
 import { chromium } from "playwright-core";
 
 const ROOT = process.cwd();
@@ -73,6 +74,26 @@ function isBlockedHost(hostname) {
     if (host.startsWith("fc") || host.startsWith("fd") || host.startsWith("fe8") || host.startsWith("fe9") || host.startsWith("fea") || host.startsWith("feb")) return true;
   }
   return false;
+}
+
+const hostSafetyCache = new Map();
+
+async function hostResolvesSafely(hostname) {
+  const host = hostname.toLowerCase().replace(/^\[|\]$/g, "");
+  if (isBlockedHost(host)) return false;
+  if (net.isIP(host)) return true;
+
+  if (!hostSafetyCache.has(host)) {
+    hostSafetyCache.set(host, (async () => {
+      try {
+        const records = await dns.lookup(host, { all: true, verbatim: true });
+        return records.length > 0 && records.every(record => !isBlockedHost(record.address));
+      } catch {
+        return false;
+      }
+    })());
+  }
+  return hostSafetyCache.get(host);
 }
 
 function safeUrl(raw) {
@@ -161,14 +182,24 @@ try {
     page.setDefaultTimeout(6000);
 
     await page.route("**/*", async route => {
-      const reqUrl = route.request().url();
+      const requestObject = route.request();
+      const reqUrl = requestObject.url();
       try {
         const parsed = new URL(reqUrl);
-        if ((parsed.protocol === "http:" || parsed.protocol === "https:") && isBlockedHost(parsed.hostname)) {
-          await route.abort("blockedbyclient");
-          return;
+        if (parsed.protocol === "http:" || parsed.protocol === "https:") {
+          if (!["GET", "HEAD"].includes(requestObject.method())) {
+            await route.abort("blockedbyclient");
+            return;
+          }
+          if (!(await hostResolvesSafely(parsed.hostname))) {
+            await route.abort("blockedbyclient");
+            return;
+          }
         }
-      } catch {}
+      } catch {
+        await route.abort("blockedbyclient");
+        return;
+      }
       await route.continue();
     });
 
@@ -192,6 +223,12 @@ try {
 
     const response = await page.goto(url.toString(), { waitUntil: "domcontentloaded", timeout: 20000 });
     await page.waitForLoadState("load", { timeout: 8000 }).catch(() => {});
+
+    const navigationStatus = response?.status() ?? null;
+    const initialTitle = await page.title().catch(() => "");
+    const criticalIssues = [];
+    if (navigationStatus != null && navigationStatus >= 400) criticalIssues.push(`navigation HTTP ${navigationStatus}`);
+    if (/^just a moment/i.test(initialTitle.trim())) criticalIssues.push("bot/interstitial challenge detected");
 
     if (!targetAllows(target, page.url())) {
       await context.close();
@@ -360,7 +397,7 @@ try {
       });
     }
 
-    const warnings = [];
+    const warnings = [...criticalIssues];
     if (diagnostics.horizontalOverflowPx > 2) warnings.push(`horizontal overflow: ${diagnostics.horizontalOverflowPx}px`);
     if (diagnostics.brokenImages.length) warnings.push(`broken visible images: ${diagnostics.brokenImages.length}`);
     if (diagnostics.clippingRisks.length) warnings.push(`content clipping risks: ${diagnostics.clippingRisks.length}`);
@@ -373,7 +410,7 @@ try {
     report.results.push({
       viewport: viewportName,
       size: viewport,
-      status: response?.status() ?? null,
+      status: navigationStatus,
       finalUrl: safeUrl(page.url()),
       title: await page.title(),
       files: { viewport: viewportFile, focus: focusFile, fullPage: fullPageFile },
@@ -382,9 +419,11 @@ try {
       pageErrors: pageErrors.slice(0, 20),
       failedRequests: failedRequests.slice(0, 20),
       badResponses: badResponses.slice(0, 20),
+      criticalIssues,
       warnings
     });
 
+    if (criticalIssues.length) report.ok = false;
     await context.close();
   }
 } catch (error) {
@@ -413,6 +452,7 @@ for (const result of report.results) {
   lines.push(`- Screenshot: \`${result.files.viewport}\``);
   if (result.files.focus) lines.push(`- Focus screenshot: \`${result.files.focus}\``);
   if (result.files.fullPage) lines.push(`- Full page: \`${result.files.fullPage}\``);
+  lines.push(`- HTTP status: ${result.status ?? "unknown"}`);
   lines.push(`- Horizontal overflow: ${result.diagnostics.horizontalOverflowPx}px`);
   lines.push(`- Broken visible images: ${result.diagnostics.brokenImages.length}`);
   lines.push(`- Clipping candidates: ${result.diagnostics.clipped.length}`);
