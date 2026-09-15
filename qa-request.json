@@ -1,12 +1,12 @@
 {
-  "requestId": "home-fit-short-desktop-final-2026-09-15",
+  "requestId": "home-fit-short-desktop-final2-2026-09-15",
   "target": "hipdiscovery",
   "path": "/",
   "selector": ".hero-games",
   "deploymentProbes": [
     {
       "path": "/css/pages/home.css",
-      "gitBlobSha": "5105353f60bc7097bc3209a05125fad28f4707a8"
+      "gitBlobSha": "ba4a18abe7d43a8cf8f8f80c01cffe6476165c21"
     }
   ],
   "viewports": [
