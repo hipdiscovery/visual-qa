@@ -20,6 +20,18 @@
       "mobile-small": {
         "width": 320,
         "height": 900
+      },
+      "mobile-large": {
+        "width": 430,
+        "height": 932
+      },
+      "tablet": {
+        "width": 768,
+        "height": 1024
+      },
+      "desktop-narrow": {
+        "width": 1024,
+        "height": 768
       }
     },
     "requireDeploymentProbes": true
