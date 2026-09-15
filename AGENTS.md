@@ -12,6 +12,6 @@ This is a **public, disposable rendering repo**, not a source-code mirror.
 - Request only the viewports relevant to an iteration; use the full standard matrix for final responsive verification.
 - Keep the runner dependency-light. Use the Chrome already installed on GitHub's Ubuntu runner; do not download a browser on every run.
 - Do not add PR-triggered execution. Public pull requests must never cause this workflow to run with elevated permissions.
-- Keep workflow permissions minimal. The browser-rendering step must not receive a GitHub token.
+- Keep workflow permissions minimal. The browser-rendering step must not receive a GitHub token. Browser traffic stays read-only (GET/HEAD) and must never be given authentication material.
 - Each new run should purge prior QA artifacts/runs; one-day artifact retention is only a fallback.
 - If cleanup or visual rendering cannot be verified, say so. Do not claim a visual pass from source inspection alone.
