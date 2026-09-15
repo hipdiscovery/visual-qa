@@ -1,12 +1,12 @@
 {
-  "requestId": "triple-check-mobile-hero-2026-09-15",
+  "requestId": "triple-check-mobile-hero-final-2026-09-15",
   "target": "hipdiscovery",
   "path": "/",
   "selector": ".hero",
   "deploymentProbes": [
     {
-      "path": "/index.html",
-      "gitBlobSha": "4cd4a967b0630aefba0e3c8cad6276d721180154"
+      "path": "/css/pages/home.css",
+      "gitBlobSha": "51e7c221ce0e5658693042ebedce892c8edba6f2"
     }
   ],
   "viewports": [
