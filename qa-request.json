@@ -1,5 +1,5 @@
 {
-  "requestId": "security-smoke",
+  "requestId": "final-smoke",
   "target": "hipdiscovery",
   "path": "/",
   "selector": ".hero-games",
@@ -7,5 +7,5 @@
     "desktop-owner"
   ],
   "fullPage": false,
-  "waitMs": 400
+  "waitMs": 300
 }
