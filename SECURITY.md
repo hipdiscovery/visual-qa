@@ -14,7 +14,7 @@ This repository is intentionally public. Treat **every committed byte, workflow 
 
 The runner has no feature for custom headers, cookies, localStorage injection, login automation, or arbitrary base URLs. Do not add one.
 
-Deployment freshness uses an opaque 24-character SHA-256-derived fingerprint. The private repository commit SHA used to derive it must never be committed here. The public Pages marker contains only the fingerprint, schema version, and build timestamp.
+Deployment freshness uses hashes of public assets the site already serves. The request stores only a public path and its Git blob SHA; it does not copy private source content or a private repository commit SHA into this repo.
 
 ## Target isolation
 

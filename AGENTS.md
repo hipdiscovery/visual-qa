@@ -8,7 +8,7 @@ This is a **public, disposable rendering repo**, not a source-code mirror.
 - Keep QA requests path-only. Do not add query-string or header support as a shortcut.
 - Do not commit generated screenshots or reports. They belong only in the short-lived Actions artifact.
 - A visual change is verified only after an agent actually looks at the screenshots.
-- For targets with a deployment marker, require the opaque deployment fingerprint and wait for an exact match before opening the browser. Never place the private source commit SHA in this public repo.
+- For targets requiring freshness, probe the exact public CSS/JS/HTML bytes changed by the private source commit and wait for their Git blob SHA(s) to match before opening the browser. Never copy private source or commit SHAs into this public repo.
 - Prefer viewport screenshots during iteration. Use full-page capture only when the task requires whole-page composition review.
 - Request only the viewports relevant to an iteration; use the full standard matrix for final responsive verification.
 - Keep the runner dependency-light. Use the Chrome already installed on GitHub's Ubuntu runner; do not download a browser on every run.

@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import net from "node:net";
 import dns from "node:dns/promises";
+import { createHash } from "node:crypto";
 import { chromium } from "playwright-core";
 
 const ROOT = process.cwd();
@@ -22,7 +23,7 @@ function fail(message) {
 }
 
 function validateRequest() {
-  const allowedKeys = new Set(["requestId", "target", "path", "selector", "viewports", "fullPage", "waitMs", "deploymentFingerprint"]);
+  const allowedKeys = new Set(["requestId", "target", "path", "selector", "viewports", "fullPage", "waitMs", "deploymentProbes"]);
   for (const key of Object.keys(request)) {
     if (!allowedKeys.has(key)) fail(`Unsupported request field: ${key}`);
   }
@@ -44,12 +45,25 @@ function validateRequest() {
   }
   if (new Set(request.viewports).size !== request.viewports.length) fail("viewports cannot contain duplicates.");
   const target = targets[request.target];
-  if (request.deploymentFingerprint != null &&
-      (typeof request.deploymentFingerprint !== "string" || !/^[0-9a-f]{24}$/.test(request.deploymentFingerprint))) {
-    fail("deploymentFingerprint must be exactly 24 lowercase hex characters.");
+  if (request.deploymentProbes != null) {
+    if (!Array.isArray(request.deploymentProbes) || request.deploymentProbes.length < 1 || request.deploymentProbes.length > 4) {
+      fail("deploymentProbes must contain 1-4 public asset probes.");
+    }
+    for (const probe of request.deploymentProbes) {
+      if (!probe || typeof probe !== "object" || Array.isArray(probe)) fail("Each deployment probe must be an object.");
+      const keys = Object.keys(probe);
+      if (keys.some(key => !["path", "gitBlobSha"].includes(key))) fail("Unsupported deployment probe field.");
+      if (typeof probe.path !== "string" || !probe.path.startsWith("/") || probe.path.startsWith("//") ||
+          probe.path.length > 300 || /[?#\\\u0000-\u001f]/.test(probe.path) || probe.path.includes("://")) {
+        fail("Deployment probe path must be a plain root-relative public path.");
+      }
+      if (typeof probe.gitBlobSha !== "string" || !/^[0-9a-f]{40}$/.test(probe.gitBlobSha)) {
+        fail("Deployment probe gitBlobSha must be exactly 40 lowercase hex characters.");
+      }
+    }
   }
-  if (target.requireDeploymentFingerprint && !request.deploymentFingerprint) {
-    fail("This target requires deploymentFingerprint so QA cannot render a stale deployment.");
+  if (target.requireDeploymentProbes && !request.deploymentProbes?.length) {
+    fail("This target requires deploymentProbes so QA cannot render stale UI bytes.");
   }
   for (const viewportName of request.viewports) {
     if (!target.viewports[viewportName]) fail(`Unknown viewport: ${viewportName}`);
@@ -136,54 +150,68 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function waitForExpectedDeployment(target, expectedFingerprint) {
-  if (!expectedFingerprint) return null;
-  if (typeof target.deploymentMarkerPath !== "string" || !target.deploymentMarkerPath.startsWith("/")) {
-    fail("Target requires deployment freshness but has no valid deploymentMarkerPath.");
-  }
+async function gitBlobSha(bytes) {
+  const header = Buffer.from(`blob ${bytes.length}\0`, "utf8");
+  return createHash("sha1").update(header).update(bytes).digest("hex");
+}
 
-  const markerUrl = new URL(target.deploymentMarkerPath, target.baseUrl);
-  if (!targetAllows(target, markerUrl.toString())) {
-    fail("Deployment marker URL is outside the target allowlist.");
-  }
+async function waitForDeploymentProbes(target, probes) {
+  if (!probes?.length) return null;
 
   const startedAt = Date.now();
   const deadline = startedAt + 150000;
-  let lastStatus = null;
+  let lastState = "not checked";
 
   while (Date.now() < deadline) {
-    const probe = new URL(markerUrl);
-    probe.searchParams.set("_qa", String(Date.now()));
+    let allMatch = true;
+    const checked = [];
 
-    try {
-      const response = await fetch(probe, {
-        method: "GET",
-        redirect: "error",
-        headers: {
-          "Accept": "application/json",
-          "Cache-Control": "no-cache",
-          "Pragma": "no-cache"
-        },
-        signal: AbortSignal.timeout(6000)
-      });
-      lastStatus = response.status;
-
-      if (response.ok) {
-        const marker = await response.json().catch(() => null);
-        if (marker?.schema === 1 && marker?.fingerprint === expectedFingerprint) {
-          return {
-            verified: true,
-            builtAt: typeof marker.builtAt === "string" ? marker.builtAt : null,
-            waitedMs: Date.now() - startedAt
-          };
-        }
+    for (const probe of probes) {
+      const probeUrl = new URL(probe.path, target.baseUrl);
+      if (!targetAllows(target, probeUrl.toString())) {
+        fail("Deployment probe URL is outside the target allowlist.");
       }
-    } catch {}
+      probeUrl.searchParams.set("_qa", String(Date.now()));
+
+      try {
+        const response = await fetch(probeUrl, {
+          method: "GET",
+          redirect: "error",
+          headers: {
+            "Cache-Control": "no-cache",
+            "Pragma": "no-cache"
+          },
+          signal: AbortSignal.timeout(6000)
+        });
+        if (!response.ok) {
+          allMatch = false;
+          checked.push({ path: probe.path, status: response.status, match: false });
+          continue;
+        }
+        const bytes = Buffer.from(await response.arrayBuffer());
+        const actual = await gitBlobSha(bytes);
+        const match = actual === probe.gitBlobSha;
+        allMatch &&= match;
+        checked.push({ path: probe.path, status: response.status, match });
+      } catch {
+        allMatch = false;
+        checked.push({ path: probe.path, status: null, match: false });
+      }
+    }
+
+    lastState = checked.map(item => `${item.path}:${item.status ?? "ERR"}:${item.match ? "match" : "stale"}`).join(", ");
+    if (allMatch) {
+      return {
+        verified: true,
+        waitedMs: Date.now() - startedAt,
+        probes: checked.map(item => ({ path: item.path, status: item.status }))
+      };
+    }
 
     await sleep(2000);
   }
 
-  fail(`Timed out waiting for the requested deployment fingerprint (last marker HTTP status: ${lastStatus ?? "unavailable"}).`);
+  fail(`Timed out waiting for requested public UI bytes (${lastState}).`);
 }
 
 validateRequest();
@@ -193,7 +221,7 @@ const base = new URL(target.baseUrl);
 const url = new URL(request.path, base);
 if (!targetAllows(target, url.toString())) fail("Resolved target URL is outside the allowlist.");
 
-const deployment = await waitForExpectedDeployment(target, request.deploymentFingerprint || null);
+const deployment = await waitForDeploymentProbes(target, request.deploymentProbes || null);
 
 const executablePath = process.env.CHROME_BIN || "/usr/bin/google-chrome";
 if (!fs.existsSync(executablePath)) fail(`Chrome not found at ${executablePath}`);
@@ -214,7 +242,7 @@ const report = {
     viewports: request.viewports,
     fullPage: request.fullPage === true,
     waitMs: request.waitMs ?? 700,
-    deploymentFingerprint: request.deploymentFingerprint || null
+    deploymentProbes: request.deploymentProbes || null
   },
   deployment,
   generatedAt: new Date().toISOString(),
@@ -529,7 +557,7 @@ const lines = [
   `- Request: \`${report.request.requestId}\``,
   `- Target: \`${report.request.target}${report.request.path}\``,
   `- Browser: \`${report.browser}\``,
-  report.deployment ? `- Deployment freshness: **verified** (waited ${report.deployment.waitedMs} ms)` : "- Deployment freshness: not requested",
+  report.deployment ? `- Deployment freshness: **verified against ${report.deployment.probes.length} public asset probe(s)** (waited ${report.deployment.waitedMs} ms)` : "- Deployment freshness: not requested",
   `- Viewports rendered: **${report.results.length}**`,
   `- Diagnostic warnings: **${warningCount}**`,
   ""
