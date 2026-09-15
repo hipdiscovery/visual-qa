@@ -104,13 +104,6 @@ function targetAllows(target, rawUrl) {
   }
 }
 
-function selectorHint(el) {
-  if (!(el instanceof Element)) return "";
-  if (el.id) return `#${CSS.escape(el.id)}`;
-  const cls = [...el.classList].slice(0, 2).map(v => `.${CSS.escape(v)}`).join("");
-  return `${el.tagName.toLowerCase()}${cls}`;
-}
-
 validateRequest();
 
 const target = targets[request.target];
