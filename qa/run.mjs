@@ -608,7 +608,12 @@ try {
     if (diagnostics.brokenImages.length) warnings.push(`broken visible images: ${diagnostics.brokenImages.length}`);
     if (diagnostics.clippingRisks.length) warnings.push(`content clipping risks: ${diagnostics.clippingRisks.length}`);
     if (diagnostics.tinyInteractive.length) warnings.push(`tiny interactive targets: ${diagnostics.tinyInteractive.length}`);
-    if (diagnostics.upscaledImages.length) warnings.push(`heavily upscaled images: ${diagnostics.upscaledImages.length}`);
+    if (diagnostics.upscaledImages.length) {
+      const sample = diagnostics.upscaledImages.slice(0, 3).map(item =>
+        `${item.node} ${item.natural.join("x")}→${item.rendered.join("x")} @${item.scale}x`
+      ).join(", ");
+      warnings.push(`heavily upscaled images: ${diagnostics.upscaledImages.length}${sample ? ` [${sample}]` : ""}`);
+    }
     if (diagnostics.missingAltImages.length) warnings.push(`visible images missing alt attributes: ${diagnostics.missingAltImages.length}`);
     if (consoleEvents.some(e => e.type === "error")) warnings.push(`console errors: ${consoleEvents.filter(e => e.type === "error").length}`);
     if (pageErrors.length) warnings.push(`page errors: ${pageErrors.length}`);
