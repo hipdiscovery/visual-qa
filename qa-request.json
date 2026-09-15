@@ -1,8 +1,8 @@
 {
-  "requestId": "bootstrap",
+  "requestId": "bootstrap-live-1",
   "target": "hipdiscovery",
   "path": "/",
-  "selector": null,
+  "selector": ".hero-games",
   "viewports": [
     "desktop-owner",
     "desktop-compact",
