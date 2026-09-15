@@ -7,8 +7,8 @@ This repository does **not** contain HipDiscovery's private application or websi
 ## Normal agent workflow
 
 1. Make the real UI change in its source repository and let the public deployment/preview become reachable.
-2. Update only `qa-request.json` here.
-3. The `Visual QA` workflow renders the requested page.
+2. Compute the opaque deployment fingerprint from the private source commit and put it in `qa-request.json`.
+3. The `Visual QA` workflow waits until that exact Cloudflare Pages build marker is live, then renders the requested page.
 4. Download the single `visual-qa-<run id>` artifact.
 5. **Actually inspect the screenshots.** The JSON diagnostics are a second layer, not a replacement for visual judgement.
 6. Iterate in the source repo if the UI looks wrong.
@@ -32,6 +32,7 @@ Only request the viewports needed for the current change when speed matters; use
   "target": "hipdiscovery",
   "path": "/",
   "selector": ".hero-games",
+  "deploymentFingerprint": "0123456789abcdef01234567",
   "viewports": ["desktop-owner", "desktop-compact", "mobile", "mobile-small"],
   "fullPage": false,
   "waitMs": 700
@@ -39,6 +40,7 @@ Only request the viewports needed for the current change when speed matters; use
 ```
 
 - `target` must exist in `qa/targets.json`.
+- HipDiscovery requests require `deploymentFingerprint`. With access to the private source commit, compute it locally as the first 24 hex characters of SHA-256 over `hipdiscovery-visual-qa:v1:<lowercase full commit SHA>`. Only the opaque fingerprint is committed here; the private commit SHA is never copied into this public repo.
 - `path` must be a plain path. Query strings, fragments, credentials, protocol-relative URLs, and arbitrary hosts are rejected.
 - `selector` is optional. When supplied, the runner scrolls it into view and also captures a focused element screenshot when possible.
 - `fullPage` is optional and defaults to `false`; viewport screenshots are faster and usually better for iterative UI work.

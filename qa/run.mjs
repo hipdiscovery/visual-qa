@@ -22,7 +22,7 @@ function fail(message) {
 }
 
 function validateRequest() {
-  const allowedKeys = new Set(["requestId", "target", "path", "selector", "viewports", "fullPage", "waitMs"]);
+  const allowedKeys = new Set(["requestId", "target", "path", "selector", "viewports", "fullPage", "waitMs", "deploymentFingerprint"]);
   for (const key of Object.keys(request)) {
     if (!allowedKeys.has(key)) fail(`Unsupported request field: ${key}`);
   }
@@ -44,6 +44,13 @@ function validateRequest() {
   }
   if (new Set(request.viewports).size !== request.viewports.length) fail("viewports cannot contain duplicates.");
   const target = targets[request.target];
+  if (request.deploymentFingerprint != null &&
+      (typeof request.deploymentFingerprint !== "string" || !/^[0-9a-f]{24}$/.test(request.deploymentFingerprint))) {
+    fail("deploymentFingerprint must be exactly 24 lowercase hex characters.");
+  }
+  if (target.requireDeploymentFingerprint && !request.deploymentFingerprint) {
+    fail("This target requires deploymentFingerprint so QA cannot render a stale deployment.");
+  }
   for (const viewportName of request.viewports) {
     if (!target.viewports[viewportName]) fail(`Unknown viewport: ${viewportName}`);
   }
@@ -125,12 +132,68 @@ function targetAllows(target, rawUrl) {
   }
 }
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function waitForExpectedDeployment(target, expectedFingerprint) {
+  if (!expectedFingerprint) return null;
+  if (typeof target.deploymentMarkerPath !== "string" || !target.deploymentMarkerPath.startsWith("/")) {
+    fail("Target requires deployment freshness but has no valid deploymentMarkerPath.");
+  }
+
+  const markerUrl = new URL(target.deploymentMarkerPath, target.baseUrl);
+  if (!targetAllows(target, markerUrl.toString())) {
+    fail("Deployment marker URL is outside the target allowlist.");
+  }
+
+  const startedAt = Date.now();
+  const deadline = startedAt + 150000;
+  let lastStatus = null;
+
+  while (Date.now() < deadline) {
+    const probe = new URL(markerUrl);
+    probe.searchParams.set("_qa", String(Date.now()));
+
+    try {
+      const response = await fetch(probe, {
+        method: "GET",
+        redirect: "error",
+        headers: {
+          "Accept": "application/json",
+          "Cache-Control": "no-cache",
+          "Pragma": "no-cache"
+        },
+        signal: AbortSignal.timeout(6000)
+      });
+      lastStatus = response.status;
+
+      if (response.ok) {
+        const marker = await response.json().catch(() => null);
+        if (marker?.schema === 1 && marker?.fingerprint === expectedFingerprint) {
+          return {
+            verified: true,
+            builtAt: typeof marker.builtAt === "string" ? marker.builtAt : null,
+            waitedMs: Date.now() - startedAt
+          };
+        }
+      }
+    } catch {}
+
+    await sleep(2000);
+  }
+
+  fail(`Timed out waiting for the requested deployment fingerprint (last marker HTTP status: ${lastStatus ?? "unavailable"}).`);
+}
+
 validateRequest();
 
 const target = targets[request.target];
 const base = new URL(target.baseUrl);
 const url = new URL(request.path, base);
 if (!targetAllows(target, url.toString())) fail("Resolved target URL is outside the allowlist.");
+
+const deployment = await waitForExpectedDeployment(target, request.deploymentFingerprint || null);
 
 const executablePath = process.env.CHROME_BIN || "/usr/bin/google-chrome";
 if (!fs.existsSync(executablePath)) fail(`Chrome not found at ${executablePath}`);
@@ -150,8 +213,10 @@ const report = {
     selector: request.selector || null,
     viewports: request.viewports,
     fullPage: request.fullPage === true,
-    waitMs: request.waitMs ?? 700
+    waitMs: request.waitMs ?? 700,
+    deploymentFingerprint: request.deploymentFingerprint || null
   },
+  deployment,
   generatedAt: new Date().toISOString(),
   browser: await browser.version(),
   results: []
@@ -464,6 +529,7 @@ const lines = [
   `- Request: \`${report.request.requestId}\``,
   `- Target: \`${report.request.target}${report.request.path}\``,
   `- Browser: \`${report.browser}\``,
+  report.deployment ? `- Deployment freshness: **verified** (waited ${report.deployment.waitedMs} ms)` : "- Deployment freshness: not requested",
   `- Viewports rendered: **${report.results.length}**`,
   `- Diagnostic warnings: **${warningCount}**`,
   ""

@@ -14,6 +14,8 @@ This repository is intentionally public. Treat **every committed byte, workflow 
 
 The runner has no feature for custom headers, cookies, localStorage injection, login automation, or arbitrary base URLs. Do not add one.
 
+Deployment freshness uses an opaque 24-character SHA-256-derived fingerprint. The private repository commit SHA used to derive it must never be committed here. The public Pages marker contains only the fingerprint, schema version, and build timestamp.
+
 ## Target isolation
 
 Targets are explicitly allowlisted in `qa/targets.json`. Requests select a target key plus a plain URL path. The runner rejects protocol-relative paths, query strings, fragments, credentials, non-HTTPS final navigation, and final hosts outside the target allowlist.

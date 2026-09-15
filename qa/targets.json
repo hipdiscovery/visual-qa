@@ -22,6 +22,8 @@
         "height": 900
       }
     },
-    "productionUrl": "https://hipdiscovery.com"
+    "productionUrl": "https://hipdiscovery.com",
+    "deploymentMarkerPath": "/.well-known/qa-deploy.json",
+    "requireDeploymentFingerprint": true
   }
 }
