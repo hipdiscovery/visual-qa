@@ -138,6 +138,9 @@ function scrubMessage(value) {
   let text = String(value || "");
   text = text.replace(/https?:\/\/[^\s"'<>]+/gi, match => safeUrl(match));
   text = text.replace(/\b(token|key|secret|authorization|password)\s*[:=]\s*[^\s,;]+/gi, "$1=[redacted]");
+  text = text.replace(/\bBearer\s+[A-Za-z0-9._~+\/-]+=*/gi, "Bearer [redacted]");
+  text = text.replace(/\b(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|AKIA[0-9A-Z]{16})\b/g, "[redacted-credential]");
+  text = text.replace(/\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b/g, "[redacted-jwt]");
   return text.slice(0, 240);
 }
 
@@ -345,7 +348,8 @@ try {
     page.on("console", msg => {
       if (msg.type() === "error" || msg.type() === "warning") {
         const message = scrubMessage(msg.text());
-        if (message.includes("ERR_BLOCKED_BY_CLIENT")) return;
+        if (message.includes("ERR_BLOCKED_BY_CLIENT") ||
+            message.includes("Service Worker registration blocked by Playwright")) return;
         consoleEvents.push({ type: msg.type(), message });
       }
     });
@@ -579,6 +583,7 @@ try {
     if (diagnostics.horizontalOverflowPx > 2) warnings.push(`horizontal overflow: ${diagnostics.horizontalOverflowPx}px`);
     if (diagnostics.brokenImages.length) warnings.push(`broken visible images: ${diagnostics.brokenImages.length}`);
     if (diagnostics.clippingRisks.length) warnings.push(`content clipping risks: ${diagnostics.clippingRisks.length}`);
+    if (diagnostics.tinyInteractive.length) warnings.push(`tiny interactive targets: ${diagnostics.tinyInteractive.length}`);
     if (consoleEvents.some(e => e.type === "error")) warnings.push(`console errors: ${consoleEvents.filter(e => e.type === "error").length}`);
     if (pageErrors.length) warnings.push(`page errors: ${pageErrors.length}`);
     if (failedRequests.length) warnings.push(`failed first-party requests: ${failedRequests.length}`);
