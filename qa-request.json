@@ -1,22 +1,15 @@
 {
-  "requestId": "finish-home-ui-fixes-2026-09-15",
+  "requestId": "finish-home-mobile-small-2026-09-15",
   "target": "hipdiscovery",
   "path": "/",
   "selector": ".hero-games",
   "deploymentProbes": [
     {
       "path": "/css/pages/home.css",
-      "gitBlobSha": "379cea36c9f61458b26a7f1fb89844ca33f194ab"
-    },
-    {
-      "path": "/styles.css",
-      "gitBlobSha": "6ff0f52e89ac26a8de5ded13ae8b4028357df38d"
+      "gitBlobSha": "af2226046427a0867973e82def4ee76d9c6b70a7"
     }
   ],
   "viewports": [
-    "desktop-owner",
-    "desktop-compact",
-    "mobile",
     "mobile-small"
   ],
   "fullPage": false,
