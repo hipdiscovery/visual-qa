@@ -1,12 +1,11 @@
 {
-  "requestId": "clipping-signal-check",
+  "requestId": "security-smoke",
   "target": "hipdiscovery",
   "path": "/",
   "selector": ".hero-games",
   "viewports": [
-    "desktop-owner",
-    "mobile-small"
+    "desktop-owner"
   ],
   "fullPage": false,
-  "waitMs": 500
+  "waitMs": 400
 }
