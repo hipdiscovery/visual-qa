@@ -22,11 +22,15 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - name: Clone public QA code without credentials
+      - name: Fetch exact triggering commit without credentials
         shell: bash
         run: |
           set -euo pipefail
-          git clone --depth=1 "https://github.com/${GITHUB_REPOSITORY}.git" "${RUNNER_TEMP}/visual-qa"
+          repo_dir="${RUNNER_TEMP}/visual-qa"
+          git init "${repo_dir}"
+          git -C "${repo_dir}" remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git -C "${repo_dir}" fetch --depth=1 origin "${GITHUB_SHA}"
+          git -C "${repo_dir}" checkout --detach FETCH_HEAD
 
       - name: Verify preinstalled Chrome
         shell: bash
@@ -41,6 +45,7 @@ jobs:
         run: |
           set -euo pipefail
           npm install --no-save --ignore-scripts --no-audit --no-fund playwright-core@1.63.0
+          node -e "const v=require('playwright-core/package.json').version;if(v!=='1.63.0')throw new Error('Unexpected playwright-core '+v)"
 
       - name: Render public UI
         id: render
