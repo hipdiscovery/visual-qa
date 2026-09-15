@@ -1,14 +1,12 @@
 {
-  "requestId": "bootstrap-pages-live-2",
+  "requestId": "clipping-signal-check",
   "target": "hipdiscovery",
   "path": "/",
   "selector": ".hero-games",
   "viewports": [
     "desktop-owner",
-    "desktop-compact",
-    "mobile",
     "mobile-small"
   ],
   "fullPage": false,
-  "waitMs": 700
+  "waitMs": 500
 }
