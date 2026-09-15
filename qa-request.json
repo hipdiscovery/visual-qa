@@ -1,5 +1,5 @@
 {
-  "requestId": "closure-smoke-2026-09-15",
+  "requestId": "closure-final-smoke-2026-09-15",
   "target": "hipdiscovery",
   "path": "/",
   "selector": ".hero-games",
@@ -7,16 +7,11 @@
     {
       "path": "/css/pages/home.css",
       "gitBlobSha": "af2226046427a0867973e82def4ee76d9c6b70a7"
-    },
-    {
-      "path": "/styles.css",
-      "gitBlobSha": "6ff0f52e89ac26a8de5ded13ae8b4028357df38d"
     }
   ],
   "viewports": [
-    "desktop-owner",
     "mobile-small"
   ],
   "fullPage": false,
-  "waitMs": 500
+  "waitMs": 300
 }
