@@ -1,0 +1,89 @@
+name: Visual QA
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - qa-request.json
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: visual-qa
+  cancel-in-progress: true
+
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+
+    steps:
+      - name: Clone public QA code without credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          git clone --depth=1 "https://github.com/${GITHUB_REPOSITORY}.git" "${RUNNER_TEMP}/visual-qa"
+
+      - name: Verify preinstalled Chrome
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -x /usr/bin/google-chrome
+          /usr/bin/google-chrome --version
+
+      - name: Install pinned browser controller only
+        working-directory: ${{ runner.temp }}/visual-qa
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install --no-save --ignore-scripts --no-audit --no-fund playwright-core@1.63.0
+
+      - name: Render public UI
+        id: render
+        working-directory: ${{ runner.temp }}/visual-qa
+        shell: bash
+        env:
+          CHROME_BIN: /usr/bin/google-chrome
+        run: |
+          set +e
+          node qa/run.mjs qa-request.json
+          code=$?
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Add QA summary
+        if: always()
+        working-directory: ${{ runner.temp }}/visual-qa
+        shell: bash
+        run: |
+          if [ -f out/summary.md ]; then
+            cat out/summary.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Purge previous QA output
+        if: always()
+        working-directory: ${{ runner.temp }}/visual-qa
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node qa/cleanup.mjs
+
+      - name: Upload current QA result
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: visual-qa-${{ github.run_id }}
+          path: ${{ runner.temp }}/visual-qa/out/
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 0
+          include-hidden-files: false
+
+      - name: Preserve render failure status
+        if: always() && steps.render.outputs.code != '0'
+        shell: bash
+        run: exit 1
