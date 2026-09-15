@@ -23,7 +23,7 @@
       }
     },
     "productionUrl": "https://hipdiscovery.com",
-    "deploymentMarkerPath": "/.well-known/qa-deploy.json",
+    "deploymentMarkerPath": "/qa-deploy.json",
     "requireDeploymentFingerprint": true
   }
 }

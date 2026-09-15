@@ -1,9 +1,9 @@
 {
-  "requestId": "home-gaming-authoritative-final-2026-09-15",
+  "requestId": "finish-home-exact-deploy-2026-09-15",
   "target": "hipdiscovery",
   "path": "/",
   "selector": ".hero-games",
-  "deploymentFingerprint": "0beca8fca4d6f8deaf5e8c85",
+  "deploymentFingerprint": "646726b3316e0178d54ff3a3",
   "viewports": [
     "desktop-owner",
     "desktop-compact",
