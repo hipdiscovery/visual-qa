@@ -1,9 +1,8 @@
 {
   "hipdiscovery": {
-    "baseUrl": "https://hipdiscovery.com",
+    "baseUrl": "https://hipdiscovery-com.pages.dev",
     "allowedHosts": [
-      "hipdiscovery.com",
-      "www.hipdiscovery.com"
+      "hipdiscovery-com.pages.dev"
     ],
     "viewports": {
       "desktop-owner": {
@@ -22,6 +21,7 @@
         "width": 320,
         "height": 900
       }
-    }
+    },
+    "productionUrl": "https://hipdiscovery.com"
   }
 }
