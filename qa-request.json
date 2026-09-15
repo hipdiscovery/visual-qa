@@ -1,5 +1,5 @@
 {
-  "requestId": "home-gaming-footer-anchor-recheck-2026-09-15",
+  "requestId": "home-gaming-debug-2026-09-15",
   "target": "hipdiscovery",
   "path": "/",
   "selector": ".hero-games",
@@ -7,5 +7,5 @@
     "desktop-compact"
   ],
   "fullPage": false,
-  "waitMs": 700
+  "waitMs": 500
 }
