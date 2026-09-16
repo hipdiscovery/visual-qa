@@ -1,12 +1,12 @@
 {
-  "requestId": "live-hub-recompose-2026-09-15",
+  "requestId": "live-hub-tight-final-2026-09-15",
   "target": "hipdiscovery",
   "path": "/",
   "selector": ".hub-now",
   "deploymentProbes": [
     {
       "path": "/css/pages/home.css",
-      "gitBlobSha": "25b2d8f1af0349cb67157e182c1eb739689feecd"
+      "gitBlobSha": "1f5f410783699c077729ed45cc2c5d1931e630b8"
     }
   ],
   "viewports": [
