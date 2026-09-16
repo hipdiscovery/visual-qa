@@ -1,16 +1,23 @@
 {
-  "requestId": "links-mobile-compact-pass-2-2026-09-16",
+  "requestId": "community-leaderboard-premium-2026-09-16",
   "target": "hipdiscovery",
-  "path": "/links",
-  "selector": "main",
+  "path": "/supporters",
+  "selector": ".sup-leaderboard-shell",
   "deploymentProbes": [
     {
-      "path": "/css/pages/links.css",
-      "gitBlobSha": "7eace2a2608103a98263806b628bf090e29da77d"
+      "path": "/css/pages/supporters.css",
+      "gitBlobSha": "a2b915888f7531d794fd90104ef767673700a91e"
+    },
+    {
+      "path": "/js/pages/supporters.js",
+      "gitBlobSha": "c9f0a7936ef148affbd9838dd28b60b0b2576d20"
     }
   ],
   "viewports": [
     "desktop-owner",
+    "desktop-compact",
+    "desktop-narrow",
+    "tablet",
     "mobile",
     "mobile-small"
   ],
