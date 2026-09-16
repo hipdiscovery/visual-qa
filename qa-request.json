@@ -1,15 +1,20 @@
 {
-  "requestId": "twitchdrops-unified-v51-final-2026-09-16",
+  "requestId": "home-discover-record-bottom-content-final-2026-09-16",
   "target": "hipdiscovery",
-  "path": "/twitchdrops",
+  "path": "/",
+  "selector": "main",
   "deploymentProbes": [
     {
-      "path": "/assets/twitchdrops-bundle-v51.css",
-      "gitBlobSha": "85d0dc6bb45f274b05f790bd813a3add4bc95073"
+      "path": "/index.html",
+      "gitBlobSha": "d8765e06252d6783103eec30b20fce756fc9b075"
     },
     {
-      "path": "/assets/twitchdrops-v4.js",
-      "gitBlobSha": "f02b1813d231c1215e9acbefcffece346e9f1233"
+      "path": "/css/pages/home.css",
+      "gitBlobSha": "149c9da39c9a6e09ab07e841f5aa69e7d483860f"
+    },
+    {
+      "path": "/js/pages/home.js",
+      "gitBlobSha": "d905dcfdfb7b1648088ae05d4a089cd85a0d8ea5"
     }
   ],
   "viewports": [
@@ -19,5 +24,5 @@
     "mobile-small"
   ],
   "fullPage": true,
-  "waitMs": 1000
+  "waitMs": 900
 }
