@@ -1,6 +1,6 @@
 {
-  "requestId": "home-production-custom-domain-final-2026-09-16",
-  "target": "hipdiscovery-production",
+  "requestId": "home-final-after-copy-fix-2026-09-16",
+  "target": "hipdiscovery",
   "path": "/",
   "selector": "main",
   "deploymentProbes": [
