@@ -1,12 +1,12 @@
 {
-  "requestId": "record-calendar-streak-polish-2026-09-15",
+  "requestId": "stream-record-milestone-redesign-2026-09-15",
   "target": "hipdiscovery",
   "path": "/",
-  "selector": "#stream",
+  "selector": "#record",
   "deploymentProbes": [
     {
       "path": "/css/pages/home.css",
-      "gitBlobSha": "0a138c8c9c26c9102fc84e2231c8f5540a3abd75"
+      "gitBlobSha": "ab846db79b4beaf790577d42ca319e4dfcaad3df"
     }
   ],
   "viewports": [
