@@ -1,16 +1,16 @@
 {
-  "requestId": "community-leaderboard-premium-2026-09-16",
+  "requestId": "community-leaderboard-final-qa-2026-09-16",
   "target": "hipdiscovery",
   "path": "/supporters",
   "selector": ".sup-leaderboard-shell",
   "deploymentProbes": [
     {
       "path": "/css/pages/supporters.css",
-      "gitBlobSha": "a2b915888f7531d794fd90104ef767673700a91e"
+      "gitBlobSha": "0844454c378cf121573c3d27b9b1cbee1c5dfb9b"
     },
     {
       "path": "/js/pages/supporters.js",
-      "gitBlobSha": "c9f0a7936ef148affbd9838dd28b60b0b2576d20"
+      "gitBlobSha": "344919ef219dc05524ee55d18addf0ad1a519154"
     }
   ],
   "viewports": [
