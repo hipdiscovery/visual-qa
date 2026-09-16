@@ -1,24 +1,19 @@
 {
-  "requestId": "twitchdrops-card-hierarchy-2026-09-15",
+  "requestId": "live-hub-recompose-2026-09-15",
   "target": "hipdiscovery",
-  "path": "/twitchdrops",
-  "selector": "#td-watch-grid .td3-card",
+  "path": "/",
+  "selector": ".hub-now",
   "deploymentProbes": [
     {
-      "path": "/assets/twitchdrops-bundle-v50.css",
-      "gitBlobSha": "1fcf3f101418ea1e9d4798eadb2a1255843a33a0"
-    },
-    {
-      "path": "/assets/twitchdrops-v3.js",
-      "gitBlobSha": "7b806eec14a641c2dcc3996b9314fa8e37ae93a7"
+      "path": "/css/pages/home.css",
+      "gitBlobSha": "25b2d8f1af0349cb67157e182c1eb739689feecd"
     }
   ],
   "viewports": [
-    "desktop-owner",
     "desktop-compact",
-    "mobile",
-    "mobile-small"
+    "desktop-owner",
+    "mobile"
   ],
   "fullPage": false,
-  "waitMs": 900
+  "waitMs": 700
 }
