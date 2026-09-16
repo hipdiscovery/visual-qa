@@ -1,20 +1,27 @@
 {
-  "requestId": "about-premium-editorial-2026-09-16",
+  "requestId": "community-leaderboard-race-cards-2026-09-16",
   "target": "hipdiscovery",
-  "path": "/about",
-  "selector": ".about-grid",
+  "path": "/supporters",
+  "selector": ".sup-leaderboard-shell .sup-main",
   "deploymentProbes": [
     {
-      "path": "/about.html",
-      "gitBlobSha": "590e9b4ba87467a40efbd8f1fcf4c14bfe471872"
+      "path": "/css/pages/supporters.css",
+      "gitBlobSha": "7ab2358fb15b6d3c83771d1752d4b004194021e2"
     },
     {
-      "path": "/css/pages/about.css",
-      "gitBlobSha": "f5a5bac2f8d7359c5a3544462be19f85d097dbb9"
+      "path": "/styles.css",
+      "gitBlobSha": "d4aad5dc034b2fc1da2ee8279e2c759f411e5287"
+    },
+    {
+      "path": "/js/pages/supporters.js",
+      "gitBlobSha": "99fc44f1e54ee9eb28bde9a81418ecb655fea9b7"
     }
   ],
   "viewports": [
+    "desktop-owner",
     "desktop-compact",
+    "desktop-narrow",
+    "tablet",
     "mobile",
     "mobile-small"
   ],
