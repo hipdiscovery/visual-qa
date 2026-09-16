@@ -1,19 +1,23 @@
 {
-  "requestId": "community-leaderboard-spacing-2026-09-16",
+  "requestId": "twitchdrops-unified-v51-2026-09-16",
   "target": "hipdiscovery",
-  "path": "/supporters",
-  "selector": ".sup-after",
+  "path": "/twitchdrops",
   "deploymentProbes": [
     {
-      "path": "/css/pages/supporters.css",
-      "gitBlobSha": "b3a8a53083a87ad3e88c5872e8b14d395c4352fc"
+      "path": "/assets/twitchdrops-bundle-v51.css",
+      "gitBlobSha": "b006e680487143e13bd0686451c7f17c7282fa0f"
+    },
+    {
+      "path": "/assets/twitchdrops-v4.js",
+      "gitBlobSha": "f02b1813d231c1215e9acbefcffece346e9f1233"
     }
   ],
   "viewports": [
+    "desktop-owner",
     "desktop-compact",
-    "tablet",
-    "mobile"
+    "mobile",
+    "mobile-small"
   ],
   "fullPage": true,
-  "waitMs": 700
+  "waitMs": 1000
 }
