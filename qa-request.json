@@ -1,23 +1,21 @@
 {
-  "requestId": "community-leaderboard-revamp-2026-09-16",
+  "requestId": "home-whole-page-story-exact-final-2026-09-16",
   "target": "hipdiscovery",
-  "path": "/supporters",
-  "selector": ".sup-leaderboard-shell",
+  "path": "/",
+  "selector": "main",
   "deploymentProbes": [
     {
-      "path": "/css/pages/supporters.css",
-      "gitBlobSha": "a68ec09b36f4d9eb007fc993c7d162def2189946"
+      "path": "/index.html",
+      "gitBlobSha": "eb4ce239dfb6f0137fb968e3133bd79c7d0cae8c"
     },
     {
-      "path": "/js/pages/supporters.js",
-      "gitBlobSha": "673bc3ec76f3ec6688a55005e6babc2772ddf0c6"
+      "path": "/css/pages/home.css",
+      "gitBlobSha": "e788bc455d66196829a76e1c2a5db525bd62443a"
     }
   ],
   "viewports": [
     "desktop-owner",
     "desktop-compact",
-    "desktop-narrow",
-    "tablet",
     "mobile",
     "mobile-small"
   ],
