@@ -1,26 +1,19 @@
 {
-  "requestId": "community-leaderboard-clean-final-2026-09-16",
+  "requestId": "community-leaderboard-spacing-2026-09-16",
   "target": "hipdiscovery",
   "path": "/supporters",
-  "selector": ".sup-leaderboard-shell",
+  "selector": ".sup-after",
   "deploymentProbes": [
     {
       "path": "/css/pages/supporters.css",
-      "gitBlobSha": "7038261ca7a3f8e559d89e9d805c926e6bc03d17"
-    },
-    {
-      "path": "/js/pages/supporters.js",
-      "gitBlobSha": "68905c2118868b9ac672720b2375278e8b788705"
+      "gitBlobSha": "b3a8a53083a87ad3e88c5872e8b14d395c4352fc"
     }
   ],
   "viewports": [
-    "desktop-owner",
     "desktop-compact",
-    "desktop-narrow",
     "tablet",
-    "mobile",
-    "mobile-small"
+    "mobile"
   ],
   "fullPage": true,
-  "waitMs": 900
+  "waitMs": 700
 }
