@@ -1,19 +1,22 @@
 {
-  "requestId": "community-leaderboard-icon-spacing-2026-09-16",
-  "target": "hipdiscovery",
-  "path": "/supporters",
-  "selector": ".sup-after .sup-ways",
+  "requestId": "home-production-custom-domain-final-2026-09-16",
+  "target": "hipdiscovery-production",
+  "path": "/",
+  "selector": "main",
   "deploymentProbes": [
     {
-      "path": "/css/pages/supporters.css",
-      "gitBlobSha": "3ed3b1e98c18f9da76ca158c2e3ee0e4ae3ca8f1"
+      "path": "/css/pages/home.css",
+      "gitBlobSha": "149c9da39c9a6e09ab07e841f5aa69e7d483860f"
+    },
+    {
+      "path": "/js/pages/home.js",
+      "gitBlobSha": "d905dcfdfb7b1648088ae05d4a089cd85a0d8ea5"
     }
   ],
   "viewports": [
     "desktop-compact",
-    "tablet",
     "mobile"
   ],
   "fullPage": true,
-  "waitMs": 700
+  "waitMs": 900
 }
