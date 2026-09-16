@@ -1,18 +1,19 @@
 {
-  "requestId": "community-leaderboard-overflow-diagnostic-2026-09-16",
+  "requestId": "site-audit-faq-final-2026-09-16",
   "target": "hipdiscovery",
-  "path": "/supporters",
-  "selector": "body",
+  "path": "/faq",
   "deploymentProbes": [
     {
-      "path": "/styles.css",
-      "gitBlobSha": "2849f6eb58f95c9f6aada89ead722cc7c299f1ff"
+      "path": "/css/pages/faq.css",
+      "gitBlobSha": "e88d74da9dfe48c5fbeda35d1cca4908d566cc97"
     }
   ],
   "viewports": [
+    "desktop-owner",
+    "desktop-compact",
     "mobile",
     "mobile-small"
   ],
-  "fullPage": false,
-  "waitMs": 500
+  "fullPage": true,
+  "waitMs": 700
 }
