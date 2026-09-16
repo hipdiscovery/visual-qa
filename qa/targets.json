@@ -35,5 +35,42 @@
       }
     },
     "requireDeploymentProbes": true
+  },
+  "hipdiscovery-production": {
+    "baseUrl": "https://hipdiscovery.com",
+    "allowedHosts": [
+      "hipdiscovery.com"
+    ],
+    "viewports": {
+      "desktop-owner": {
+        "width": 1912,
+        "height": 918
+      },
+      "desktop-compact": {
+        "width": 1668,
+        "height": 900
+      },
+      "mobile": {
+        "width": 375,
+        "height": 900
+      },
+      "mobile-small": {
+        "width": 320,
+        "height": 900
+      },
+      "mobile-large": {
+        "width": 430,
+        "height": 932
+      },
+      "tablet": {
+        "width": 768,
+        "height": 1024
+      },
+      "desktop-narrow": {
+        "width": 1024,
+        "height": 768
+      }
+    },
+    "requireDeploymentProbes": true
   }
 }
