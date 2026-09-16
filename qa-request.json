@@ -1,12 +1,12 @@
 {
-  "requestId": "live-trackers-cta-redesign-2026-09-15",
+  "requestId": "home-live-first-paint-gate-2026-09-15",
   "target": "hipdiscovery",
   "path": "/",
-  "selector": ".ht-trackers",
+  "selector": "#hero-takeover",
   "deploymentProbes": [
     {
       "path": "/css/pages/home.css",
-      "gitBlobSha": "48de7f10411188dd3a8f8ebd24d7288393586469"
+      "gitBlobSha": "c65bbeeae5e352df632849ee914c0eff40ecbcd0"
     }
   ],
   "viewports": [
