@@ -1,12 +1,16 @@
 {
-  "requestId": "home-fit-short-desktop-final2-2026-09-15",
+  "requestId": "twitchdrops-review-2026-09-15",
   "target": "hipdiscovery",
-  "path": "/",
-  "selector": ".hero-games",
+  "path": "/twitchdrops",
+  "selector": "#td-watch-grid",
   "deploymentProbes": [
     {
-      "path": "/css/pages/home.css",
-      "gitBlobSha": "ba4a18abe7d43a8cf8f8f80c01cffe6476165c21"
+      "path": "/assets/twitchdrops-bundle-v50.css",
+      "gitBlobSha": "ecf090708267affcf1523d9cc416956d72f5e7f4"
+    },
+    {
+      "path": "/assets/twitchdrops-v3.js",
+      "gitBlobSha": "7b806eec14a641c2dcc3996b9314fa8e37ae93a7"
     }
   ],
   "viewports": [
@@ -16,5 +20,5 @@
     "mobile-small"
   ],
   "fullPage": false,
-  "waitMs": 700
+  "waitMs": 900
 }
