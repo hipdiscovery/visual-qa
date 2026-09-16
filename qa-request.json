@@ -1,11 +1,11 @@
 {
-  "requestId": "site-audit-faq-final-2026-09-16",
+  "requestId": "site-audit-press-final-2026-09-16",
   "target": "hipdiscovery",
-  "path": "/faq",
+  "path": "/press",
   "deploymentProbes": [
     {
-      "path": "/css/pages/faq.css",
-      "gitBlobSha": "e88d74da9dfe48c5fbeda35d1cca4908d566cc97"
+      "path": "/css/pages/press.css",
+      "gitBlobSha": "fe614ae66433ec9b3e6357c8141ed83a5965f27b"
     }
   ],
   "viewports": [
