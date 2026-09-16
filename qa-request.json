@@ -1,11 +1,11 @@
 {
-  "requestId": "site-audit-press-final-2026-09-16",
+  "requestId": "site-audit-whats-new-final-2026-09-16",
   "target": "hipdiscovery",
-  "path": "/press",
+  "path": "/whats-new",
   "deploymentProbes": [
     {
-      "path": "/css/pages/press.css",
-      "gitBlobSha": "fe614ae66433ec9b3e6357c8141ed83a5965f27b"
+      "path": "/css/pages/whats-new.css",
+      "gitBlobSha": "c74404dfb50e63f8c42ba95ba597f387fb49adcf"
     }
   ],
   "viewports": [
@@ -15,5 +15,5 @@
     "mobile-small"
   ],
   "fullPage": true,
-  "waitMs": 700
+  "waitMs": 1000
 }
