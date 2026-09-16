@@ -1,30 +1,18 @@
 {
-  "requestId": "community-leaderboard-race-cards-final-2026-09-16",
+  "requestId": "community-leaderboard-overflow-diagnostic-2026-09-16",
   "target": "hipdiscovery",
   "path": "/supporters",
-  "selector": ".sup-leaderboard-shell .sup-main",
+  "selector": "body",
   "deploymentProbes": [
-    {
-      "path": "/css/pages/supporters.css",
-      "gitBlobSha": "7ab2358fb15b6d3c83771d1752d4b004194021e2"
-    },
     {
       "path": "/styles.css",
       "gitBlobSha": "2849f6eb58f95c9f6aada89ead722cc7c299f1ff"
-    },
-    {
-      "path": "/js/pages/supporters.js",
-      "gitBlobSha": "99fc44f1e54ee9eb28bde9a81418ecb655fea9b7"
     }
   ],
   "viewports": [
-    "desktop-owner",
-    "desktop-compact",
-    "desktop-narrow",
-    "tablet",
     "mobile",
     "mobile-small"
   ],
-  "fullPage": true,
-  "waitMs": 900
+  "fullPage": false,
+  "waitMs": 500
 }
