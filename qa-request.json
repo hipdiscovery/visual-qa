@@ -1,19 +1,17 @@
 {
-  "requestId": "home-live-first-paint-gate-2026-09-15",
+  "requestId": "home-live-first-paint-final-2026-09-15",
   "target": "hipdiscovery",
   "path": "/",
   "selector": "#hero-takeover",
   "deploymentProbes": [
     {
-      "path": "/css/pages/home.css",
-      "gitBlobSha": "c65bbeeae5e352df632849ee914c0eff40ecbcd0"
+      "path": "/",
+      "gitBlobSha": "38157726ad47c5fce45a3402ab2ace1fcc5d8e94"
     }
   ],
   "viewports": [
-    "desktop-owner",
     "desktop-compact",
-    "mobile",
-    "mobile-small"
+    "mobile"
   ],
   "fullPage": false,
   "waitMs": 700
