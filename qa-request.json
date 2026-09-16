@@ -1,16 +1,16 @@
 {
-  "requestId": "community-leaderboard-final-2026-09-16",
+  "requestId": "links-wide-layout-pass-1-2026-09-16",
   "target": "hipdiscovery",
-  "path": "/",
+  "path": "/links",
   "selector": "main",
   "deploymentProbes": [
     {
-      "path": "/index.html",
-      "gitBlobSha": "eb4ce239dfb6f0137fb968e3133bd79c7d0cae8c"
+      "path": "/links.html",
+      "gitBlobSha": "e9ecc5cc2980f4689a3131dcc037ed2e85978f2c"
     },
     {
-      "path": "/css/pages/home.css",
-      "gitBlobSha": "e788bc455d66196829a76e1c2a5db525bd62443a"
+      "path": "/css/pages/links.css",
+      "gitBlobSha": "ca97c0464cf924efbab918daab129d46b4fe98f1"
     }
   ],
   "viewports": [
