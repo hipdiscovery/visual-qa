@@ -1,12 +1,12 @@
 {
-  "requestId": "home-live-first-paint-final-2026-09-15",
+  "requestId": "home-live-first-paint-final2-2026-09-15",
   "target": "hipdiscovery",
   "path": "/",
   "selector": "#hero-takeover",
   "deploymentProbes": [
     {
-      "path": "/",
-      "gitBlobSha": "38157726ad47c5fce45a3402ab2ace1fcc5d8e94"
+      "path": "/css/pages/home.css",
+      "gitBlobSha": "28985493308b3b917ea6e686326f0abc696ed916"
     }
   ],
   "viewports": [
