@@ -1,13 +1,9 @@
 {
-  "requestId": "links-wide-layout-pass-1b-2026-09-16",
+  "requestId": "links-wide-layout-pass-1c-2026-09-16",
   "target": "hipdiscovery",
   "path": "/links",
   "selector": "main",
   "deploymentProbes": [
-    {
-      "path": "/links.html",
-      "gitBlobSha": "e9ecc5cc2980f4689a3131dcc037ed2e85978f2c"
-    },
     {
       "path": "/css/pages/links.css",
       "gitBlobSha": "ca97c0464cf924efbab918daab129d46b4fe98f1"
