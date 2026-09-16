@@ -1,5 +1,5 @@
 {
-  "requestId": "community-leaderboard-race-cards-2026-09-16",
+  "requestId": "community-leaderboard-race-cards-final-2026-09-16",
   "target": "hipdiscovery",
   "path": "/supporters",
   "selector": ".sup-leaderboard-shell .sup-main",
@@ -10,7 +10,7 @@
     },
     {
       "path": "/styles.css",
-      "gitBlobSha": "d4aad5dc034b2fc1da2ee8279e2c759f411e5287"
+      "gitBlobSha": "2849f6eb58f95c9f6aada89ead722cc7c299f1ff"
     },
     {
       "path": "/js/pages/supporters.js",
