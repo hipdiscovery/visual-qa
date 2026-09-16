@@ -1,23 +1,21 @@
 {
-  "requestId": "community-leaderboard-qa-2026-09-16",
+  "requestId": "links-wide-layout-pass-1b-2026-09-16",
   "target": "hipdiscovery",
-  "path": "/supporters",
-  "selector": ".sup-leaderboard-shell",
+  "path": "/links",
+  "selector": "main",
   "deploymentProbes": [
     {
-      "path": "/css/pages/supporters.css",
-      "gitBlobSha": "a68ec09b36f4d9eb007fc993c7d162def2189946"
+      "path": "/links.html",
+      "gitBlobSha": "e9ecc5cc2980f4689a3131dcc037ed2e85978f2c"
     },
     {
-      "path": "/js/pages/supporters.js",
-      "gitBlobSha": "673bc3ec76f3ec6688a55005e6babc2772ddf0c6"
+      "path": "/css/pages/links.css",
+      "gitBlobSha": "ca97c0464cf924efbab918daab129d46b4fe98f1"
     }
   ],
   "viewports": [
     "desktop-owner",
     "desktop-compact",
-    "desktop-narrow",
-    "tablet",
     "mobile",
     "mobile-small"
   ],
