@@ -1,12 +1,12 @@
 {
-  "requestId": "twitchdrops-review-2026-09-15",
+  "requestId": "twitchdrops-review-final-2026-09-15",
   "target": "hipdiscovery",
   "path": "/twitchdrops",
   "selector": "#td-watch-grid",
   "deploymentProbes": [
     {
       "path": "/assets/twitchdrops-bundle-v50.css",
-      "gitBlobSha": "ecf090708267affcf1523d9cc416956d72f5e7f4"
+      "gitBlobSha": "1fcf3f101418ea1e9d4798eadb2a1255843a33a0"
     },
     {
       "path": "/assets/twitchdrops-v3.js",
