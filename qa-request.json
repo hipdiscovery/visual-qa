@@ -1,7 +1,8 @@
 {
-  "requestId": "site-audit-whats-new-final-2026-09-16",
+  "requestId": "whats-new-live-feed-settle-2026-09-16",
   "target": "hipdiscovery",
   "path": "/whats-new",
+  "selector": "#feed",
   "deploymentProbes": [
     {
       "path": "/css/pages/whats-new.css",
@@ -10,10 +11,8 @@
   ],
   "viewports": [
     "desktop-owner",
-    "desktop-compact",
-    "mobile",
     "mobile-small"
   ],
-  "fullPage": true,
-  "waitMs": 1000
+  "fullPage": false,
+  "waitMs": 2500
 }
