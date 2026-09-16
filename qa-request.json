@@ -1,12 +1,12 @@
 {
-  "requestId": "home-whole-page-story-2026-09-16",
+  "requestId": "home-whole-page-story-final-2026-09-16",
   "target": "hipdiscovery",
   "path": "/",
   "selector": "main",
   "deploymentProbes": [
     {
       "path": "/css/pages/home.css",
-      "gitBlobSha": "b2510727ac2fa673e30fbbd088b10d202f154386"
+      "gitBlobSha": "e788bc455d66196829a76e1c2a5db525bd62443a"
     }
   ],
   "viewports": [
