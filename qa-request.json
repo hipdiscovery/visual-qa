@@ -1,11 +1,11 @@
 {
-  "requestId": "twitchdrops-unified-v51-2026-09-16",
+  "requestId": "twitchdrops-unified-v51-final-2026-09-16",
   "target": "hipdiscovery",
   "path": "/twitchdrops",
   "deploymentProbes": [
     {
       "path": "/assets/twitchdrops-bundle-v51.css",
-      "gitBlobSha": "b006e680487143e13bd0686451c7f17c7282fa0f"
+      "gitBlobSha": "85d0dc6bb45f274b05f790bd813a3add4bc95073"
     },
     {
       "path": "/assets/twitchdrops-v4.js",
