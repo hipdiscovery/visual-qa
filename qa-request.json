@@ -1,12 +1,12 @@
 {
-  "requestId": "whats-new-live-feed-settle-2026-09-16",
+  "requestId": "whats-new-progressive-feed-final-2026-09-16",
   "target": "hipdiscovery",
   "path": "/whats-new",
   "selector": "#feed",
   "deploymentProbes": [
     {
       "path": "/css/pages/whats-new.css",
-      "gitBlobSha": "c74404dfb50e63f8c42ba95ba597f387fb49adcf"
+      "gitBlobSha": "2d18b73f39821f6c5a7cfda03a4c0d4115d5facf"
     }
   ],
   "viewports": [
@@ -14,5 +14,5 @@
     "mobile-small"
   ],
   "fullPage": false,
-  "waitMs": 2500
+  "waitMs": 1200
 }
