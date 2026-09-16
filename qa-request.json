@@ -1,21 +1,22 @@
 {
-  "requestId": "home-final-after-copy-fix-2026-09-16",
+  "requestId": "about-premium-editorial-2026-09-16",
   "target": "hipdiscovery",
-  "path": "/",
-  "selector": "main",
+  "path": "/about",
+  "selector": ".about-grid",
   "deploymentProbes": [
     {
-      "path": "/css/pages/home.css",
-      "gitBlobSha": "149c9da39c9a6e09ab07e841f5aa69e7d483860f"
+      "path": "/about.html",
+      "gitBlobSha": "590e9b4ba87467a40efbd8f1fcf4c14bfe471872"
     },
     {
-      "path": "/js/pages/home.js",
-      "gitBlobSha": "d905dcfdfb7b1648088ae05d4a089cd85a0d8ea5"
+      "path": "/css/pages/about.css",
+      "gitBlobSha": "f5a5bac2f8d7359c5a3544462be19f85d097dbb9"
     }
   ],
   "viewports": [
     "desktop-compact",
-    "mobile"
+    "mobile",
+    "mobile-small"
   ],
   "fullPage": true,
   "waitMs": 900
