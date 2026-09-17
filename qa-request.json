@@ -1,5 +1,5 @@
 {
-  "requestId": "ai-updates-post-isolation-check-2026-09-17-2252z",
+  "requestId": "ai-updates-post-isolation-check-2-2026-09-17",
   "target": "hipdiscovery",
   "path": "/api/aiupdates",
   "deploymentProbes": [
@@ -12,5 +12,5 @@
     "desktop-owner"
   ],
   "fullPage": true,
-  "waitMs": 500
+  "waitMs": 1000
 }
