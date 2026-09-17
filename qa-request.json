@@ -1,5 +1,5 @@
 {
-  "requestId": "ai-updates-public-api-state-2026-09-17",
+  "requestId": "ai-updates-post-isolation-check-2026-09-17-2252z",
   "target": "hipdiscovery",
   "path": "/api/aiupdates",
   "deploymentProbes": [
