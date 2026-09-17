@@ -1,18 +1,24 @@
 {
-  "requestId": "whats-new-progressive-feed-final-2026-09-16",
+  "requestId": "ai-updates-nav-discovery-2026-09-17",
   "target": "hipdiscovery",
-  "path": "/whats-new",
-  "selector": "#feed",
+  "path": "/aiupdates",
+  "selector": ".aiu-hero",
   "deploymentProbes": [
     {
-      "path": "/css/pages/whats-new.css",
-      "gitBlobSha": "2d18b73f39821f6c5a7cfda03a4c0d4115d5facf"
+      "path": "/site.js",
+      "gitBlobSha": "39b62b99fd3533ef43015fdf7f89b396a79a67d0"
+    },
+    {
+      "path": "/assets/aiupdates.js",
+      "gitBlobSha": "0febbac9145b397cf94ba66b5d7e7d04499d706b"
     }
   ],
   "viewports": [
     "desktop-owner",
+    "desktop-compact",
+    "mobile",
     "mobile-small"
   ],
   "fullPage": false,
-  "waitMs": 1200
+  "waitMs": 1500
 }
