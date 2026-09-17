@@ -1,8 +1,8 @@
 {
-  "requestId": "ai-updates-nav-discovery-2026-09-17",
+  "requestId": "ai-updates-source-health-2026-09-17",
   "target": "hipdiscovery",
   "path": "/aiupdates",
-  "selector": ".aiu-hero",
+  "selector": ".aiu-source-grid",
   "deploymentProbes": [
     {
       "path": "/site.js",
@@ -14,11 +14,8 @@
     }
   ],
   "viewports": [
-    "desktop-owner",
-    "desktop-compact",
-    "mobile",
-    "mobile-small"
+    "desktop-owner"
   ],
   "fullPage": false,
-  "waitMs": 1500
+  "waitMs": 1200
 }
