@@ -1,23 +1,17 @@
 {
-  "requestId": "ai-updates-ui-final-2026-09-18-1155ct",
+  "requestId": "og-v5-render-2026-09-18",
   "target": "hipdiscovery",
-  "path": "/aiupdates",
+  "path": "/og-card-preview-20260918.html",
+  "selector": "#cards",
   "deploymentProbes": [
     {
-      "path": "/assets/aiupdates.js",
-      "gitBlobSha": "27a1ea63f87a614365c7044438a2c48dc21a17f2"
-    },
-    {
-      "path": "/assets/aiupdates.css",
-      "gitBlobSha": "0058b0ec8c756409e763f13278296611f429a37c"
+      "path": "/og-card-preview-20260918.html",
+      "gitBlobSha": "6b8575038e5b838cf4d126f9ef4b7d1670c0cf26"
     }
   ],
   "viewports": [
-    "desktop-owner",
-    "desktop-compact",
-    "mobile",
-    "mobile-small"
+    "desktop-owner"
   ],
   "fullPage": false,
-  "waitMs": 1200
+  "waitMs": 700
 }
