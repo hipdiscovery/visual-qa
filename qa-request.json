@@ -1,7 +1,7 @@
 {
-  "requestId": "ai-updates-30-day-api-2026-09-18",
+  "requestId": "ai-updates-30-day-api-retry-2026-09-18",
   "target": "hipdiscovery",
-  "path": "/api/aiupdates?limit=150",
+  "path": "/api/aiupdates",
   "deploymentProbes": [
     {
       "path": "/assets/aiupdates.js",
