@@ -1,7 +1,7 @@
 {
-  "requestId": "premium-cyan-twitchdrops-2026-09-18",
+  "requestId": "premium-cyan-emotes-2026-09-18",
   "target": "hipdiscovery",
-  "path": "/twitchdrops",
+  "path": "/emotes",
   "deploymentProbes": [
     {
       "path": "/styles.css",
