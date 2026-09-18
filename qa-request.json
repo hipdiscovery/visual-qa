@@ -1,20 +1,27 @@
 {
-  "requestId": "ai-updates-mobile-platform-header-final-2026-09-18",
+  "requestId": "premium-cyan-ai-updates-2026-09-18",
   "target": "hipdiscovery",
   "path": "/aiupdates",
   "deploymentProbes": [
     {
-      "path": "/assets/aiupdates.js",
-      "gitBlobSha": "5b3b9dc72c9f8850144d03e0fc1e0be9562804df"
+      "path": "/styles.css",
+      "gitBlobSha": "065a7e49b12a72f67fd972a017c909f508e81871"
     },
     {
       "path": "/assets/aiupdates.css",
-      "gitBlobSha": "1826cdde593bb9beb18be205399929e479136075"
+      "gitBlobSha": "9c4e4eed2ef0cc68a8fad76b08a7a159bff35a4b"
+    },
+    {
+      "path": "/assets/aiupdates.js",
+      "gitBlobSha": "947b39ec0b71f4fcb4158c54c1cb3fb784572376"
     }
   ],
   "viewports": [
+    "desktop-owner",
+    "desktop-compact",
+    "mobile",
     "mobile-small"
   ],
   "fullPage": false,
-  "waitMs": 1200
+  "waitMs": 1400
 }
