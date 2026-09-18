@@ -1,16 +1,21 @@
 {
-  "requestId": "ai-updates-post-perplexity-deploy-check-2026-09-18",
+  "requestId": "ai-updates-30-day-ui-2026-09-18",
   "target": "hipdiscovery",
-  "path": "/api/aiupdates",
+  "path": "/aiupdates",
   "deploymentProbes": [
     {
       "path": "/assets/aiupdates.js",
-      "gitBlobSha": "6d65b9fcf77a701910d9fa8bf811fd314a1faee1"
+      "gitBlobSha": "809f772222b8ae47ad2a746ea367e77ba73ceb7e"
+    },
+    {
+      "path": "/assets/aiupdates.css",
+      "gitBlobSha": "a3ac788156b3aea666fcbd56240fbfdcb904c63c"
     }
   ],
   "viewports": [
-    "desktop-owner"
+    "desktop-owner",
+    "mobile-small"
   ],
   "fullPage": true,
-  "waitMs": 900
+  "waitMs": 1400
 }
