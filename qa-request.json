@@ -1,12 +1,12 @@
 {
-  "requestId": "site-audit-fortnite-alerts-current-2026-09-18",
+  "requestId": "site-audit-twitch-alerts-current-2026-09-18",
   "target": "hipdiscovery",
-  "path": "/fortniteitemshop",
-  "selector": ".shop-code-act",
+  "path": "/twitchdrops",
+  "selector": ".td4-alerts",
   "deploymentProbes": [
     {
-      "path": "/css/pages/fortniteshop.css",
-      "gitBlobSha": "97e9f62859cb3841cc5cdd946f648ed2e0d902af"
+      "path": "/css/pages/twitchdrops.css",
+      "gitBlobSha": "fb78c62823677de069cf67f9cc9d55e087dd8e4a"
     }
   ],
   "viewports": [
