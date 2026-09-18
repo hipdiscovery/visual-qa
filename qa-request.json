@@ -1,7 +1,7 @@
 {
-  "requestId": "premium-cyan-home-2026-09-18",
+  "requestId": "premium-cyan-watch-2026-09-18",
   "target": "hipdiscovery",
-  "path": "/",
+  "path": "/watch",
   "deploymentProbes": [
     {
       "path": "/styles.css",
