@@ -1,16 +1,23 @@
 {
-  "requestId": "ai-updates-source-health-2026-09-18-1135ct",
+  "requestId": "ai-updates-ui-final-2026-09-18-1155ct",
   "target": "hipdiscovery",
-  "path": "/api/aiupdates",
+  "path": "/aiupdates",
   "deploymentProbes": [
     {
       "path": "/assets/aiupdates.js",
-      "gitBlobSha": "0febbac9145b397cf94ba66b5d7e7d04499d706b"
+      "gitBlobSha": "27a1ea63f87a614365c7044438a2c48dc21a17f2"
+    },
+    {
+      "path": "/assets/aiupdates.css",
+      "gitBlobSha": "0058b0ec8c756409e763f13278296611f429a37c"
     }
   ],
   "viewports": [
-    "desktop-owner"
+    "desktop-owner",
+    "desktop-compact",
+    "mobile",
+    "mobile-small"
   ],
-  "fullPage": true,
-  "waitMs": 800
+  "fullPage": false,
+  "waitMs": 1200
 }
