@@ -1,24 +1,11 @@
 {
-  "requestId": "home-final-ui-audit-2026-09-18",
+  "requestId": "site-audit-ai-updates-current-2026-09-18",
   "target": "hipdiscovery",
-  "path": "/",
-  "selector": "#stream",
+  "path": "/aiupdates",
   "deploymentProbes": [
     {
-      "path": "/styles.css",
-      "gitBlobSha": "55fca9511503fec745cbcb7a6c263f066da514fe"
-    },
-    {
-      "path": "/css/pages/home.css",
-      "gitBlobSha": "36921346e15f98acec03ba5fc9a5f58c3f70612d"
-    },
-    {
-      "path": "/site.js",
-      "gitBlobSha": "bd5411adc772174ad21a2bc1c445665f5cd2518e"
-    },
-    {
-      "path": "/js/pages/home.js",
-      "gitBlobSha": "69f43821e577bff8ce8b4f5579521d3ced65d219"
+      "path": "/assets/aiupdates.css",
+      "gitBlobSha": "aa159506bf9401cad4bcd80e5e53cc22d32c6b78"
     }
   ],
   "viewports": [
@@ -28,5 +15,5 @@
     "mobile-small"
   ],
   "fullPage": true,
-  "waitMs": 900
+  "waitMs": 1400
 }
