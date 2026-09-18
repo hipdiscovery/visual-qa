@@ -1,5 +1,5 @@
 {
-  "requestId": "ai-updates-post-hotfix-api-2026-09-18",
+  "requestId": "ai-updates-worker-live-check-2026-09-18",
   "target": "hipdiscovery",
   "path": "/api/aiupdates",
   "deploymentProbes": [
