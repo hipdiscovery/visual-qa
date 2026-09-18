@@ -1,5 +1,5 @@
 {
-  "requestId": "premium-cyan-ai-updates-2026-09-18",
+  "requestId": "premium-cyan-ai-updates-final-2026-09-18",
   "target": "hipdiscovery",
   "path": "/aiupdates",
   "deploymentProbes": [
@@ -9,7 +9,7 @@
     },
     {
       "path": "/assets/aiupdates.css",
-      "gitBlobSha": "9c4e4eed2ef0cc68a8fad76b08a7a159bff35a4b"
+      "gitBlobSha": "027de45c302b996b1b6a4a3babf9f90a73b52f79"
     },
     {
       "path": "/assets/aiupdates.js",
@@ -18,10 +18,9 @@
   ],
   "viewports": [
     "desktop-owner",
-    "desktop-compact",
     "mobile",
     "mobile-small"
   ],
   "fullPage": false,
-  "waitMs": 1400
+  "waitMs": 1300
 }
