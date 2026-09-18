@@ -1,7 +1,7 @@
 {
-  "requestId": "ai-updates-source-repair-live-2026-09-17-2135ct",
+  "requestId": "worker-health-after-ai-repair-2026-09-17-2138ct",
   "target": "hipdiscovery",
-  "path": "/api/aiupdates",
+  "path": "/api/health",
   "deploymentProbes": [
     {
       "path": "/site.js",
@@ -12,5 +12,5 @@
     "desktop-owner"
   ],
   "fullPage": true,
-  "waitMs": 1000
+  "waitMs": 500
 }
