@@ -1,15 +1,15 @@
 {
-  "requestId": "ai-updates-visual-top-faq-2026-09-18",
+  "requestId": "ai-updates-hero-platforms-healthless-2026-09-18",
   "target": "hipdiscovery",
   "path": "/aiupdates",
   "deploymentProbes": [
     {
       "path": "/assets/aiupdates.js",
-      "gitBlobSha": "1d4ba4e247d4aafb032b0fda8f302a531673ff51"
+      "gitBlobSha": "5b3b9dc72c9f8850144d03e0fc1e0be9562804df"
     },
     {
       "path": "/assets/aiupdates.css",
-      "gitBlobSha": "a81f8c7054840c269a0a8f6f71551a76b60b2bbd"
+      "gitBlobSha": "0170e13081ab9f64e62687431255328ab41167f6"
     }
   ],
   "viewports": [
@@ -17,5 +17,5 @@
     "mobile-small"
   ],
   "fullPage": true,
-  "waitMs": 1300
+  "waitMs": 1400
 }
