@@ -1,7 +1,7 @@
 {
-  "requestId": "ai-updates-postdeploy-catchup-2026-09-17-2141ct",
+  "requestId": "d1-crosscheck-twitchdrops-2026-09-17-2143ct",
   "target": "hipdiscovery",
-  "path": "/api/aiupdates",
+  "path": "/api/twitchdrops",
   "deploymentProbes": [
     {
       "path": "/site.js",
@@ -12,5 +12,5 @@
     "desktop-owner"
   ],
   "fullPage": true,
-  "waitMs": 750
+  "waitMs": 500
 }
