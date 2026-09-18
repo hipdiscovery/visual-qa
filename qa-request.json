@@ -1,5 +1,5 @@
 {
-  "requestId": "ai-updates-backend-curation-check-2026-09-18",
+  "requestId": "ai-updates-perplexity-fallback-check-2026-09-18",
   "target": "hipdiscovery",
   "path": "/api/aiupdates",
   "deploymentProbes": [
@@ -12,5 +12,5 @@
     "desktop-owner"
   ],
   "fullPage": true,
-  "waitMs": 700
+  "waitMs": 900
 }
