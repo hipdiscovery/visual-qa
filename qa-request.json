@@ -1,5 +1,5 @@
 {
-  "requestId": "home-full-ui-audit-2026-09-18",
+  "requestId": "home-final-ui-audit-2026-09-18",
   "target": "hipdiscovery",
   "path": "/",
   "selector": "#stream",
@@ -10,7 +10,7 @@
     },
     {
       "path": "/css/pages/home.css",
-      "gitBlobSha": "9dd5e31702ca98437b32d431f8075990f1be436d"
+      "gitBlobSha": "36921346e15f98acec03ba5fc9a5f58c3f70612d"
     },
     {
       "path": "/site.js",
