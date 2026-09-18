@@ -1,15 +1,15 @@
 {
-  "requestId": "ai-updates-final-30day-ui-2026-09-18",
+  "requestId": "ai-updates-visual-top-faq-2026-09-18",
   "target": "hipdiscovery",
   "path": "/aiupdates",
   "deploymentProbes": [
     {
       "path": "/assets/aiupdates.js",
-      "gitBlobSha": "809f772222b8ae47ad2a746ea367e77ba73ceb7e"
+      "gitBlobSha": "1d4ba4e247d4aafb032b0fda8f302a531673ff51"
     },
     {
       "path": "/assets/aiupdates.css",
-      "gitBlobSha": "a3ac788156b3aea666fcbd56240fbfdcb904c63c"
+      "gitBlobSha": "a81f8c7054840c269a0a8f6f71551a76b60b2bbd"
     }
   ],
   "viewports": [
@@ -17,5 +17,5 @@
     "mobile-small"
   ],
   "fullPage": true,
-  "waitMs": 1400
+  "waitMs": 1300
 }
