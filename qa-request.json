@@ -1,7 +1,7 @@
 {
-  "requestId": "premium-cyan-freegames-2026-09-18",
+  "requestId": "premium-cyan-fortniteshop-2026-09-18",
   "target": "hipdiscovery",
-  "path": "/freegames",
+  "path": "/fortniteshop",
   "deploymentProbes": [
     {
       "path": "/styles.css",
