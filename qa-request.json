@@ -1,7 +1,7 @@
 {
-  "requestId": "premium-cyan-schedule-2026-09-18",
+  "requestId": "premium-cyan-links-2026-09-18",
   "target": "hipdiscovery",
-  "path": "/schedule",
+  "path": "/links",
   "deploymentProbes": [
     {
       "path": "/styles.css",
