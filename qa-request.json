@@ -1,17 +1,16 @@
 {
-  "requestId": "og-v5-render-2026-09-18",
+  "requestId": "ai-updates-backend-curation-check-2026-09-18",
   "target": "hipdiscovery",
-  "path": "/og-card-preview-20260918.html",
-  "selector": "#cards",
+  "path": "/api/aiupdates",
   "deploymentProbes": [
     {
-      "path": "/og-card-preview-20260918.html",
-      "gitBlobSha": "6b8575038e5b838cf4d126f9ef4b7d1670c0cf26"
+      "path": "/assets/aiupdates.js",
+      "gitBlobSha": "6d65b9fcf77a701910d9fa8bf811fd314a1faee1"
     }
   ],
   "viewports": [
     "desktop-owner"
   ],
-  "fullPage": false,
+  "fullPage": true,
   "waitMs": 700
 }
