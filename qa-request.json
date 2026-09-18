@@ -1,7 +1,7 @@
 {
-  "requestId": "premium-cyan-fortniteshop-2026-09-18",
+  "requestId": "premium-cyan-twitchdrops-2026-09-18",
   "target": "hipdiscovery",
-  "path": "/fortniteshop",
+  "path": "/twitchdrops",
   "deploymentProbes": [
     {
       "path": "/styles.css",
