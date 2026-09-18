@@ -1,7 +1,7 @@
 {
-  "requestId": "worker-health-after-ai-repair-2026-09-17-2138ct",
+  "requestId": "ai-updates-postdeploy-catchup-2026-09-17-2141ct",
   "target": "hipdiscovery",
-  "path": "/api/health",
+  "path": "/api/aiupdates",
   "deploymentProbes": [
     {
       "path": "/site.js",
@@ -12,5 +12,5 @@
     "desktop-owner"
   ],
   "fullPage": true,
-  "waitMs": 500
+  "waitMs": 750
 }
