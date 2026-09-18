@@ -1,7 +1,7 @@
 {
-  "requestId": "premium-cyan-emotes-2026-09-18",
+  "requestId": "premium-cyan-home-final-2026-09-18",
   "target": "hipdiscovery",
-  "path": "/emotes",
+  "path": "/",
   "deploymentProbes": [
     {
       "path": "/styles.css",
@@ -13,5 +13,5 @@
     "mobile"
   ],
   "fullPage": false,
-  "waitMs": 1000
+  "waitMs": 1200
 }
