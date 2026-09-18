@@ -1,11 +1,12 @@
 {
-  "requestId": "site-audit-ai-updates-current-2026-09-18",
+  "requestId": "site-audit-fortnite-alerts-current-2026-09-18",
   "target": "hipdiscovery",
-  "path": "/aiupdates",
+  "path": "/fortniteitemshop",
+  "selector": ".shop-code-act",
   "deploymentProbes": [
     {
-      "path": "/assets/aiupdates.css",
-      "gitBlobSha": "aa159506bf9401cad4bcd80e5e53cc22d32c6b78"
+      "path": "/css/pages/fortniteshop.css",
+      "gitBlobSha": "97e9f62859cb3841cc5cdd946f648ed2e0d902af"
     }
   ],
   "viewports": [
@@ -14,6 +15,6 @@
     "mobile",
     "mobile-small"
   ],
-  "fullPage": true,
-  "waitMs": 1400
+  "fullPage": false,
+  "waitMs": 1300
 }
