@@ -1,16 +1,21 @@
 {
-  "requestId": "ai-updates-worker-live-check-2026-09-18",
+  "requestId": "ai-updates-final-30day-ui-2026-09-18",
   "target": "hipdiscovery",
-  "path": "/api/aiupdates",
+  "path": "/aiupdates",
   "deploymentProbes": [
     {
       "path": "/assets/aiupdates.js",
       "gitBlobSha": "809f772222b8ae47ad2a746ea367e77ba73ceb7e"
+    },
+    {
+      "path": "/assets/aiupdates.css",
+      "gitBlobSha": "a3ac788156b3aea666fcbd56240fbfdcb904c63c"
     }
   ],
   "viewports": [
-    "desktop-owner"
+    "desktop-owner",
+    "mobile-small"
   ],
   "fullPage": true,
-  "waitMs": 1000
+  "waitMs": 1400
 }
