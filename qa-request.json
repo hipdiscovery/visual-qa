@@ -1,7 +1,7 @@
 {
-  "requestId": "premium-cyan-links-2026-09-18",
+  "requestId": "premium-cyan-supporters-2026-09-18",
   "target": "hipdiscovery",
-  "path": "/links",
+  "path": "/supporters",
   "deploymentProbes": [
     {
       "path": "/styles.css",
