@@ -1,5 +1,5 @@
 {
-  "requestId": "ai-updates-hero-platforms-healthless-2026-09-18",
+  "requestId": "ai-updates-mobile-platform-header-final-2026-09-18",
   "target": "hipdiscovery",
   "path": "/aiupdates",
   "deploymentProbes": [
@@ -9,13 +9,12 @@
     },
     {
       "path": "/assets/aiupdates.css",
-      "gitBlobSha": "0170e13081ab9f64e62687431255328ab41167f6"
+      "gitBlobSha": "1826cdde593bb9beb18be205399929e479136075"
     }
   ],
   "viewports": [
-    "desktop-owner",
     "mobile-small"
   ],
-  "fullPage": true,
-  "waitMs": 1400
+  "fullPage": false,
+  "waitMs": 1200
 }
