@@ -1,7 +1,7 @@
 {
-  "requestId": "premium-cyan-supporters-2026-09-18",
+  "requestId": "premium-cyan-freegames-2026-09-18",
   "target": "hipdiscovery",
-  "path": "/supporters",
+  "path": "/freegames",
   "deploymentProbes": [
     {
       "path": "/styles.css",
