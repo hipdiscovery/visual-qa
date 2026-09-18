@@ -1,20 +1,16 @@
 {
-  "requestId": "site-audit-twitch-alerts-current-2026-09-18",
+  "requestId": "ai-updates-source-health-2026-09-18-1135ct",
   "target": "hipdiscovery",
-  "path": "/twitchdrops",
-  "selector": ".td4-alerts",
+  "path": "/api/aiupdates",
   "deploymentProbes": [
     {
-      "path": "/css/pages/twitchdrops.css",
-      "gitBlobSha": "fb78c62823677de069cf67f9cc9d55e087dd8e4a"
+      "path": "/assets/aiupdates.js",
+      "gitBlobSha": "0febbac9145b397cf94ba66b5d7e7d04499d706b"
     }
   ],
   "viewports": [
-    "desktop-owner",
-    "desktop-compact",
-    "mobile",
-    "mobile-small"
+    "desktop-owner"
   ],
-  "fullPage": false,
-  "waitMs": 1300
+  "fullPage": true,
+  "waitMs": 800
 }
