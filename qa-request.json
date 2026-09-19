@@ -1,5 +1,5 @@
 {
-  "requestId": "ai-premium-editorial-20260919",
+  "requestId": "ai-premium-editorial-css-probe-20260919",
   "target": "hipdiscovery",
   "path": "/aiupdates",
   "selector": ".aiu-feed",
@@ -7,10 +7,6 @@
     {
       "path": "/assets/aiupdates.css",
       "gitBlobSha": "37442a99f1d19159d99b749b5883ac91876c8368"
-    },
-    {
-      "path": "/aiupdates.html",
-      "gitBlobSha": "51bc77424db2f7bdc43de9466dcdc69c221f9cf1"
     }
   ],
   "viewports": [
