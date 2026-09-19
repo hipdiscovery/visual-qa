@@ -1,21 +1,26 @@
 {
-  "requestId": "premium-cyan-schedule-true-final-2026-09-18",
+  "requestId": "premium-cyan-aiupdates-final-2026-09-18",
   "target": "hipdiscovery",
-  "path": "/schedule",
+  "path": "/aiupdates",
   "deploymentProbes": [
     {
       "path": "/styles.css",
       "gitBlobSha": "6382eb1c78ae83c651a42e12089f7cbae1e0918c"
     },
     {
-      "path": "/css/pages/schedule.css",
-      "gitBlobSha": "2bce2a88d218c1d81234e98d7647e9bbe87dab5a"
+      "path": "/assets/aiupdates.css?v=20260918-7",
+      "gitBlobSha": "027de45c302b996b1b6a4a3babf9f90a73b52f79"
+    },
+    {
+      "path": "/assets/aiupdates.js?v=20260918-7",
+      "gitBlobSha": "947b39ec0b71f4fcb4158c54c1cb3fb784572376"
     }
   ],
   "viewports": [
     "desktop-owner",
-    "mobile"
+    "mobile",
+    "mobile-small"
   ],
   "fullPage": false,
-  "waitMs": 1200
+  "waitMs": 1400
 }
