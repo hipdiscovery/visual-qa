@@ -1,24 +1,12 @@
 {
-  "requestId": "ai-logos-fulltext-20260919",
+  "requestId": "ai-readable-final-20260919",
   "target": "hipdiscovery",
   "path": "/aiupdates",
   "selector": ".aiu-feed",
   "deploymentProbes": [
     {
       "path": "/assets/aiupdates.css",
-      "gitBlobSha": "c710a301403329ee47dc2558b675f57724fc312d"
-    },
-    {
-      "path": "/assets/aiupdates.js",
-      "gitBlobSha": "a83a8b848113f4ada896f8f0f029349d4e8a6447"
-    },
-    {
-      "path": "/styles.css",
-      "gitBlobSha": "c7447d61c5a5b1d41bd15d023a4ccbb7ab9b222b"
-    },
-    {
-      "path": "/assets/ai-logos/nvidia.svg",
-      "gitBlobSha": "5ebb35a1ef00917c9ddc22b88afc01af7bc08117"
+      "gitBlobSha": "659d9421cc446cc903bdc012282ce67ce3bf1b4d"
     }
   ],
   "viewports": [
@@ -29,5 +17,5 @@
     "mobile-small"
   ],
   "fullPage": false,
-  "waitMs": 1600
+  "waitMs": 1300
 }
