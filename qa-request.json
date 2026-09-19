@@ -1,12 +1,16 @@
 {
-  "requestId": "ai-readable-final-20260919",
+  "requestId": "ai-premium-editorial-20260919",
   "target": "hipdiscovery",
   "path": "/aiupdates",
   "selector": ".aiu-feed",
   "deploymentProbes": [
     {
       "path": "/assets/aiupdates.css",
-      "gitBlobSha": "659d9421cc446cc903bdc012282ce67ce3bf1b4d"
+      "gitBlobSha": "37442a99f1d19159d99b749b5883ac91876c8368"
+    },
+    {
+      "path": "/aiupdates.html",
+      "gitBlobSha": "51bc77424db2f7bdc43de9466dcdc69c221f9cf1"
     }
   ],
   "viewports": [
@@ -17,5 +21,5 @@
     "mobile-small"
   ],
   "fullPage": false,
-  "waitMs": 1300
+  "waitMs": 1500
 }
