@@ -1,8 +1,12 @@
 {
-  "requestId": "premium-cyan-schedule-final-2026-09-18",
+  "requestId": "premium-cyan-schedule-shared-exact-2026-09-18",
   "target": "hipdiscovery",
   "path": "/schedule",
   "deploymentProbes": [
+    {
+      "path": "/styles.css",
+      "gitBlobSha": "065a7e49b12a72f67fd972a017c909f508e81871"
+    },
     {
       "path": "/css/pages/schedule.css",
       "gitBlobSha": "2bce2a88d218c1d81234e98d7647e9bbe87dab5a"
