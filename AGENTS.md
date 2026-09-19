@@ -20,3 +20,11 @@ This is a **public, disposable rendering repo**, not a source-code mirror.
 - Keep deployment probes small and byte-stable. The runner enforces a 5 MiB cap per probe.
 - Do not bypass `qa/policy-check.mjs`. If a policy must change, update the policy and documentation deliberately in the same reviewed change.
 - Preserve the last good artifact when a new run cannot produce a replacement; cleanup belongs after rendering.
+
+## File-level quality checks
+
+- `qa/run.mjs`: check read-only browser navigation, allowlisted targets, viewport capture, deployment-byte probes, request bounds and errors before marking a render pass.
+- `qa/targets.json`, `qa-request.json`: never accept arbitrary destinations, private access tokens or unsafe new targets; test malformed and unexpected route values.
+- `qa/cleanup.mjs`: preserve the last good artifact when a replacement fails; avoid unbounded Actions storage.
+- `qa/policy-check.mjs` and `.github/workflows/visual-qa.yml`: keep minimal permissions, manual execution, bounded short-lived artifacts, and public-only content. Recheck policy on any workflow change.
+- Do not claim screenshots were reviewed if an agent only confirmed that the runner produced files.
