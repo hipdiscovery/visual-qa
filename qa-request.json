@@ -1,25 +1,20 @@
 {
-  "requestId": "premium-cyan-aiupdates-final2-2026-09-18",
+  "requestId": "premium-cyan-freepcgames-final-2026-09-18",
   "target": "hipdiscovery",
-  "path": "/aiupdates",
+  "path": "/freepcgames",
   "deploymentProbes": [
     {
       "path": "/styles.css",
       "gitBlobSha": "6382eb1c78ae83c651a42e12089f7cbae1e0918c"
     },
     {
-      "path": "/assets/aiupdates.css",
-      "gitBlobSha": "027de45c302b996b1b6a4a3babf9f90a73b52f79"
-    },
-    {
-      "path": "/assets/aiupdates.js",
-      "gitBlobSha": "947b39ec0b71f4fcb4158c54c1cb3fb784572376"
+      "path": "/assets/freepcgames-v5.css",
+      "gitBlobSha": "e563d09343b84251bc848033706b27cf5f0ccd56"
     }
   ],
   "viewports": [
     "desktop-owner",
-    "mobile",
-    "mobile-small"
+    "mobile"
   ],
   "fullPage": false,
   "waitMs": 1400
