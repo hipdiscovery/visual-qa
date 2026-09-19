@@ -1,18 +1,21 @@
 {
-  "requestId": "ai-mobile-density-final-20260919",
+  "requestId": "ai-wider-readable-20260919",
   "target": "hipdiscovery",
   "path": "/aiupdates",
-  "selector": ".aiu-hero-platforms",
+  "selector": ".aiu-feed",
   "deploymentProbes": [
     {
       "path": "/assets/aiupdates.css",
-      "gitBlobSha": "b522ca2f4bfd307f53745d78e4e3604d0881075d"
+      "gitBlobSha": "467448b44540cfe7f06ee096943e927ddb7463d2"
     }
   ],
   "viewports": [
+    "desktop-owner",
+    "desktop-compact",
+    "desktop-narrow",
     "mobile",
     "mobile-small"
   ],
   "fullPage": false,
-  "waitMs": 1200
+  "waitMs": 1500
 }
