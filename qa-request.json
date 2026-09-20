@@ -1,8 +1,8 @@
 {
-  "requestId": "ai-analytics-browser-verification-20260920",
+  "requestId": "ai-filter-viewport-verification-20260920",
   "target": "hipdiscovery",
   "path": "/aiupdates",
-  "selector": ".aiu-feed",
+  "selector": ".aiu-filter-wrap",
   "deploymentProbes": [
     {
       "path": "/assets/aiupdates.css",
@@ -22,7 +22,6 @@
     }
   ],
   "viewports": [
-    "desktop-owner",
     "desktop-compact",
     "desktop-narrow",
     "mobile",
