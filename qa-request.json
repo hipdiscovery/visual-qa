@@ -1,12 +1,20 @@
 {
-  "requestId": "home-narrow-clipping-20260920",
+  "requestId": "ai-logos-title-polish-20260920",
   "target": "hipdiscovery",
-  "path": "/",
-  "selector": ".hero",
+  "path": "/aiupdates",
+  "selector": ".aiu-feed",
   "deploymentProbes": [
     {
-      "path": "/css/pages/home.css",
-      "gitBlobSha": "ddca75ca4cb55fed4abeca3c02f5b9215d971a45"
+      "path": "/assets/aiupdates.css",
+      "gitBlobSha": "5d2110e602816a18c00c555a67097c72290cd863"
+    },
+    {
+      "path": "/assets/aiupdates.js",
+      "gitBlobSha": "af379962be329de509fa4ed584def9ae87bdde28"
+    },
+    {
+      "path": "/assets/ai-logos/kiro.svg",
+      "gitBlobSha": "4593811126dbd043610c80ebae4edc4049a354d2"
     }
   ],
   "viewports": [
@@ -17,5 +25,5 @@
     "mobile-small"
   ],
   "fullPage": false,
-  "waitMs": 1200
+  "waitMs": 1400
 }
