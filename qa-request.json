@@ -1,27 +1,24 @@
 {
-  "requestId": "ai-filter-viewport-verification-20260920",
+  "requestId": "home-editorial-rebuild-20260920",
   "target": "hipdiscovery",
-  "path": "/aiupdates",
-  "selector": ".aiu-filter-wrap",
+  "path": "/",
+  "selector": ".home-rotation",
   "deploymentProbes": [
     {
-      "path": "/assets/aiupdates.css",
-      "gitBlobSha": "5d2110e602816a18c00c555a67097c72290cd863"
+      "path": "/css/pages/home.css",
+      "gitBlobSha": "7af4e9c3a69bb914309dbfdedd8a675f9dbe14ab"
     },
     {
-      "path": "/assets/aiupdates.js",
-      "gitBlobSha": "af379962be329de509fa4ed584def9ae87bdde28"
+      "path": "/styles.css",
+      "gitBlobSha": "d9d171eb4d0308f277130794bea7e448ca29770a"
     },
     {
-      "path": "/assets/ai-logos/kiro.svg",
-      "gitBlobSha": "4593811126dbd043610c80ebae4edc4049a354d2"
-    },
-    {
-      "path": "/js/analytics.js",
-      "gitBlobSha": "984f9df6ce7121b7291d64f109cd90b9cf2834c8"
+      "path": "/site.js",
+      "gitBlobSha": "c7b2cad7e8b8f01edf74e68e8a49141f33a8197e"
     }
   ],
   "viewports": [
+    "desktop-owner",
     "desktop-compact",
     "desktop-narrow",
     "mobile",
