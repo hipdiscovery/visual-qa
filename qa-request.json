@@ -1,19 +1,24 @@
 {
-  "requestId": "home-final-record-320px-20260920",
+  "requestId": "home-original-restore-20260920",
   "target": "hipdiscovery",
   "path": "/",
-  "selector": "#rec-lead",
+  "selector": ".hero-games",
   "deploymentProbes": [
     {
       "path": "/css/pages/home.css",
-      "gitBlobSha": "727c12d4820e0b223f229ce1078ec57cd28e5b57"
+      "gitBlobSha": "7cf3d6ace33cd351bb3948c5f334e2d0bd3d55c4"
+    },
+    {
+      "path": "/styles.css",
+      "gitBlobSha": "09e2a56b8fd2468ce32e371db1fe4c6881a281bf"
     }
   ],
   "viewports": [
+    "desktop-owner",
     "desktop-compact",
     "mobile",
     "mobile-small"
   ],
   "fullPage": false,
-  "waitMs": 1200
+  "waitMs": 1000
 }
