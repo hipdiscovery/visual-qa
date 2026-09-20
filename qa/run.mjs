@@ -696,7 +696,7 @@ for (const result of report.results) {
   lines.push(`- Broken visible images: ${result.diagnostics.brokenImages.length}`);
   lines.push(`- Clipping candidates: ${result.diagnostics.clipped.length}`);
   lines.push(`- Content clipping risks: ${result.diagnostics.clippingRisks.length}`);
-  lines.push(`- Edge collisions: ${result.diagnostics.edgeCollisions.length}`);
+  lines.push(`- Edge collisions: ${result.diagnostics.edgeCollisions.length} (intentional horizontal-scroll children excluded: ${result.diagnostics.intentionalScrollChildren || 0})`);
   lines.push(`- Tiny interactive targets: ${result.diagnostics.tinyInteractive.length}`);
   lines.push(`- Heavily upscaled images: ${result.diagnostics.upscaledImages.length}`);
   lines.push(`- Visible images missing alt: ${result.diagnostics.missingAltImages.length}`);
