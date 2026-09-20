@@ -21,6 +21,19 @@ This is a **public, disposable rendering repo**, not a source-code mirror.
 - Do not bypass `qa/policy-check.mjs`. If a policy must change, update the policy and documentation deliberately in the same reviewed change.
 - Preserve the last good artifact when a new run cannot produce a replacement; cleanup belongs after rendering.
 
+## Honest horizontal-scroll diagnostics
+
+- A deliberately scrollable horizontal rail can place children partly beyond
+  the viewport; flag those as **intentional scroll children**, not actionable
+  viewport-edge collisions, only when a real scrollable overflow-X ancestor
+  is itself contained in the viewport. Preserve genuine page/parent overflow,
+  hidden/clip risks, broken images and JavaScript errors as separate findings.
+- Read the classified counts **and** inspect the actual browser screenshot,
+  including visible/active chips and mobile touch/keyboard accessibility.
+  A quiet edge-collision count does not prove the composition looks good.
+  Do not blanket-ignore filter classes or all offscreen controls: other
+  pages and broken containers still need warnings.
+
 ## File-level quality checks
 
 - `qa/run.mjs`: check read-only browser navigation, allowlisted targets, viewport capture, deployment-byte probes, request bounds and errors before marking a render pass.
