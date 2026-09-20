@@ -1,12 +1,12 @@
 {
-  "requestId": "ai-wider-readable-20260919",
+  "requestId": "home-hierarchy-20260920",
   "target": "hipdiscovery",
-  "path": "/aiupdates",
-  "selector": ".aiu-feed",
+  "path": "/",
+  "selector": ".hero",
   "deploymentProbes": [
     {
-      "path": "/assets/aiupdates.css",
-      "gitBlobSha": "467448b44540cfe7f06ee096943e927ddb7463d2"
+      "path": "/css/pages/home.css",
+      "gitBlobSha": "d6b7388dbbc6fb4eef662b66244aff25de31102f"
     }
   ],
   "viewports": [
@@ -17,5 +17,5 @@
     "mobile-small"
   ],
   "fullPage": false,
-  "waitMs": 1500
+  "waitMs": 1200
 }
