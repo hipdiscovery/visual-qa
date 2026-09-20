@@ -1,16 +1,12 @@
 {
-  "requestId": "home-editorial-rebuild-20260920",
+  "requestId": "home-editorial-container-fixed-20260920",
   "target": "hipdiscovery",
   "path": "/",
   "selector": ".home-rotation",
   "deploymentProbes": [
     {
       "path": "/css/pages/home.css",
-      "gitBlobSha": "7af4e9c3a69bb914309dbfdedd8a675f9dbe14ab"
-    },
-    {
-      "path": "/styles.css",
-      "gitBlobSha": "d9d171eb4d0308f277130794bea7e448ca29770a"
+      "gitBlobSha": "bbc0aa2959f60a42346bb2aa57a118c975263cfe"
     },
     {
       "path": "/site.js",
