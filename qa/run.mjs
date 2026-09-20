@@ -4,6 +4,7 @@ import net from "node:net";
 import dns from "node:dns/promises";
 import { createHash } from "node:crypto";
 import { chromium } from "playwright-core";
+import { pageErrorIssues } from "./diagnostic-policy.mjs";
 
 const ROOT = process.cwd();
 const OUT = path.join(ROOT, "out");
@@ -604,6 +605,7 @@ try {
       });
     }
 
+    criticalIssues.push(...pageErrorIssues(pageErrors));
     const warnings = [...criticalIssues];
     if (diagnostics.horizontalOverflowPx > 2) warnings.push(`horizontal overflow: ${diagnostics.horizontalOverflowPx}px`);
     if (diagnostics.edgeCollisions.length) warnings.push(`viewport edge collisions: ${diagnostics.edgeCollisions.length}`);
