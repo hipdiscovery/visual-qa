@@ -4,7 +4,7 @@ import net from "node:net";
 import dns from "node:dns/promises";
 import { createHash } from "node:crypto";
 import { chromium } from "playwright-core";
-import { pageErrorIssues } from "./diagnostic-policy.mjs";
+import { pageErrorIssues, classifyEdgeCollisions } from "./diagnostic-policy.mjs";
 
 const ROOT = process.cwd();
 const OUT = path.join(ROOT, "out");
@@ -441,6 +441,20 @@ try {
         const cls = [...el.classList].slice(0, 2).map(v => `.${CSS.escape(v)}`).join("");
         return `${el.tagName.toLowerCase()}${cls}`;
       };
+      // Only dismiss offscreen children of a genuinely scrollable,
+      // viewport-contained horizontal rail. Its OWN overflow, clipped
+      // content and any unrelated viewport collision still get reported.
+      const scrollContainerFor = child => {
+        for (let parent = child.parentElement; parent && parent !== document.documentElement; parent = parent.parentElement) {
+          const over = getComputedStyle(parent).overflowX;
+          if (over !== "auto" && over !== "scroll") continue;
+          if (parent.scrollWidth <= parent.clientWidth + 2) continue;
+          const bounds = parent.getBoundingClientRect();
+          if (bounds.width <= 2 || bounds.left < -2 || bounds.right > innerWidth + 2) continue;
+          return parent;
+        }
+        return null;
+      };
       const root = document.documentElement;
       const body = document.body;
       const all = [...document.querySelectorAll("body *")];
@@ -485,12 +499,14 @@ try {
           }
         }
 
-        if (edgeCollisions.length < 20 && rect.left < innerWidth && rect.right > 0 && (rect.left < -2 || rect.right > innerWidth + 2)) {
+        if (edgeCollisions.length < 100 && rect.left < innerWidth && rect.right > 0 && (rect.left < -2 || rect.right > innerWidth + 2)) {
+          const scrollParent = scrollContainerFor(el);
           edgeCollisions.push({
             node: selectorHint(el),
             left: Math.round(rect.left),
             right: Math.round(rect.right),
-            width: Math.round(rect.width)
+            width: Math.round(rect.width),
+            intentionalHorizontalScroll: Boolean(scrollParent)
           });
         }
 
@@ -605,6 +621,9 @@ try {
       });
     }
 
+    const edgeClass = classifyEdgeCollisions(diagnostics.edgeCollisions);
+    diagnostics.edgeCollisions = edgeClass.actionable.slice(0, 20);
+    diagnostics.intentionalScrollChildren = edgeClass.intentionalScrollChildren;
     criticalIssues.push(...pageErrorIssues(pageErrors));
     const warnings = [...criticalIssues];
     if (diagnostics.horizontalOverflowPx > 2) warnings.push(`horizontal overflow: ${diagnostics.horizontalOverflowPx}px`);
