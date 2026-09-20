@@ -1,25 +1,19 @@
 {
-  "requestId": "home-editorial-container-fixed-20260920",
+  "requestId": "home-final-record-320px-20260920",
   "target": "hipdiscovery",
   "path": "/",
-  "selector": ".home-rotation",
+  "selector": "#rec-lead",
   "deploymentProbes": [
     {
       "path": "/css/pages/home.css",
-      "gitBlobSha": "bbc0aa2959f60a42346bb2aa57a118c975263cfe"
-    },
-    {
-      "path": "/site.js",
-      "gitBlobSha": "c7b2cad7e8b8f01edf74e68e8a49141f33a8197e"
+      "gitBlobSha": "727c12d4820e0b223f229ce1078ec57cd28e5b57"
     }
   ],
   "viewports": [
-    "desktop-owner",
     "desktop-compact",
-    "desktop-narrow",
     "mobile",
     "mobile-small"
   ],
   "fullPage": false,
-  "waitMs": 1400
+  "waitMs": 1200
 }
