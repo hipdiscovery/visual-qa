@@ -1,5 +1,5 @@
 {
-  "requestId": "ai-logos-title-polish-20260920",
+  "requestId": "ai-analytics-browser-verification-20260920",
   "target": "hipdiscovery",
   "path": "/aiupdates",
   "selector": ".aiu-feed",
@@ -15,6 +15,10 @@
     {
       "path": "/assets/ai-logos/kiro.svg",
       "gitBlobSha": "4593811126dbd043610c80ebae4edc4049a354d2"
+    },
+    {
+      "path": "/js/analytics.js",
+      "gitBlobSha": "984f9df6ce7121b7291d64f109cd90b9cf2834c8"
     }
   ],
   "viewports": [
