@@ -1,21 +1,17 @@
 {
-  "requestId": "home-hierarchy-20260920",
+  "requestId": "og-v5-render-20260920",
   "target": "hipdiscovery",
-  "path": "/",
-  "selector": ".hero",
+  "path": "/og-card-preview-20260918.html",
+  "selector": "#cards",
   "deploymentProbes": [
     {
-      "path": "/css/pages/home.css",
-      "gitBlobSha": "d6b7388dbbc6fb4eef662b66244aff25de31102f"
+      "path": "/og-card-preview-20260918.html",
+      "gitBlobSha": "6b8575038e5b838cf4d126f9ef4b7d1670c0cf26"
     }
   ],
   "viewports": [
-    "desktop-owner",
-    "desktop-compact",
-    "desktop-narrow",
-    "mobile",
-    "mobile-small"
+    "desktop-owner"
   ],
   "fullPage": false,
-  "waitMs": 1200
+  "waitMs": 700
 }
