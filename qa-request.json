@@ -1,17 +1,21 @@
 {
-  "requestId": "og-v5-render-20260920",
+  "requestId": "home-narrow-clipping-20260920",
   "target": "hipdiscovery",
-  "path": "/og-card-preview-20260918.html",
-  "selector": "#cards",
+  "path": "/",
+  "selector": ".hero",
   "deploymentProbes": [
     {
-      "path": "/og-card-preview-20260918.html",
-      "gitBlobSha": "6b8575038e5b838cf4d126f9ef4b7d1670c0cf26"
+      "path": "/css/pages/home.css",
+      "gitBlobSha": "ddca75ca4cb55fed4abeca3c02f5b9215d971a45"
     }
   ],
   "viewports": [
-    "desktop-owner"
+    "desktop-owner",
+    "desktop-compact",
+    "desktop-narrow",
+    "mobile",
+    "mobile-small"
   ],
   "fullPage": false,
-  "waitMs": 700
+  "waitMs": 1200
 }
