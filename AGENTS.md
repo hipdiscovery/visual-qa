@@ -41,3 +41,12 @@ This is a **public, disposable rendering repo**, not a source-code mirror.
 - `qa/cleanup.mjs`: preserve the last good artifact when a replacement fails; avoid unbounded Actions storage.
 - `qa/policy-check.mjs` and `.github/workflows/visual-qa.yml`: keep minimal permissions, manual execution, bounded short-lived artifacts, and public-only content. Recheck policy on any workflow change.
 - Do not claim screenshots were reviewed if an agent only confirmed that the runner produced files.
+
+
+## ChatGPT and GitHub connector file-size rules
+
+For handwritten source and tests that agents will routinely inspect or edit, use **30 KiB or 500 lines as a practical upper target**. Before growing a file past either mark, split it along real responsibilities and preserve its public interfaces. Do not split a cohesive feature solely to hit a number. If a safe split would harm the app, keep the file stable, record the exception, and use verified chunks for every connector read.
+
+The GitHub connector supports 1-based `start_line`/`end_line` reads, but its effective response and model-context limits vary and are not published as one reliable file-size ceiling. Never assume a whole-file response is complete. For large files, fetch contiguous chunks of at most 200 lines, include imports/exports and affected callers, verify the chunks cover the required code, then edit from the complete current source. Never replace a file from a truncated response.
+
+Do not apply the size target to generated or minified bundles, vendored dependencies, lockfiles, binary assets, archived records, or captured/generated fixtures. Do not hand-edit generated output when source exists. Avoid enlarging an already oversized authored module; refactor it incrementally when safe, with focused tests and compatibility checks.
