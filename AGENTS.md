@@ -62,3 +62,16 @@ For handwritten source and tests that agents will routinely inspect or edit, use
 The GitHub connector supports 1-based `start_line`/`end_line` reads, but its effective response and model-context limits vary and are not published as one reliable file-size ceiling. Never assume a whole-file response is complete. For large files, fetch contiguous chunks of at most 200 lines, include imports/exports and affected callers, verify the chunks cover the required code, then edit from the complete current source. Never replace a file from a truncated response.
 
 Do not apply the size target to generated or minified bundles, vendored dependencies, lockfiles, binary assets, archived records, or captured/generated fixtures. Do not hand-edit generated output when source exists. Avoid enlarging an already oversized authored module; refactor it incrementally when safe, with focused tests and compatibility checks.
+
+## Metered-usage reporting
+
+When a feature touches a quota, free-tier allowance, rate limit, API-call budget, browser time, storage/database usage, or another metered resource, quantify **Current**, **Change**, **Saved / Added**, **Headroom**, **Cost**, and **Recommendation**. Derive numbers from current code/schedulers and current provider docs; keep meters separate; say **0 invocations saved/added** when only subrequests change; give a formula instead of inventing an unavailable total.
+
+## Research-first, optimize-first engineering
+
+For an unfamiliar API, platform capability, quota, auth flow, scraping surface, SDK, framework, or tool, inspect current repo state, research current authoritative docs and working methods, then test the chosen path against the real target when possible. Prefer official/free structured APIs or events, then stable free structured public sources, then bounded browser/DOM automation; OCR is last. A path that produces no real readings is failed. Optimize for the best reliable result first: minimum recurring calls, no duplicate polling, no paid dependency when a free path works, bounded fallbacks, and newest stable tools only when they improve reliability or efficiency.
+
+## Retirement and dead-code hygiene
+
+When removing a feature, remove everything that exists only for it after any required one-time migration: modules, imports, constants, state, tests, docs, helper scripts, fixtures, comments, UI copy, and scheduler hooks. Search the current tree for old names/symbols/routes/files before calling removal complete. Preserve independently useful shared functionality. Git history is the archive.
+
