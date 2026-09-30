@@ -3,7 +3,7 @@ name: Visual QA
 on:
   push:
     branches:
-      - main
+      - master
     paths:
       - qa-request.json
       - qa/**
