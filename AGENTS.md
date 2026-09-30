@@ -21,6 +21,10 @@ This is a **public, disposable rendering repo**, not a source-code mirror.
 - Do not bypass `qa/policy-check.mjs`. If a policy must change, update the policy and documentation deliberately in the same reviewed change.
 - Preserve the last good artifact when a new run cannot produce a replacement; cleanup belongs after rendering.
 
+## Automation default
+
+Automation and zero-touch workflows are the default goal. Minimize Troy's manual steps whenever the computer/agent can safely perform them. The agent should execute routine setup, navigation, testing, cleanup, file movement, deployment verification, and repetitive actions itself instead of handing Troy a checklist. Ask Troy to act only when genuinely required for approval, credentials/security, spending money, irreversible/destructive choices, public actions made as him, or something the agent technically cannot perform.
+
 ## Honest horizontal-scroll diagnostics
 
 - A deliberately scrollable horizontal rail can place children partly beyond
