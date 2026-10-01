@@ -1,12 +1,16 @@
 {
-  "requestId": "leaderboard-support-first-20261001-b",
+  "requestId": "leaderboard-profiles-empty-states-20261001",
   "target": "hipdiscovery",
   "path": "/leaderboard",
-  "selector": ".sup-leaderboard-shell",
+  "selector": "#sup-points",
   "deploymentProbes": [
     {
+      "path": "/js/pages/supporters.js",
+      "gitBlobSha": "e0a64302d35271c253c794a51ecb2849db9bfd5f"
+    },
+    {
       "path": "/css/pages/supporters.css",
-      "gitBlobSha": "3ff9065e504b09407f5e2a7cd52171ad4863ad6b"
+      "gitBlobSha": "3def8bbd86c421ad2aefe91c7dfbf262ad578855"
     }
   ],
   "viewports": [
@@ -19,5 +23,5 @@
     "mobile-small"
   ],
   "fullPage": true,
-  "waitMs": 900
+  "waitMs": 1200
 }
