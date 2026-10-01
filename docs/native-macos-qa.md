@@ -11,9 +11,10 @@ This repository provides `.github/workflows/native-macos-qa.yml` as a reusable w
 - Builds and runs the caller's Xcode scheme with `xcodebuild test`.
 - Disables code signing for CI compile/test checks.
 - Preserves the `.xcresult` bundle and full xcodebuild log for one day.
+- Extracts the compact XCTest summary and any XCTest attachments/screenshots from the result bundle.
 - Takes no secrets and does not upload app source.
 
-This is **build/test QA**, not a replacement for inspecting actual app screenshots.
+This is **build/test QA**, not a replacement for inspecting actual app screenshots. Screenshots only appear automatically when the app's XCTest/XCUITest suite records them as test attachments.
 
 ## Recommended caller
 
@@ -57,8 +58,8 @@ With GitHub access to the app repository, an agent can:
 1. Make a coherent batch of code changes.
 2. Update the QA trigger once.
 3. Read the workflow result and failing xcodebuild logs through GitHub.
-4. Fix compilation/test failures.
-5. Repeat until green.
-6. Use real screenshots/XCUITest attachments for final visual judgement when the app repo provides them.
+4. Inspect the compact XCTest summary.
+5. Review exported XCTest screenshot attachments when the UI test suite supplies them.
+6. Fix compilation/test failures and repeat until green.
 
-The remaining gap is actual interactive taste review of the running native app. Source review and green CI are not substitutes for that.
+The remaining gap is actual interactive taste review of the running native app. Source review, green CI, and test screenshots are complementary—not substitutes for each other.
