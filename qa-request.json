@@ -1,24 +1,25 @@
 {
-  "requestId": "home-original-restore-20260920",
+  "requestId": "merch-private-baseline-20261001",
   "target": "hipdiscovery",
-  "path": "/",
-  "selector": ".hero-games",
+  "path": "/merch",
+  "selector": ".merch-product-layout",
   "deploymentProbes": [
     {
-      "path": "/css/pages/home.css",
-      "gitBlobSha": "7cf3d6ace33cd351bb3948c5f334e2d0bd3d55c4"
+      "path": "/css/pages/merch.css",
+      "gitBlobSha": "8b712869ffbdf15ab8e7c47dbf37b12b0d25d0e2"
     },
     {
-      "path": "/styles.css",
-      "gitBlobSha": "09e2a56b8fd2468ce32e371db1fe4c6881a281bf"
+      "path": "/js/pages/merch.js",
+      "gitBlobSha": "5f55bcdaac0338a31f6b34a3f0463a3e288a5697"
     }
   ],
   "viewports": [
     "desktop-owner",
     "desktop-compact",
+    "tablet",
     "mobile",
     "mobile-small"
   ],
-  "fullPage": false,
+  "fullPage": true,
   "waitMs": 1000
 }
