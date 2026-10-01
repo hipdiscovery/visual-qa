@@ -1,16 +1,16 @@
 {
-  "requestId": "merch-final-regression-20261001",
+  "requestId": "merch-catalog-first-20261001",
   "target": "hipdiscovery",
   "path": "/merch",
-  "selector": ".merch-product-layout",
+  "selector": ".merch-catalog",
   "deploymentProbes": [
     {
       "path": "/css/pages/merch.css",
-      "gitBlobSha": "87418c3fe6a965d913a909920ea2bebf1899e502"
+      "gitBlobSha": "a51cde77272035060e6739473e904f2d3dbec610"
     },
     {
       "path": "/js/pages/merch.js",
-      "gitBlobSha": "381b2afd60ecb23669198fe3215aee147b2a8d07"
+      "gitBlobSha": "9b1321f07ce0ea08673b0391ab01a6b4c9977803"
     }
   ],
   "viewports": [
@@ -25,43 +25,379 @@
   "waitMs": 450,
   "journeys": [
     {
-      "name": "hero-jump",
+      "name": "card-341",
       "steps": [
         {
           "action": "click",
-          "selector": ".merch-primary",
-          "label": "Hero jump remains clean"
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-color=\"341\"]",
+          "label": "Navy Heather Gray · Lost in south · Cyan"
+        },
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-print=\"white\"]",
+          "label": "Navy Heather Gray · Lost in south · White"
+        },
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-print=\"ink\"]",
+          "label": "Navy Heather Gray · Lost in south · Black"
+        },
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-wordmark=\"blanka\"]",
+          "label": "Navy Heather Gray · Blanka · Black"
+        },
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-print=\"cyan\"]",
+          "label": "Navy Heather Gray · Blanka · Cyan"
+        },
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-print=\"white\"]",
+          "label": "Navy Heather Gray · Blanka · White"
         }
       ]
     },
     {
-      "name": "hero-hover",
+      "name": "card-289",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-color=\"289\"]",
+          "label": "Sky Blue White · Lost in south · Cyan"
+        },
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-print=\"white\"]",
+          "label": "Sky Blue White · Lost in south · White"
+        },
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-print=\"ink\"]",
+          "label": "Sky Blue White · Lost in south · Black"
+        },
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-wordmark=\"blanka\"]",
+          "label": "Sky Blue White · Blanka · Black"
+        },
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-print=\"cyan\"]",
+          "label": "Sky Blue White · Blanka · Cyan"
+        },
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-print=\"white\"]",
+          "label": "Sky Blue White · Blanka · White"
+        }
+      ]
+    },
+    {
+      "name": "card-551",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-color=\"551\"]",
+          "label": "Heather Gray Navy · Lost in south · Cyan"
+        },
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-print=\"white\"]",
+          "label": "Heather Gray Navy · Lost in south · White"
+        },
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-print=\"ink\"]",
+          "label": "Heather Gray Navy · Lost in south · Black"
+        },
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-wordmark=\"blanka\"]",
+          "label": "Heather Gray Navy · Blanka · Black"
+        },
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-print=\"cyan\"]",
+          "label": "Heather Gray Navy · Blanka · Cyan"
+        },
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-print=\"white\"]",
+          "label": "Heather Gray Navy · Blanka · White"
+        }
+      ]
+    },
+    {
+      "name": "card-400",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-color=\"400\"]",
+          "label": "Black Heather Gray · Lost in south · Cyan"
+        },
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-print=\"white\"]",
+          "label": "Black Heather Gray · Lost in south · White"
+        },
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-print=\"ink\"]",
+          "label": "Black Heather Gray · Lost in south · Black"
+        },
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-wordmark=\"blanka\"]",
+          "label": "Black Heather Gray · Blanka · Black"
+        },
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-print=\"cyan\"]",
+          "label": "Black Heather Gray · Blanka · Cyan"
+        },
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-print=\"white\"]",
+          "label": "Black Heather Gray · Blanka · White"
+        }
+      ]
+    },
+    {
+      "name": "inline-sizes",
+      "steps": [
+        {
+          "action": "select",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-size]",
+          "value": "S",
+          "label": "Inline size S"
+        },
+        {
+          "action": "select",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-size]",
+          "value": "M",
+          "label": "Inline size M"
+        },
+        {
+          "action": "select",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-size]",
+          "value": "L",
+          "label": "Inline size L"
+        },
+        {
+          "action": "select",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-size]",
+          "value": "XL",
+          "label": "Inline size XL"
+        },
+        {
+          "action": "select",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-size]",
+          "value": "2XL",
+          "label": "Inline size 2XL"
+        }
+      ]
+    },
+    {
+      "name": "details-full",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-open-product]",
+          "label": "Open product details"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-color=\"341\"]",
+          "label": "Details navy color"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-color=\"289\"]",
+          "label": "Details sky blue color"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-color=\"551\"]",
+          "label": "Details heather gray color"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-color=\"400\"]",
+          "label": "Details black color"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-wordmark=\"blanka\"]",
+          "label": "Details Blanka design"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-wordmark=\"lost-in-south\"]",
+          "label": "Details Lost in south design"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-print=\"white\"]",
+          "label": "Details white print"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-print=\"ink\"]",
+          "label": "Details black print"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-print=\"cyan\"]",
+          "label": "Details cyan print"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-size=\"S\"]",
+          "label": "Details size S"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-size=\"M\"]",
+          "label": "Details size M"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-size=\"L\"]",
+          "label": "Details size L"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-size=\"XL\"]",
+          "label": "Details size XL"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-size=\"2XL\"]",
+          "label": "Details size 2XL"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-view=\"back\"]",
+          "label": "Details back view"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-view=\"right\"]",
+          "label": "Details right view"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-view=\"left\"]",
+          "label": "Details left view"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-view=\"front\"]",
+          "label": "Details front view"
+        },
+        {
+          "action": "click",
+          "selector": "[data-dialog-close]",
+          "label": "Close product details"
+        }
+      ]
+    },
+    {
+      "name": "card-media-hover",
       "steps": [
         {
           "action": "hover",
-          "selector": ".merch-primary",
-          "label": "Hero CTA hover stays cyan and readable"
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-open-product]",
+          "label": "Product image hover"
         }
       ]
     },
     {
-      "name": "hero-focus",
+      "name": "customize-hover",
+      "steps": [
+        {
+          "action": "hover",
+          "selector": "[data-product-id=\"contrast-hoodie\"] .merch-customize-btn",
+          "label": "Customize button hover"
+        }
+      ]
+    },
+    {
+      "name": "customize-focus",
       "steps": [
         {
           "action": "focus",
-          "selector": ".merch-primary",
-          "label": "Hero CTA keyboard focus remains clear"
+          "selector": "[data-product-id=\"contrast-hoodie\"] .merch-customize-btn",
+          "label": "Customize keyboard focus"
         }
       ]
     },
     {
-      "name": "image-error",
+      "name": "color-focus",
+      "steps": [
+        {
+          "action": "focus",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-color=\"341\"]",
+          "label": "Color keyboard focus"
+        }
+      ]
+    },
+    {
+      "name": "design-focus",
+      "steps": [
+        {
+          "action": "focus",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-wordmark=\"blanka\"]",
+          "label": "Design keyboard focus"
+        }
+      ]
+    },
+    {
+      "name": "print-focus",
+      "steps": [
+        {
+          "action": "focus",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-print=\"white\"]",
+          "label": "Print keyboard focus"
+        }
+      ]
+    },
+    {
+      "name": "size-focus",
+      "steps": [
+        {
+          "action": "focus",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-size]",
+          "label": "Size keyboard focus"
+        }
+      ]
+    },
+    {
+      "name": "card-image-error",
       "steps": [
         {
           "action": "dispatch",
-          "selector": "[data-garment-image]",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-card-garment]",
           "event": "error",
-          "label": "Image failure fallback hides preview art cleanly"
+          "label": "Catalog image error state"
+        }
+      ]
+    },
+    {
+      "name": "detail-image-error",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-open-product]",
+          "label": "Open details for error state"
+        },
+        {
+          "action": "dispatch",
+          "selector": "[data-detail-garment]",
+          "event": "error",
+          "label": "Detail image error state"
         }
       ]
     }
