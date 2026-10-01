@@ -66,8 +66,17 @@ function validateRequest() {
       totalSteps += journey.steps.length;
       for (const step of journey.steps) {
         if (!step || typeof step !== "object" || Array.isArray(step)) fail("Each journey step must be an object.");
-        if (Object.keys(step).some(key => !["action", "selector", "label"].includes(key))) fail("Unsupported journey step field.");
-        if (step.action !== "click") fail("Journey step action must be click.");
+        if (Object.keys(step).some(key => !["action", "selector", "label", "event"].includes(key))) fail("Unsupported journey step field.");
+        if (!["click", "hover", "focus", "dispatch"].includes(step.action)) {
+          fail("Journey step action must be click, hover, focus, or dispatch.");
+        }
+        if (step.action === "dispatch") {
+          if (!["error", "load", "input", "change"].includes(step.event)) {
+            fail("Dispatch journey steps require an allowlisted event: error, load, input, or change.");
+          }
+        } else if (step.event != null) {
+          fail("Journey step event is only valid for dispatch actions.");
+        }
         if (typeof step.selector !== "string" || step.selector.length < 1 || step.selector.length > 220) {
           fail("Journey step selector must be 1-220 characters.");
         }
@@ -361,8 +370,16 @@ async function runJourneys(page, viewportName, targetUrl) {
       try {
         if (!(await locator.count())) throw new Error("selector not found");
         await locator.scrollIntoViewIfNeeded();
-        await locator.click({ timeout: 6000 });
-        await page.waitForLoadState("domcontentloaded", { timeout: 3000 }).catch(() => {});
+        if (step.action === "click") {
+          await locator.click({ timeout: 6000 });
+          await page.waitForLoadState("domcontentloaded", { timeout: 3000 }).catch(() => {});
+        } else if (step.action === "hover") {
+          await locator.hover({ timeout: 6000 });
+        } else if (step.action === "focus") {
+          await locator.focus({ timeout: 6000 });
+        } else if (step.action === "dispatch") {
+          await locator.dispatchEvent(step.event);
+        }
         await settlePageImages(page, 1400);
         await page.waitForTimeout(250);
 
