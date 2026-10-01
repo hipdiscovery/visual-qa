@@ -1,5 +1,5 @@
 {
-  "requestId": "merch-22-overview-20261001",
+  "requestId": "merch-products-a-20261001",
   "target": "hipdiscovery",
   "path": "/merch",
   "selector": ".merch-catalog",
@@ -21,113 +21,446 @@
     "mobile",
     "mobile-small"
   ],
-  "fullPage": true,
-  "waitMs": 500,
+  "fullPage": false,
+  "waitMs": 350,
   "journeys": [
     {
-      "name": "category-filters",
+      "name": "product-contrast-hoodie",
       "steps": [
         {
           "action": "click",
-          "selector": "[data-category=\"Tees\"]",
-          "label": "Tees filter"
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-open-product]",
+          "label": "Open contrast-hoodie"
         },
         {
           "action": "click",
-          "selector": "[data-category=\"Hoodies\"]",
-          "label": "Hoodies filter"
+          "selector": "[data-detail-color=\"400\"]",
+          "label": "contrast-hoodie color"
         },
         {
           "action": "click",
-          "selector": "[data-category=\"Sweatshirts\"]",
-          "label": "Sweatshirts filter"
+          "selector": "[data-detail-wordmark=\"blanka\"]",
+          "label": "contrast-hoodie Blanka design"
         },
         {
           "action": "click",
-          "selector": "[data-category=\"Layers\"]",
-          "label": "Layers filter"
+          "selector": "[data-detail-print=\"white\"]",
+          "label": "contrast-hoodie white print"
         },
         {
           "action": "click",
-          "selector": "[data-category=\"Bottoms\"]",
-          "label": "Bottoms filter"
+          "selector": "[data-detail-size=\"XL\"]",
+          "label": "contrast-hoodie size XL"
         },
         {
           "action": "click",
-          "selector": "[data-category=\"Hats\"]",
-          "label": "Hats filter"
+          "selector": "[data-detail-view=\"back\"]",
+          "label": "contrast-hoodie back view"
         },
         {
           "action": "click",
-          "selector": "[data-category=\"All\"]",
-          "label": "All products filter"
+          "selector": "[data-dialog-close]",
+          "label": "Close contrast-hoodie"
         }
       ]
     },
     {
-      "name": "shared-states",
+      "name": "product-classic-unisex-tee",
       "steps": [
         {
-          "action": "hover",
+          "action": "click",
           "selector": "[data-product-id=\"classic-unisex-tee\"] [data-open-product]",
-          "label": "Product image hover"
+          "label": "Open classic-unisex-tee"
         },
         {
-          "action": "focus",
-          "selector": "[data-product-id=\"classic-unisex-tee\"] [data-open-product]",
-          "label": "Product image focus"
+          "action": "click",
+          "selector": "[data-detail-color=\"navy\"]",
+          "label": "classic-unisex-tee color"
         },
         {
-          "action": "hover",
-          "selector": "[data-product-id=\"classic-unisex-tee\"] .merch-customize-btn",
-          "label": "Customize hover"
+          "action": "click",
+          "selector": "[data-detail-wordmark=\"blanka\"]",
+          "label": "classic-unisex-tee Blanka design"
         },
         {
-          "action": "focus",
-          "selector": "[data-product-id=\"classic-unisex-tee\"] .merch-customize-btn",
-          "label": "Customize focus"
+          "action": "click",
+          "selector": "[data-detail-print=\"white\"]",
+          "label": "classic-unisex-tee white print"
         },
         {
-          "action": "focus",
-          "selector": "[data-product-id=\"classic-unisex-tee\"] [data-quick-color=\"navy\"]",
-          "label": "Color focus"
+          "action": "click",
+          "selector": "[data-detail-size=\"XL\"]",
+          "label": "classic-unisex-tee size XL"
         },
         {
-          "action": "focus",
-          "selector": "[data-product-id=\"classic-unisex-tee\"] [data-quick-wordmark=\"blanka\"]",
-          "label": "Design focus"
+          "action": "click",
+          "selector": "[data-detail-view=\"back\"]",
+          "label": "classic-unisex-tee back view"
         },
         {
-          "action": "focus",
-          "selector": "[data-product-id=\"classic-unisex-tee\"] [data-quick-print=\"white\"]",
-          "label": "Print focus"
-        },
-        {
-          "action": "focus",
-          "selector": "[data-product-id=\"classic-unisex-tee\"] [data-quick-size]",
-          "label": "Size focus"
+          "action": "click",
+          "selector": "[data-dialog-close]",
+          "label": "Close classic-unisex-tee"
         }
       ]
     },
     {
-      "name": "generated-image-error",
+      "name": "product-premium-unisex-tee",
       "steps": [
         {
-          "action": "dispatch",
-          "selector": "[data-product-id=\"classic-unisex-tee\"] [data-card-garment]",
-          "event": "error",
-          "label": "Generated mockup error state"
+          "action": "click",
+          "selector": "[data-product-id=\"premium-unisex-tee\"] [data-open-product]",
+          "label": "Open premium-unisex-tee"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-color=\"navy\"]",
+          "label": "premium-unisex-tee color"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-wordmark=\"blanka\"]",
+          "label": "premium-unisex-tee Blanka design"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-print=\"white\"]",
+          "label": "premium-unisex-tee white print"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-size=\"XL\"]",
+          "label": "premium-unisex-tee size XL"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-view=\"back\"]",
+          "label": "premium-unisex-tee back view"
+        },
+        {
+          "action": "click",
+          "selector": "[data-dialog-close]",
+          "label": "Close premium-unisex-tee"
         }
       ]
     },
     {
-      "name": "supplier-image-error",
+      "name": "product-heavyweight-tee",
       "steps": [
         {
-          "action": "dispatch",
-          "selector": "[data-product-id=\"contrast-hoodie\"] [data-card-garment]",
-          "event": "error",
-          "label": "Supplier photo error state"
+          "action": "click",
+          "selector": "[data-product-id=\"heavyweight-tee\"] [data-open-product]",
+          "label": "Open heavyweight-tee"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-color=\"navy\"]",
+          "label": "heavyweight-tee color"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-wordmark=\"blanka\"]",
+          "label": "heavyweight-tee Blanka design"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-print=\"white\"]",
+          "label": "heavyweight-tee white print"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-size=\"XL\"]",
+          "label": "heavyweight-tee size XL"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-view=\"back\"]",
+          "label": "heavyweight-tee back view"
+        },
+        {
+          "action": "click",
+          "selector": "[data-dialog-close]",
+          "label": "Close heavyweight-tee"
+        }
+      ]
+    },
+    {
+      "name": "product-long-sleeve-tee",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"long-sleeve-tee\"] [data-open-product]",
+          "label": "Open long-sleeve-tee"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-color=\"navy\"]",
+          "label": "long-sleeve-tee color"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-wordmark=\"blanka\"]",
+          "label": "long-sleeve-tee Blanka design"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-print=\"white\"]",
+          "label": "long-sleeve-tee white print"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-size=\"XL\"]",
+          "label": "long-sleeve-tee size XL"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-view=\"back\"]",
+          "label": "long-sleeve-tee back view"
+        },
+        {
+          "action": "click",
+          "selector": "[data-dialog-close]",
+          "label": "Close long-sleeve-tee"
+        }
+      ]
+    },
+    {
+      "name": "product-womens-relaxed-tee",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"womens-relaxed-tee\"] [data-open-product]",
+          "label": "Open womens-relaxed-tee"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-color=\"navy\"]",
+          "label": "womens-relaxed-tee color"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-wordmark=\"blanka\"]",
+          "label": "womens-relaxed-tee Blanka design"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-print=\"white\"]",
+          "label": "womens-relaxed-tee white print"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-size=\"XL\"]",
+          "label": "womens-relaxed-tee size XL"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-view=\"back\"]",
+          "label": "womens-relaxed-tee back view"
+        },
+        {
+          "action": "click",
+          "selector": "[data-dialog-close]",
+          "label": "Close womens-relaxed-tee"
+        }
+      ]
+    },
+    {
+      "name": "product-crop-tee",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"crop-tee\"] [data-open-product]",
+          "label": "Open crop-tee"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-color=\"navy\"]",
+          "label": "crop-tee color"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-wordmark=\"blanka\"]",
+          "label": "crop-tee Blanka design"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-print=\"white\"]",
+          "label": "crop-tee white print"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-size=\"XL\"]",
+          "label": "crop-tee size XL"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-view=\"back\"]",
+          "label": "crop-tee back view"
+        },
+        {
+          "action": "click",
+          "selector": "[data-dialog-close]",
+          "label": "Close crop-tee"
+        }
+      ]
+    },
+    {
+      "name": "product-classic-hoodie",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"classic-hoodie\"] [data-open-product]",
+          "label": "Open classic-hoodie"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-color=\"navy\"]",
+          "label": "classic-hoodie color"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-wordmark=\"blanka\"]",
+          "label": "classic-hoodie Blanka design"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-print=\"white\"]",
+          "label": "classic-hoodie white print"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-size=\"XL\"]",
+          "label": "classic-hoodie size XL"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-view=\"back\"]",
+          "label": "classic-hoodie back view"
+        },
+        {
+          "action": "click",
+          "selector": "[data-dialog-close]",
+          "label": "Close classic-hoodie"
+        }
+      ]
+    },
+    {
+      "name": "product-premium-hoodie",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"premium-hoodie\"] [data-open-product]",
+          "label": "Open premium-hoodie"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-color=\"navy\"]",
+          "label": "premium-hoodie color"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-wordmark=\"blanka\"]",
+          "label": "premium-hoodie Blanka design"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-print=\"white\"]",
+          "label": "premium-hoodie white print"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-size=\"XL\"]",
+          "label": "premium-hoodie size XL"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-view=\"back\"]",
+          "label": "premium-hoodie back view"
+        },
+        {
+          "action": "click",
+          "selector": "[data-dialog-close]",
+          "label": "Close premium-hoodie"
+        }
+      ]
+    },
+    {
+      "name": "product-zip-hoodie",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"zip-hoodie\"] [data-open-product]",
+          "label": "Open zip-hoodie"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-color=\"navy\"]",
+          "label": "zip-hoodie color"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-wordmark=\"blanka\"]",
+          "label": "zip-hoodie Blanka design"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-print=\"white\"]",
+          "label": "zip-hoodie white print"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-size=\"XL\"]",
+          "label": "zip-hoodie size XL"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-view=\"back\"]",
+          "label": "zip-hoodie back view"
+        },
+        {
+          "action": "click",
+          "selector": "[data-dialog-close]",
+          "label": "Close zip-hoodie"
+        }
+      ]
+    },
+    {
+      "name": "product-crop-hoodie",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"crop-hoodie\"] [data-open-product]",
+          "label": "Open crop-hoodie"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-color=\"navy\"]",
+          "label": "crop-hoodie color"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-wordmark=\"blanka\"]",
+          "label": "crop-hoodie Blanka design"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-print=\"white\"]",
+          "label": "crop-hoodie white print"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-size=\"XL\"]",
+          "label": "crop-hoodie size XL"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-view=\"back\"]",
+          "label": "crop-hoodie back view"
+        },
+        {
+          "action": "click",
+          "selector": "[data-dialog-close]",
+          "label": "Close crop-hoodie"
         }
       ]
     }
