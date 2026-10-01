@@ -15,7 +15,7 @@ This repository does **not** contain HipDiscovery's private application or websi
 7. Review all responsive layouts that the change can affect. If a state changes composition at a breakpoint, that state must be exercised at that breakpoint.
 8. Iterate in the source repo if anything looks wrong; rerun the impacted states until the full affected surface is clean.
 
-After a render produces its own artifact, a separate narrowly privileged cleanup job deletes older Visual QA artifacts and completed runs. If rendering fails before a replacement artifact exists, the previous result is preserved. The browser/render job has no repository permissions. The current artifact has a one-day fallback retention period, so generated screenshots do not become a permanent public archive.
+After a render produces its own artifact, a separate narrowly privileged cleanup job deletes older Visual QA artifacts and completed runs. If rendering fails before a replacement artifact exists, the previous result is preserved. The browser/render job has no repository permissions. The current artifact has a one-day fallback retention period, so generated screenshots do not become a permanent public archive. After the agent finishes manual review, any downloaded ZIPs and extracted screenshot folders in its local/container workspace must also be deleted; those files are disposable QA evidence, not project assets.
 
 ## Standard HipDiscovery viewports
 
