@@ -58,6 +58,6 @@ Deployment probes are capped at 5 MiB each to prevent accidental large downloads
 
 ## Self-protection
 
-Runner/config changes trigger the same workflow automatically. Before browser setup, `qa/policy-check.mjs` verifies the JavaScript parses and enforces the repository's security contract: no PR/scheduled triggers, render permissions stay empty, only cleanup gets `actions: write`, artifact retention stays one day, the upload action stays commit-pinned, targets remain HTTPS/allowlisted, deployment probes remain mandatory, and the Playwright package matches its integrity-locked package lock.
+Runner/config changes trigger a separate fast `Visual QA Policy` workflow instead of replaying an old browser request. Explicit `qa-request.json` changes (or a manual dispatch) trigger browser rendering. `qa/policy-check.mjs` verifies the JavaScript parses and enforces the repository's security contract: no PR/scheduled triggers, render permissions stay empty, only cleanup gets `actions: write`, artifact retention stays one day, action dependencies stay commit-pinned, targets remain HTTPS/allowlisted, deployment probes remain mandatory, and the Playwright package matches its integrity-locked package lock.
 
 Each viewport report also records the actual HTTP(S) hostnames contacted while rendering. This is observational rather than a brittle third-party CDN allowlist: private/link-local destinations are still blocked, while legitimate public CDN/API hosts can evolve without silently breaking visual QA.
