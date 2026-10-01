@@ -1,16 +1,16 @@
 {
-  "requestId": "merch-catalog-polish-regression-20261001",
+  "requestId": "merch-22-overview-20261001",
   "target": "hipdiscovery",
   "path": "/merch",
-  "selector": ".merch-card",
+  "selector": ".merch-catalog",
   "deploymentProbes": [
     {
       "path": "/css/pages/merch.css",
-      "gitBlobSha": "fe6e0deae08f3f1a0c589ae752dea3f299cdb00c"
+      "gitBlobSha": "582ca4461a157603fb92c2b0e80682070d0d7e51"
     },
     {
       "path": "/js/pages/merch.js",
-      "gitBlobSha": "3fd4aa39a6cffc6e0ab9a0db7d34ecd1f17d091f"
+      "gitBlobSha": "0ea8823e059687e7ea17bd35fc49ee119dabf11c"
     }
   ],
   "viewports": [
@@ -22,61 +22,112 @@
     "mobile-small"
   ],
   "fullPage": true,
-  "waitMs": 450,
+  "waitMs": 500,
   "journeys": [
     {
-      "name": "card-polish",
+      "name": "category-filters",
       "steps": [
         {
           "action": "click",
-          "selector": "[data-quick-color=\"400\"]",
-          "label": "Black garment"
+          "selector": "[data-category=\"Tees\"]",
+          "label": "Tees filter"
         },
         {
           "action": "click",
-          "selector": "[data-quick-wordmark=\"blanka\"]",
-          "label": "Blanka design"
+          "selector": "[data-category=\"Hoodies\"]",
+          "label": "Hoodies filter"
         },
         {
           "action": "click",
-          "selector": "[data-quick-print=\"white\"]",
-          "label": "White print"
+          "selector": "[data-category=\"Sweatshirts\"]",
+          "label": "Sweatshirts filter"
         },
         {
-          "action": "select",
-          "selector": "[data-quick-size]",
-          "value": "2XL",
-          "label": "2XL inline size"
+          "action": "click",
+          "selector": "[data-category=\"Layers\"]",
+          "label": "Layers filter"
+        },
+        {
+          "action": "click",
+          "selector": "[data-category=\"Bottoms\"]",
+          "label": "Bottoms filter"
+        },
+        {
+          "action": "click",
+          "selector": "[data-category=\"Hats\"]",
+          "label": "Hats filter"
+        },
+        {
+          "action": "click",
+          "selector": "[data-category=\"All\"]",
+          "label": "All products filter"
         }
       ]
     },
     {
-      "name": "dialog-polish",
+      "name": "shared-states",
       "steps": [
         {
-          "action": "click",
-          "selector": "[data-product-id=\"contrast-hoodie\"] [data-open-product]",
-          "label": "Open centered details"
+          "action": "hover",
+          "selector": "[data-product-id=\"classic-unisex-tee\"] [data-open-product]",
+          "label": "Product image hover"
         },
         {
-          "action": "click",
-          "selector": "[data-detail-color=\"341\"]",
-          "label": "Navy detail color"
+          "action": "focus",
+          "selector": "[data-product-id=\"classic-unisex-tee\"] [data-open-product]",
+          "label": "Product image focus"
         },
         {
-          "action": "click",
-          "selector": "[data-detail-view=\"back\"]",
-          "label": "Back detail view"
+          "action": "hover",
+          "selector": "[data-product-id=\"classic-unisex-tee\"] .merch-customize-btn",
+          "label": "Customize hover"
         },
         {
-          "action": "click",
-          "selector": "[data-detail-size=\"2XL\"]",
-          "label": "Detail size 2XL"
+          "action": "focus",
+          "selector": "[data-product-id=\"classic-unisex-tee\"] .merch-customize-btn",
+          "label": "Customize focus"
         },
         {
-          "action": "click",
-          "selector": "[data-dialog-close]",
-          "label": "Close details"
+          "action": "focus",
+          "selector": "[data-product-id=\"classic-unisex-tee\"] [data-quick-color=\"navy\"]",
+          "label": "Color focus"
+        },
+        {
+          "action": "focus",
+          "selector": "[data-product-id=\"classic-unisex-tee\"] [data-quick-wordmark=\"blanka\"]",
+          "label": "Design focus"
+        },
+        {
+          "action": "focus",
+          "selector": "[data-product-id=\"classic-unisex-tee\"] [data-quick-print=\"white\"]",
+          "label": "Print focus"
+        },
+        {
+          "action": "focus",
+          "selector": "[data-product-id=\"classic-unisex-tee\"] [data-quick-size]",
+          "label": "Size focus"
+        }
+      ]
+    },
+    {
+      "name": "generated-image-error",
+      "steps": [
+        {
+          "action": "dispatch",
+          "selector": "[data-product-id=\"classic-unisex-tee\"] [data-card-garment]",
+          "event": "error",
+          "label": "Generated mockup error state"
+        }
+      ]
+    },
+    {
+      "name": "supplier-image-error",
+      "steps": [
+        {
+          "action": "dispatch",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-card-garment]",
+          "event": "error",
+          "label": "Supplier photo error state"
         }
       ]
     }
