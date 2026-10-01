@@ -91,6 +91,8 @@ jobs:
 
           echo "Xcode:"
           xcodebuild -version
+          echo "Swift:"
+          swift --version
           echo "macOS:"
           sw_vers
           echo "Destination: $DESTINATION"
@@ -134,6 +136,43 @@ jobs:
             ONLY_ACTIVE_ARCH=YES \
             test 2>&1 | tee "$log_file"
 
+      - name: Extract result evidence
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          result_bundle="$RUNNER_TEMP/NativeMacQA.xcresult"
+          evidence_dir="$RUNNER_TEMP/native-macos-evidence"
+          mkdir -p "$evidence_dir"
+
+          if [[ ! -d "$result_bundle" ]]; then
+            echo "No xcresult bundle was produced." > "$evidence_dir/no-xcresult.txt"
+            exit 0
+          fi
+
+          xcrun xcresulttool get content-availability \
+            --path "$result_bundle" \
+            --compact > "$evidence_dir/content-availability.json" || true
+
+          xcrun xcresulttool get test-results summary \
+            --path "$result_bundle" \
+            --compact > "$evidence_dir/test-summary.json" || true
+
+          mkdir -p "$evidence_dir/attachments"
+          xcrun xcresulttool export attachments \
+            --path "$result_bundle" \
+            --output-path "$evidence_dir/attachments" || true
+
+          {
+            echo "## Native macOS QA evidence"
+            echo
+            echo "- Result bundle: `NativeMacQA.xcresult`"
+            echo "- Full build/test log: `native-macos-qa.log`"
+            echo "- Test summary: `native-macos-evidence/test-summary.json`"
+            echo "- XCTest attachments/screenshots: `native-macos-evidence/attachments/`"
+          } >> "$GITHUB_STEP_SUMMARY"
+
       - name: Upload QA evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
@@ -142,6 +181,7 @@ jobs:
           path: |
             ${{ runner.temp }}/NativeMacQA.xcresult
             ${{ runner.temp }}/native-macos-qa.log
+            ${{ runner.temp }}/native-macos-evidence/
           if-no-files-found: warn
           retention-days: 1
           compression-level: 6
