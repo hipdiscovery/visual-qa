@@ -38,6 +38,40 @@ if (!workflow.includes("actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875
 }
 if (!workflow.includes("cancel-in-progress: true")) fail("stale QA runs must be cancelled.");
 if (!workflow.includes("npm ci --ignore-scripts --no-audit --no-fund")) fail("dependency install must use the integrity lock with scripts disabled.");
+if (!workflow.includes(".github/workflows/**")) fail("workflow changes must trigger the security policy check.");
+
+const nativeWorkflow = read(".github/workflows/native-macos-qa.yml");
+if (!nativeWorkflow.includes("workflow_call:")) fail("native macOS QA must remain reusable via workflow_call.");
+for (const forbidden of ["workflow_dispatch:", "push:", "pull_request:", "pull_request_target:", "schedule:"]) {
+  if (nativeWorkflow.includes(forbidden)) fail(`native macOS QA contains forbidden standalone trigger ${forbidden}`);
+}
+if (!nativeWorkflow.includes("permissions:\n  contents: read")) {
+  fail("native macOS QA must keep repository permissions read-only.");
+}
+if (/\b(?:actions|contents|checks|deployments|issues|packages|pull-requests|statuses):\s*write\b/.test(nativeWorkflow)) {
+  fail("native macOS QA must not request write permissions.");
+}
+if (nativeWorkflow.includes("secrets.") || nativeWorkflow.includes("secrets:")) {
+  fail("native macOS QA must not consume caller secrets.");
+}
+if (!nativeWorkflow.includes("actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1")) {
+  fail("native macOS QA checkout action must remain pinned to the reviewed SHA.");
+}
+if (!nativeWorkflow.includes("persist-credentials: false")) {
+  fail("native macOS QA checkout must not persist GitHub credentials.");
+}
+if (!nativeWorkflow.includes("actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a")) {
+  fail("native macOS QA artifact upload must remain pinned to the reviewed SHA.");
+}
+if (!nativeWorkflow.includes("retention-days: 1")) {
+  fail("native macOS QA evidence must retain for exactly one day.");
+}
+if (!nativeWorkflow.includes("CODE_SIGNING_ALLOWED=NO")) {
+  fail("native macOS QA must not depend on signing credentials.");
+}
+if (!nativeWorkflow.includes("runs-on: macos-15")) {
+  fail("native macOS QA runner must stay on the reviewed standard macOS image.");
+}
 
 const lock = JSON.parse(read("package-lock.json"));
 const pw = lock.packages?.["node_modules/playwright-core"];
