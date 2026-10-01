@@ -1,16 +1,16 @@
 {
-  "requestId": "leaderboard-profiles-empty-states-20261001",
+  "requestId": "leaderboard-profiles-empty-states-20261001-final",
   "target": "hipdiscovery",
   "path": "/leaderboard",
   "selector": "#sup-points",
   "deploymentProbes": [
     {
       "path": "/js/pages/supporters.js",
-      "gitBlobSha": "e0a64302d35271c253c794a51ecb2849db9bfd5f"
+      "gitBlobSha": "94358133f718bea83f49053185ac3cfd19184724"
     },
     {
       "path": "/css/pages/supporters.css",
-      "gitBlobSha": "3def8bbd86c421ad2aefe91c7dfbf262ad578855"
+      "gitBlobSha": "c114af8cdc01d6aa49426ba5d92e01562bc1a7d7"
     }
   ],
   "viewports": [
