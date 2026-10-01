@@ -1,12 +1,12 @@
 {
-  "requestId": "merch-anchor-all-breakpoints-20261001",
+  "requestId": "merch-anchor-all-breakpoints-20261001-r2",
   "target": "hipdiscovery",
   "path": "/merch",
   "selector": ".merch-feature-head",
   "deploymentProbes": [
     {
       "path": "/css/pages/merch.css",
-      "gitBlobSha": "44c700118a54e06388a29d1f943a1d0e4739f80e"
+      "gitBlobSha": "999c9cf873b81fd403bda5061802f3d5ebeba641"
     },
     {
       "path": "/js/pages/merch.js",
