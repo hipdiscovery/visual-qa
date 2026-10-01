@@ -3,34 +3,43 @@
 /**
  * Lightweight visual regression helper.
  *
- * Compares a newly captured screenshot against an approved baseline using
- * pixel differences. This intentionally produces a signal for an agent to
- * review rather than pretending visual taste can be reduced to a number.
+ * Detects whether two screenshot files are byte-identical using SHA-256.
+ * A difference is only a signal for an agent to inspect the rendered images;
+ * this is intentionally not presented as perceptual or pixel-level scoring.
  */
 
 import fs from "node:fs";
-import path from "node:path";
+import { createHash } from "node:crypto";
 
 const [, , currentPath, baselinePath] = process.argv;
 
 if (!currentPath || !baselinePath) {
-  console.error("Usage: node qa/visual-diff-review.mjs <current.png> <baseline.png>");
+  console.error("Usage: node qa/visual-diff-review.mjs <current-image> <baseline-image>");
   process.exit(1);
 }
 
-const current = fs.statSync(currentPath);
-const baseline = fs.statSync(baselinePath);
+function fingerprint(filePath) {
+  const bytes = fs.readFileSync(filePath);
+  return {
+    bytes: bytes.length,
+    sha256: createHash("sha256").update(bytes).digest("hex")
+  };
+}
+
+const current = fingerprint(currentPath);
+const baseline = fingerprint(baselinePath);
+const changed = current.sha256 !== baseline.sha256;
 
 const result = {
-  currentBytes: current.size,
-  baselineBytes: baseline.size,
-  changed: current.size !== baseline.size,
-  reviewRequired: false,
-  note: "Image byte size changes are only a warning. Use screenshot inspection for final approval."
+  currentBytes: current.bytes,
+  baselineBytes: baseline.bytes,
+  currentSha256: current.sha256,
+  baselineSha256: baseline.sha256,
+  changed,
+  reviewRequired: changed,
+  note: changed
+    ? "Screenshot bytes changed. Inspect the rendered images before approval."
+    : "Screenshot files are byte-identical. Visual inspection is still required for final approval."
 };
-
-if (result.changed) {
-  result.reviewRequired = true;
-}
 
 console.log(JSON.stringify(result, null, 2));
