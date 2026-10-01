@@ -1,12 +1,12 @@
 {
-  "requestId": "leaderboard-support-first-20261001",
+  "requestId": "leaderboard-support-first-20261001-b",
   "target": "hipdiscovery",
   "path": "/leaderboard",
   "selector": ".sup-leaderboard-shell",
   "deploymentProbes": [
     {
-      "path": "/leaderboard",
-      "gitBlobSha": "8056739d646f0cb3883cdef9a51348b8ea83ba86"
+      "path": "/css/pages/supporters.css",
+      "gitBlobSha": "3ff9065e504b09407f5e2a7cd52171ad4863ad6b"
     }
   ],
   "viewports": [
@@ -19,5 +19,5 @@
     "mobile-small"
   ],
   "fullPage": true,
-  "waitMs": 800
+  "waitMs": 900
 }
