@@ -8,13 +8,20 @@ const fail = message => {
 };
 const read = path => fs.readFileSync(path, "utf8");
 
-for (const file of ["qa/run.mjs", "qa/cleanup.mjs", "qa/diagnostic-policy.mjs", "qa/diagnostic-policy.test.mjs"]) {
+const qaScripts = fs.readdirSync("qa")
+  .filter(file => file.endsWith(".mjs"))
+  .map(file => `qa/${file}`)
+  .sort();
+
+for (const file of qaScripts) {
   const checked = spawnSync(process.execPath, ["--check", file], { encoding: "utf8" });
   if (checked.status !== 0) fail(`${file} does not parse: ${checked.stderr || checked.stdout}`);
 }
 
-const contract = spawnSync(process.execPath, ["qa/diagnostic-policy.test.mjs"], { encoding: "utf8" });
-if (contract.status !== 0) fail(`browser diagnostics contract failed: ${contract.stderr || contract.stdout}`);
+for (const testFile of ["qa/diagnostic-policy.test.mjs", "qa/visual-diff-review.test.mjs"]) {
+  const contract = spawnSync(process.execPath, [testFile], { encoding: "utf8" });
+  if (contract.status !== 0) fail(`${testFile} failed: ${contract.stderr || contract.stdout}`);
+}
 
 const workflow = read(".github/workflows/visual-qa.yml");
 for (const forbidden of ["pull_request:", "pull_request_target:", "schedule:"]) {
