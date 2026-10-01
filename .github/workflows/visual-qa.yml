@@ -9,7 +9,7 @@ on:
       - qa/**
       - package.json
       - package-lock.json
-      - .github/workflows/visual-qa.yml
+      - .github/workflows/**
   workflow_dispatch:
 
 permissions: {}
