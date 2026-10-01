@@ -1,0 +1,148 @@
+name: Native macOS QA
+
+on:
+  workflow_call:
+    inputs:
+      scheme:
+        description: Xcode scheme to build and test.
+        required: true
+        type: string
+      project:
+        description: Relative path to the .xcodeproj. Set exactly one of project or workspace.
+        required: false
+        default: ""
+        type: string
+      workspace:
+        description: Relative path to the .xcworkspace. Set exactly one of project or workspace.
+        required: false
+        default: ""
+        type: string
+      configuration:
+        description: Xcode build configuration.
+        required: false
+        default: Debug
+        type: string
+      destination:
+        description: xcodebuild destination.
+        required: false
+        default: platform=macOS
+        type: string
+      test_plan:
+        description: Optional Xcode test plan name.
+        required: false
+        default: ""
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  build-test:
+    runs-on: macos-15
+    timeout-minutes: 20
+    permissions:
+      contents: read
+
+    steps:
+      - name: Check out caller repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Validate inputs
+        shell: bash
+        env:
+          PROJECT: ${{ inputs.project }}
+          WORKSPACE: ${{ inputs.workspace }}
+          SCHEME: ${{ inputs.scheme }}
+          CONFIGURATION: ${{ inputs.configuration }}
+          DESTINATION: ${{ inputs.destination }}
+        run: |
+          set -euo pipefail
+
+          if [[ -n "$PROJECT" && -n "$WORKSPACE" ]]; then
+            echo "::error::Set project or workspace, not both."
+            exit 2
+          fi
+          if [[ -z "$PROJECT" && -z "$WORKSPACE" ]]; then
+            echo "::error::Set exactly one of project or workspace."
+            exit 2
+          fi
+          if [[ -z "$SCHEME" ]]; then
+            echo "::error::scheme cannot be empty."
+            exit 2
+          fi
+          if [[ ! "$CONFIGURATION" =~ ^[A-Za-z0-9._[:space:]-]+$ ]]; then
+            echo "::error::configuration contains unsupported characters."
+            exit 2
+          fi
+          if [[ "$PROJECT" == -* || "$WORKSPACE" == -* ]]; then
+            echo "::error::project/workspace paths cannot start with a dash."
+            exit 2
+          fi
+          if [[ -n "$PROJECT" ]]; then
+            [[ "$PROJECT" == *.xcodeproj ]] || { echo "::error::project must end in .xcodeproj"; exit 2; }
+            [[ -d "$PROJECT" ]] || { echo "::error::project not found: $PROJECT"; exit 2; }
+          fi
+          if [[ -n "$WORKSPACE" ]]; then
+            [[ "$WORKSPACE" == *.xcworkspace ]] || { echo "::error::workspace must end in .xcworkspace"; exit 2; }
+            [[ -d "$WORKSPACE" ]] || { echo "::error::workspace not found: $WORKSPACE"; exit 2; }
+          fi
+
+          echo "Xcode:"
+          xcodebuild -version
+          echo "macOS:"
+          sw_vers
+          echo "Destination: $DESTINATION"
+
+      - name: Build and test
+        shell: bash
+        env:
+          PROJECT: ${{ inputs.project }}
+          WORKSPACE: ${{ inputs.workspace }}
+          SCHEME: ${{ inputs.scheme }}
+          CONFIGURATION: ${{ inputs.configuration }}
+          DESTINATION: ${{ inputs.destination }}
+          TEST_PLAN: ${{ inputs.test_plan }}
+        run: |
+          set -euo pipefail
+
+          result_bundle="$RUNNER_TEMP/NativeMacQA.xcresult"
+          log_file="$RUNNER_TEMP/native-macos-qa.log"
+          rm -rf "$result_bundle"
+
+          container_args=()
+          if [[ -n "$PROJECT" ]]; then
+            container_args=(-project "$PROJECT")
+          else
+            container_args=(-workspace "$WORKSPACE")
+          fi
+
+          test_plan_args=()
+          if [[ -n "$TEST_PLAN" ]]; then
+            test_plan_args=(-testPlan "$TEST_PLAN")
+          fi
+
+          xcodebuild \
+            "${container_args[@]}" \
+            -scheme "$SCHEME" \
+            -configuration "$CONFIGURATION" \
+            -destination "$DESTINATION" \
+            "${test_plan_args[@]}" \
+            -resultBundlePath "$result_bundle" \
+            CODE_SIGNING_ALLOWED=NO \
+            ONLY_ACTIVE_ARCH=YES \
+            test 2>&1 | tee "$log_file"
+
+      - name: Upload QA evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: native-macos-qa-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/NativeMacQA.xcresult
+            ${{ runner.temp }}/native-macos-qa.log
+          if-no-files-found: warn
+          retention-days: 1
+          compression-level: 6
+          include-hidden-files: false
