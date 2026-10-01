@@ -8,7 +8,7 @@ const readme = read("README.md");
 const checks = [
   ["request schema accepts journeys", run.includes('"journeys"') && run.includes("request.journeys")],
   ["journey requests are bounded", run.includes("at most 100 total journey steps") && run.includes("1-20 interaction journeys")],
-  ["journey steps are click-only", run.includes('step.action !== "click"')],
+  ["journey steps cover interaction state classes", run.includes('"click", "hover", "focus", "dispatch"') && run.includes('"error", "load", "input", "change"')],
   ["journey runner captures each step", run.includes("async function runJourneys") && run.includes("stepResult.screenshot")],
   ["journey runner fails unreachable controls", run.includes("selector not found")],
   ["journey runner fails broken visible images", run.includes("broken visible images after step")],
