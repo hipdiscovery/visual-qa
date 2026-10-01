@@ -1,5 +1,5 @@
 {
-  "requestId": "merch-exhaustive-desktop-20261001",
+  "requestId": "merch-exhaustive-desktop-20261001-r2",
   "target": "hipdiscovery",
   "path": "/merch",
   "selector": ".merch-product-layout",
@@ -11,10 +11,6 @@
     {
       "path": "/js/pages/merch.js",
       "gitBlobSha": "381b2afd60ecb23669198fe3215aee147b2a8d07"
-    },
-    {
-      "path": "/merch",
-      "gitBlobSha": "791cac0afd7f3aaef57e36aba3762fea9d60861b"
     }
   ],
   "viewports": [
