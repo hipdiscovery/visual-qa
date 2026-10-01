@@ -38,7 +38,28 @@ if (!workflow.includes("actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875
 }
 if (!workflow.includes("cancel-in-progress: true")) fail("stale QA runs must be cancelled.");
 if (!workflow.includes("npm ci --ignore-scripts --no-audit --no-fund")) fail("dependency install must use the integrity lock with scripts disabled.");
-if (!workflow.includes(".github/workflows/**")) fail("workflow changes must trigger the security policy check.");
+if (!/paths:\s*\n\s*- qa-request\.json\s*(?:\n|$)/.test(workflow)) {
+  fail("browser render workflow must trigger on explicit qa-request changes.");
+}
+if (workflow.includes(".github/workflows/**") || workflow.includes("- qa/**")) {
+  fail("tooling changes must use the policy workflow instead of replaying stale browser requests.");
+}
+
+const policyWorkflow = read(".github/workflows/visual-qa-policy.yml");
+for (const forbidden of ["pull_request:", "pull_request_target:", "schedule:"]) {
+  if (policyWorkflow.includes(forbidden)) fail(`policy workflow contains forbidden trigger ${forbidden}`);
+}
+if (!policyWorkflow.includes("permissions: {}")) fail("policy workflow must default to permissions: {}.");
+if (!/policy:[\s\S]*?permissions:\s*\{\}/.test(policyWorkflow)) fail("policy job must keep permissions: {}.");
+if (!policyWorkflow.includes("- qa/**") || !policyWorkflow.includes("- .github/workflows/**")) {
+  fail("policy workflow must run for QA scripts and workflow changes.");
+}
+if (!policyWorkflow.includes("node qa/policy-check.mjs")) {
+  fail("policy workflow must execute qa/policy-check.mjs.");
+}
+if (/\bactions:\s*write\b/.test(policyWorkflow) || /\bcontents:\s*write\b/.test(policyWorkflow)) {
+  fail("policy workflow must not request write permissions.");
+}
 
 const nativeWorkflow = read(".github/workflows/native-macos-qa.yml");
 if (!nativeWorkflow.includes("workflow_call:")) fail("native macOS QA must remain reusable via workflow_call.");
