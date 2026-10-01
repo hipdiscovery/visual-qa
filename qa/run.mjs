@@ -66,9 +66,9 @@ function validateRequest() {
       totalSteps += journey.steps.length;
       for (const step of journey.steps) {
         if (!step || typeof step !== "object" || Array.isArray(step)) fail("Each journey step must be an object.");
-        if (Object.keys(step).some(key => !["action", "selector", "label", "event"].includes(key))) fail("Unsupported journey step field.");
-        if (!["click", "hover", "focus", "dispatch"].includes(step.action)) {
-          fail("Journey step action must be click, hover, focus, or dispatch.");
+        if (Object.keys(step).some(key => !["action", "selector", "label", "event", "value"].includes(key))) fail("Unsupported journey step field.");
+        if (!["click", "hover", "focus", "dispatch", "select"].includes(step.action)) {
+          fail("Journey step action must be click, hover, focus, dispatch, or select.");
         }
         if (step.action === "dispatch") {
           if (!["error", "load", "input", "change"].includes(step.event)) {
@@ -76,6 +76,13 @@ function validateRequest() {
           }
         } else if (step.event != null) {
           fail("Journey step event is only valid for dispatch actions.");
+        }
+        if (step.action === "select") {
+          if (typeof step.value !== "string" || step.value.length < 1 || step.value.length > 120) {
+            fail("Select journey steps require a 1-120 character value.");
+          }
+        } else if (step.value != null) {
+          fail("Journey step value is only valid for select actions.");
         }
         if (typeof step.selector !== "string" || step.selector.length < 1 || step.selector.length > 220) {
           fail("Journey step selector must be 1-220 characters.");
@@ -379,6 +386,8 @@ async function runJourneys(page, viewportName, targetUrl) {
           await locator.focus({ timeout: 6000 });
         } else if (step.action === "dispatch") {
           await locator.dispatchEvent(step.event);
+        } else if (step.action === "select") {
+          await locator.selectOption(step.value, { timeout: 6000 });
         }
         await settlePageImages(page, 1400);
         await page.waitForTimeout(250);
