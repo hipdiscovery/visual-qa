@@ -25,7 +25,7 @@ function fail(message) {
 }
 
 function validateRequest() {
-  const allowedKeys = new Set(["requestId", "target", "path", "selector", "viewports", "fullPage", "waitMs", "deploymentProbes"]);
+  const allowedKeys = new Set(["requestId", "target", "path", "selector", "viewports", "fullPage", "waitMs", "deploymentProbes", "journeys"]);
   for (const key of Object.keys(request)) {
     if (!allowedKeys.has(key)) fail(`Unsupported request field: ${key}`);
   }
@@ -41,6 +41,42 @@ function validateRequest() {
   }
   if (request.selector != null && (typeof request.selector !== "string" || request.selector.length < 1 || request.selector.length > 220)) {
     fail("selector must be 1-220 characters when supplied.");
+  }
+  if (request.journeys != null) {
+    if (!Array.isArray(request.journeys) || request.journeys.length < 1 || request.journeys.length > 20) {
+      fail("journeys must contain 1-20 interaction journeys when supplied.");
+    }
+    let totalSteps = 0;
+    const journeyNames = new Set();
+    for (const journey of request.journeys) {
+      if (!journey || typeof journey !== "object" || Array.isArray(journey)) fail("Each journey must be an object.");
+      if (Object.keys(journey).some(key => !["name", "steps", "captureSelector"].includes(key))) fail("Unsupported journey field.");
+      if (typeof journey.name !== "string" || !/^[A-Za-z0-9._-]{1,60}$/.test(journey.name)) {
+        fail("Journey names must be 1-60 safe filename characters.");
+      }
+      if (journeyNames.has(journey.name)) fail("Journey names must be unique.");
+      journeyNames.add(journey.name);
+      if (journey.captureSelector != null &&
+          (typeof journey.captureSelector !== "string" || journey.captureSelector.length < 1 || journey.captureSelector.length > 220)) {
+        fail("captureSelector must be 1-220 characters when supplied.");
+      }
+      if (!Array.isArray(journey.steps) || journey.steps.length < 1 || journey.steps.length > 30) {
+        fail("Each journey must contain 1-30 steps.");
+      }
+      totalSteps += journey.steps.length;
+      for (const step of journey.steps) {
+        if (!step || typeof step !== "object" || Array.isArray(step)) fail("Each journey step must be an object.");
+        if (Object.keys(step).some(key => !["action", "selector", "label"].includes(key))) fail("Unsupported journey step field.");
+        if (step.action !== "click") fail("Journey step action must be click.");
+        if (typeof step.selector !== "string" || step.selector.length < 1 || step.selector.length > 220) {
+          fail("Journey step selector must be 1-220 characters.");
+        }
+        if (step.label != null && (typeof step.label !== "string" || step.label.length < 1 || step.label.length > 80)) {
+          fail("Journey step label must be 1-80 characters when supplied.");
+        }
+      }
+    }
+    if (totalSteps > 100) fail("A request may contain at most 100 total journey steps.");
   }
   if (!Array.isArray(request.viewports) || request.viewports.length < 1 || request.viewports.length > 8) {
     fail("viewports must contain 1-8 configured viewport names.");
@@ -261,6 +297,120 @@ if (!targetAllows(target, url.toString())) fail("Resolved target URL is outside 
 
 const deployment = await waitForDeploymentProbes(target, request.deploymentProbes || null);
 
+async function settlePageImages(page, timeoutMs = 1800) {
+  await page.evaluate(async timeout => {
+    if (document.fonts?.ready) await document.fonts.ready.catch(() => {});
+    const pending = [...document.images].filter(img => !img.complete);
+    if (!pending.length) return;
+    await Promise.race([
+      Promise.all(pending.map(img => new Promise(resolve => {
+        img.addEventListener("load", resolve, { once: true });
+        img.addEventListener("error", resolve, { once: true });
+      }))),
+      new Promise(resolve => setTimeout(resolve, timeout))
+    ]);
+  }, timeoutMs).catch(() => {});
+}
+
+async function journeyHealth(page) {
+  return page.evaluate(() => {
+    const root = document.documentElement;
+    const body = document.body;
+    const brokenImages = [...document.images]
+      .filter(img => img.complete && img.naturalWidth === 0 &&
+        img.getBoundingClientRect().width > 0 && img.getBoundingClientRect().height > 0)
+      .slice(0, 20)
+      .map(img => ({
+        node: img.id ? "#" + img.id : img.className ? "img." + String(img.className).trim().split(/\s+/).slice(0, 2).join(".") : "img",
+        src: img.currentSrc ? new URL(img.currentSrc, location.href).pathname : ""
+      }));
+    return {
+      horizontalOverflowPx: Math.max(0, Math.max(root.scrollWidth, body?.scrollWidth || 0) - innerWidth),
+      brokenImages
+    };
+  });
+}
+
+async function runJourneys(page, viewportName, targetUrl) {
+  const journeys = [];
+  if (!request.journeys?.length) return journeys;
+  const viewportSlug = viewportName.replace(/[^A-Za-z0-9_-]/g, "-");
+  const waitMs = request.waitMs ?? 700;
+
+  for (const journey of request.journeys) {
+    const result = { name: journey.name, steps: [], ok: true };
+    await page.goto(targetUrl.toString(), { waitUntil: "domcontentloaded", timeout: 20000 });
+    await page.waitForLoadState("load", { timeout: 8000 }).catch(() => {});
+    await settlePageImages(page);
+    if (waitMs) await page.waitForTimeout(waitMs);
+
+    for (let i = 0; i < journey.steps.length; i++) {
+      const step = journey.steps[i];
+      const locator = page.locator(step.selector).first();
+      const stepResult = {
+        index: i + 1,
+        action: step.action,
+        selector: step.selector,
+        label: step.label || null,
+        screenshot: null,
+        focusScreenshot: null,
+        health: null,
+        error: null
+      };
+
+      try {
+        if (!(await locator.count())) throw new Error("selector not found");
+        await locator.scrollIntoViewIfNeeded();
+        await locator.click({ timeout: 6000 });
+        await page.waitForLoadState("domcontentloaded", { timeout: 3000 }).catch(() => {});
+        await settlePageImages(page, 1400);
+        await page.waitForTimeout(250);
+
+        const stepSlug = String(i + 1).padStart(2, "0");
+        const file = `journey-${viewportSlug}-${journey.name}-${stepSlug}.jpg`;
+        await page.screenshot({
+          path: path.join(OUT, file),
+          type: "jpeg",
+          quality: 86,
+          fullPage: false,
+          scale: "css"
+        });
+        stepResult.screenshot = file;
+
+        if (journey.captureSelector) {
+          const capture = page.locator(journey.captureSelector).first();
+          if (!(await capture.count())) throw new Error("captureSelector not found");
+          await capture.scrollIntoViewIfNeeded().catch(() => {});
+          const focusFile = `journey-focus-${viewportSlug}-${journey.name}-${stepSlug}.jpg`;
+          await capture.screenshot({
+            path: path.join(OUT, focusFile),
+            type: "jpeg",
+            quality: 88,
+            scale: "css"
+          });
+          stepResult.focusScreenshot = focusFile;
+        }
+
+        stepResult.health = await journeyHealth(page);
+        if (stepResult.health.horizontalOverflowPx > 2) {
+          throw new Error(`horizontal overflow after step: ${stepResult.health.horizontalOverflowPx}px`);
+        }
+        if (stepResult.health.brokenImages.length) {
+          throw new Error(`broken visible images after step: ${stepResult.health.brokenImages.length}`);
+        }
+      } catch (error) {
+        result.ok = false;
+        stepResult.error = scrubMessage(error?.message || error);
+      }
+
+      result.steps.push(stepResult);
+      if (!result.ok) break;
+    }
+    journeys.push(result);
+  }
+  return journeys;
+}
+
 const executablePath = process.env.CHROME_BIN || "/usr/bin/google-chrome";
 if (!fs.existsSync(executablePath)) fail(`Chrome not found at ${executablePath}`);
 
@@ -280,7 +430,8 @@ const report = {
     viewports: request.viewports,
     fullPage: request.fullPage === true,
     waitMs: request.waitMs ?? 700,
-    deploymentProbes: request.deploymentProbes || null
+    deploymentProbes: request.deploymentProbes || null,
+    journeys: request.journeys || null
   },
   deployment,
   generatedAt: new Date().toISOString(),
@@ -383,18 +534,7 @@ try {
       fail(`Final navigation left the allowlist: ${safeUrl(page.url())}`);
     }
 
-    await page.evaluate(async () => {
-      if (document.fonts?.ready) await document.fonts.ready.catch(() => {});
-      const pending = [...document.images].filter(img => !img.complete);
-      if (!pending.length) return;
-      await Promise.race([
-        Promise.all(pending.map(img => new Promise(resolve => {
-          img.addEventListener("load", resolve, { once: true });
-          img.addEventListener("error", resolve, { once: true });
-        }))),
-        new Promise(resolve => setTimeout(resolve, 1800))
-      ]);
-    }).catch(() => {});
+    await settlePageImages(page);
 
     const waitMs = request.waitMs ?? 700;
     if (waitMs) await page.waitForTimeout(waitMs);
@@ -644,6 +784,15 @@ try {
     if (badResponses.length) warnings.push(`first-party HTTP 4xx/5xx responses: ${badResponses.length}`);
     if (request.selector && !focus) warnings.push("focus selector not found");
 
+    const journeys = await runJourneys(page, viewportName, url);
+    for (const journey of journeys) {
+      if (!journey.ok) {
+        const failed = journey.steps.find(step => step.error);
+        criticalIssues.push(`journey ${journey.name} failed at step ${failed?.index ?? "?"}: ${failed?.error || "unknown error"}`);
+      }
+    }
+    if (journeys.some(journey => !journey.ok)) report.ok = false;
+
     report.results.push({
       viewport: viewportName,
       size: viewport,
@@ -652,13 +801,14 @@ try {
       title: await page.title(),
       files: { viewport: viewportFile, focus: focusFile, fullPage: fullPageFile },
       diagnostics,
+      journeys,
       console: consoleEvents.slice(0, 20),
       pageErrors: pageErrors.slice(0, 20),
       failedRequests: failedRequests.slice(0, 20),
       badResponses: badResponses.slice(0, 20),
       networkHosts: [...networkHosts].sort().slice(0, 80),
       criticalIssues,
-      warnings
+      warnings: warnings.concat(journeys.filter(journey => !journey.ok).map(journey => `journey failed: ${journey.name}`))
     });
 
     if (criticalIssues.length) report.ok = false;
@@ -691,6 +841,11 @@ for (const result of report.results) {
   lines.push(`- Screenshot: \`${result.files.viewport}\``);
   if (result.files.focus) lines.push(`- Focus screenshot: \`${result.files.focus}\``);
   if (result.files.fullPage) lines.push(`- Full page: \`${result.files.fullPage}\``);
+  if (result.journeys?.length) {
+    const stepCount = result.journeys.reduce((sum, journey) => sum + journey.steps.length, 0);
+    const passed = result.journeys.filter(journey => journey.ok).length;
+    lines.push(`- Interaction journeys: ${passed}/${result.journeys.length} passed; ${stepCount} step screenshot(s)`);
+  }
   lines.push(`- HTTP status: ${result.status ?? "unknown"}`);
   lines.push(`- Horizontal overflow: ${result.diagnostics.horizontalOverflowPx}px`);
   lines.push(`- Broken visible images: ${result.diagnostics.brokenImages.length}`);
