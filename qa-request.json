@@ -1,12 +1,12 @@
 {
-  "requestId": "merch-exhaustive-desktop-20261001-r2",
+  "requestId": "merch-exhaustive-desktop-20261001-r3",
   "target": "hipdiscovery",
   "path": "/merch",
   "selector": ".merch-product-layout",
   "deploymentProbes": [
     {
       "path": "/css/pages/merch.css",
-      "gitBlobSha": "de82734adc3898b17afe1b21b38df9dccf4a9d64"
+      "gitBlobSha": "513aebf1bbe9a1b88e1c15fca9be609beb06c987"
     },
     {
       "path": "/js/pages/merch.js",
