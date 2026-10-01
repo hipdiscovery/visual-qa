@@ -10,8 +10,10 @@ This repository does **not** contain HipDiscovery's private application or websi
 2. Add one or more `deploymentProbes` for the public CSS/JS/HTML assets changed by the private source commit. Use the private repo's Git blob SHA for each asset; only the hashes and public paths are copied here.
 3. The `Visual QA` workflow waits until those exact public asset bytes are live, then renders the requested page.
 4. Download the single `visual-qa-<run id>` artifact.
-5. **Actually inspect the screenshots.** The JSON diagnostics are a second layer, not a replacement for visual judgement.
-6. Iterate in the source repo if the UI looks wrong.
+5. **Actually inspect every impacted screenshot.** The JSON diagnostics are a second layer, not a replacement for visual judgement.
+6. For interactive changes, define `journeys` that exercise every changed/new control and every distinct resulting visual state, including nested controls revealed by earlier steps. Final approval is not a landing-page spot-check.
+7. Review all responsive layouts that the change can affect. If a state changes composition at a breakpoint, that state must be exercised at that breakpoint.
+8. Iterate in the source repo if anything looks wrong; rerun the impacted states until the full affected surface is clean.
 
 After a render produces its own artifact, a separate narrowly privileged cleanup job deletes older Visual QA artifacts and completed runs. If rendering fails before a replacement artifact exists, the previous result is preserved. The browser/render job has no repository permissions. The current artifact has a one-day fallback retention period, so generated screenshots do not become a permanent public archive.
 
@@ -37,7 +39,18 @@ Optional breakpoint probes are also configured for `mobile-large` (430 × 932), 
   ],
   "viewports": ["desktop-owner", "desktop-compact", "mobile", "mobile-small"],
   "fullPage": false,
-  "waitMs": 700
+  "waitMs": 700,
+  "journeys": [
+    {
+      "name": "filters-and-details",
+      "captureSelector": ".feature-panel",
+      "steps": [
+        {"action": "click", "selector": "[data-filter='new']", "label": "New filter"},
+        {"action": "click", "selector": "[data-item='example']", "label": "Open details"},
+        {"action": "click", "selector": "[data-tab='info']", "label": "Details info tab"}
+      ]
+    }
+  ]
 }
 ```
 
@@ -45,6 +58,8 @@ Optional breakpoint probes are also configured for `mobile-large` (430 × 932), 
 - HipDiscovery requests require `deploymentProbes`. Probe only public assets the target already serves. The runner computes the Git blob SHA from the deployed bytes and waits for an exact match, so no private commit SHA or source content is copied into this public repo.
 - `path` must be a plain path. Query strings, fragments, credentials, protocol-relative URLs, and arbitrary hosts are rejected.
 - `selector` is optional. The normal viewport screenshot is captured **before** any scrolling; when a selector is supplied, the runner then scrolls it into view, lets its images settle, and captures a separate focused screenshot.
+- `journeys` is optional and is the required mechanism for changed interactive flows. Each journey starts from a fresh page load, performs its click steps in order, captures the viewport after every step, optionally captures `captureSelector`, and fails if a step cannot be reached, a visible image breaks, or horizontal overflow appears.
+- Final visual approval requires a deliberate impact inventory first: every changed/new control, every distinct resulting state/screen, nested changed controls, relevant loading/empty/error/disabled states, and every responsive breakpoint that can change the composition. Representative sampling is not final approval.
 - `fullPage` is optional and defaults to `false`; viewport screenshots are faster and usually better for iterative UI work.
 - `waitMs` is capped to keep runs short.
 
