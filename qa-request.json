@@ -1,8 +1,8 @@
 {
-  "requestId": "merch-anchor-all-breakpoints-20261001-r2",
+  "requestId": "merch-final-exhaustive-20261001",
   "target": "hipdiscovery",
   "path": "/merch",
-  "selector": ".merch-feature-head",
+  "selector": ".merch-product-layout",
   "deploymentProbes": [
     {
       "path": "/css/pages/merch.css",
@@ -17,19 +17,341 @@
     "desktop-owner",
     "desktop-compact",
     "tablet",
+    "mobile-large",
     "mobile",
     "mobile-small"
   ],
-  "fullPage": false,
-  "waitMs": 500,
+  "fullPage": true,
+  "waitMs": 450,
   "journeys": [
     {
-      "name": "hero-to-product",
+      "name": "hero-jump",
       "steps": [
         {
           "action": "click",
           "selector": ".merch-primary",
           "label": "Hero button lands cleanly on product"
+        }
+      ]
+    },
+    {
+      "name": "341-design-and-views",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "[data-appearance=\"341\"]",
+          "label": "Navy Heather Gray front cyan Lost in south"
+        },
+        {
+          "action": "click",
+          "selector": "[data-print=\"white\"]",
+          "label": "Navy Heather Gray front white Lost in south"
+        },
+        {
+          "action": "click",
+          "selector": "[data-print=\"ink\"]",
+          "label": "Navy Heather Gray front black Lost in south"
+        },
+        {
+          "action": "click",
+          "selector": "[data-wordmark=\"blanka\"]",
+          "label": "Navy Heather Gray front black Blanka"
+        },
+        {
+          "action": "click",
+          "selector": "[data-print=\"cyan\"]",
+          "label": "Navy Heather Gray front cyan Blanka"
+        },
+        {
+          "action": "click",
+          "selector": "[data-print=\"white\"]",
+          "label": "Navy Heather Gray front white Blanka"
+        },
+        {
+          "action": "click",
+          "selector": "[data-merch-view=\"1\"]",
+          "label": "Navy Heather Gray back"
+        },
+        {
+          "action": "click",
+          "selector": "[data-merch-view=\"2\"]",
+          "label": "Navy Heather Gray right"
+        },
+        {
+          "action": "click",
+          "selector": "[data-merch-view=\"3\"]",
+          "label": "Navy Heather Gray left"
+        }
+      ]
+    },
+    {
+      "name": "289-design-and-views",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "[data-appearance=\"289\"]",
+          "label": "Sky Blue White front cyan Lost in south"
+        },
+        {
+          "action": "click",
+          "selector": "[data-print=\"white\"]",
+          "label": "Sky Blue White front white Lost in south"
+        },
+        {
+          "action": "click",
+          "selector": "[data-print=\"ink\"]",
+          "label": "Sky Blue White front black Lost in south"
+        },
+        {
+          "action": "click",
+          "selector": "[data-wordmark=\"blanka\"]",
+          "label": "Sky Blue White front black Blanka"
+        },
+        {
+          "action": "click",
+          "selector": "[data-print=\"cyan\"]",
+          "label": "Sky Blue White front cyan Blanka"
+        },
+        {
+          "action": "click",
+          "selector": "[data-print=\"white\"]",
+          "label": "Sky Blue White front white Blanka"
+        },
+        {
+          "action": "click",
+          "selector": "[data-merch-view=\"1\"]",
+          "label": "Sky Blue White back"
+        },
+        {
+          "action": "click",
+          "selector": "[data-merch-view=\"2\"]",
+          "label": "Sky Blue White right"
+        },
+        {
+          "action": "click",
+          "selector": "[data-merch-view=\"3\"]",
+          "label": "Sky Blue White left"
+        }
+      ]
+    },
+    {
+      "name": "551-design-and-views",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "[data-appearance=\"551\"]",
+          "label": "Heather Gray Navy front cyan Lost in south"
+        },
+        {
+          "action": "click",
+          "selector": "[data-print=\"white\"]",
+          "label": "Heather Gray Navy front white Lost in south"
+        },
+        {
+          "action": "click",
+          "selector": "[data-print=\"ink\"]",
+          "label": "Heather Gray Navy front black Lost in south"
+        },
+        {
+          "action": "click",
+          "selector": "[data-wordmark=\"blanka\"]",
+          "label": "Heather Gray Navy front black Blanka"
+        },
+        {
+          "action": "click",
+          "selector": "[data-print=\"cyan\"]",
+          "label": "Heather Gray Navy front cyan Blanka"
+        },
+        {
+          "action": "click",
+          "selector": "[data-print=\"white\"]",
+          "label": "Heather Gray Navy front white Blanka"
+        },
+        {
+          "action": "click",
+          "selector": "[data-merch-view=\"1\"]",
+          "label": "Heather Gray Navy back"
+        },
+        {
+          "action": "click",
+          "selector": "[data-merch-view=\"2\"]",
+          "label": "Heather Gray Navy right"
+        },
+        {
+          "action": "click",
+          "selector": "[data-merch-view=\"3\"]",
+          "label": "Heather Gray Navy left"
+        }
+      ]
+    },
+    {
+      "name": "400-design-and-views",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "[data-appearance=\"400\"]",
+          "label": "Black Heather Gray front cyan Lost in south"
+        },
+        {
+          "action": "click",
+          "selector": "[data-print=\"white\"]",
+          "label": "Black Heather Gray front white Lost in south"
+        },
+        {
+          "action": "click",
+          "selector": "[data-print=\"ink\"]",
+          "label": "Black Heather Gray front black Lost in south"
+        },
+        {
+          "action": "click",
+          "selector": "[data-wordmark=\"blanka\"]",
+          "label": "Black Heather Gray front black Blanka"
+        },
+        {
+          "action": "click",
+          "selector": "[data-print=\"cyan\"]",
+          "label": "Black Heather Gray front cyan Blanka"
+        },
+        {
+          "action": "click",
+          "selector": "[data-print=\"white\"]",
+          "label": "Black Heather Gray front white Blanka"
+        },
+        {
+          "action": "click",
+          "selector": "[data-merch-view=\"1\"]",
+          "label": "Black Heather Gray back"
+        },
+        {
+          "action": "click",
+          "selector": "[data-merch-view=\"2\"]",
+          "label": "Black Heather Gray right"
+        },
+        {
+          "action": "click",
+          "selector": "[data-merch-view=\"3\"]",
+          "label": "Black Heather Gray left"
+        }
+      ]
+    },
+    {
+      "name": "hero-hover",
+      "steps": [
+        {
+          "action": "hover",
+          "selector": ".merch-primary",
+          "label": "Hero CTA hover"
+        }
+      ]
+    },
+    {
+      "name": "hero-focus",
+      "steps": [
+        {
+          "action": "focus",
+          "selector": ".merch-primary",
+          "label": "Hero CTA keyboard focus"
+        }
+      ]
+    },
+    {
+      "name": "color-hover",
+      "steps": [
+        {
+          "action": "hover",
+          "selector": "[data-appearance=\"341\"]",
+          "label": "Garment color hover"
+        }
+      ]
+    },
+    {
+      "name": "color-focus",
+      "steps": [
+        {
+          "action": "focus",
+          "selector": "[data-appearance=\"341\"]",
+          "label": "Garment color keyboard focus"
+        }
+      ]
+    },
+    {
+      "name": "wordmark-hover",
+      "steps": [
+        {
+          "action": "hover",
+          "selector": "[data-wordmark=\"blanka\"]",
+          "label": "Wordmark hover"
+        }
+      ]
+    },
+    {
+      "name": "wordmark-focus",
+      "steps": [
+        {
+          "action": "focus",
+          "selector": "[data-wordmark=\"blanka\"]",
+          "label": "Wordmark keyboard focus"
+        }
+      ]
+    },
+    {
+      "name": "print-hover",
+      "steps": [
+        {
+          "action": "hover",
+          "selector": "[data-print=\"white\"]",
+          "label": "Print color hover"
+        }
+      ]
+    },
+    {
+      "name": "print-focus",
+      "steps": [
+        {
+          "action": "focus",
+          "selector": "[data-print=\"white\"]",
+          "label": "Print color keyboard focus"
+        }
+      ]
+    },
+    {
+      "name": "view-hover",
+      "steps": [
+        {
+          "action": "hover",
+          "selector": "[data-merch-view=\"1\"]",
+          "label": "Gallery view hover"
+        }
+      ]
+    },
+    {
+      "name": "view-focus",
+      "steps": [
+        {
+          "action": "focus",
+          "selector": "[data-merch-view=\"1\"]",
+          "label": "Gallery view keyboard focus"
+        }
+      ]
+    },
+    {
+      "name": "policy-focus",
+      "steps": [
+        {
+          "action": "focus",
+          "selector": ".merch-policy-note a",
+          "label": "Policy link keyboard focus"
+        }
+      ]
+    },
+    {
+      "name": "image-error",
+      "steps": [
+        {
+          "action": "dispatch",
+          "selector": "[data-garment-image]",
+          "label": "Product image failure state",
+          "event": "error"
         }
       ]
     }
