@@ -18,7 +18,7 @@ for (const file of qaScripts) {
   if (checked.status !== 0) fail(`${file} does not parse: ${checked.stderr || checked.stdout}`);
 }
 
-for (const testFile of ["qa/diagnostic-policy.test.mjs", "qa/visual-diff-review.test.mjs"]) {
+for (const testFile of ["qa/diagnostic-policy.test.mjs", "qa/visual-diff-review.test.mjs", "qa/journey-contract.test.mjs"]) {
   const contract = spawnSync(process.execPath, [testFile], { encoding: "utf8" });
   if (contract.status !== 0) fail(`${testFile} failed: ${contract.stderr || contract.stdout}`);
 }
