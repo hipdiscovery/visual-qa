@@ -1,5 +1,5 @@
 {
-  "requestId": "leaderboard-community-polish-20261001-final",
+  "requestId": "leaderboard-community-polish-20261001-final2",
   "target": "hipdiscovery",
   "path": "/leaderboard",
   "selector": "#sup-points",
@@ -10,7 +10,7 @@
     },
     {
       "path": "/css/pages/supporters.css",
-      "gitBlobSha": "c656a51a35a5bed4391a9f3c8701b45435c219ce"
+      "gitBlobSha": "6fbef20acded41dae80f8f4982bb8755e88cba4a"
     },
     {
       "path": "/supporters.html",
