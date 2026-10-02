@@ -1,5 +1,5 @@
 {
-  "requestId": "merch-launch-ready-final-20261002",
+  "requestId": "merch-launch-ready-final-r2-20261002",
   "target": "hipdiscovery",
   "path": "/merch",
   "selector": ".merch-catalog",
@@ -25,17 +25,12 @@
       "name": "launch-state",
       "steps": [
         {
-          "action": "focus",
-          "selector": "[data-launch-chip]",
-          "label": "Launch status"
-        },
-        {
           "action": "click",
           "selector": "[data-product-id=\"mens-premium-tee\"] [data-open-product]",
           "label": "Open remote product"
         },
         {
-          "action": "focus",
+          "action": "hover",
           "selector": "[data-checkout-status]",
           "label": "Checkout pending status"
         },
