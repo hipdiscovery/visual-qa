@@ -1,13 +1,9 @@
 {
-  "requestId": "leaderboard-community-polish-20261001-v2",
+  "requestId": "leaderboard-community-polish-20261001-v2b",
   "target": "hipdiscovery",
   "path": "/leaderboard",
   "selector": "#sup-points",
   "deploymentProbes": [
-    {
-      "path": "/supporters.html",
-      "gitBlobSha": "f2a1d62674c6faf657c724e7a9973144584b6fc7"
-    },
     {
       "path": "/css/pages/supporters.css",
       "gitBlobSha": "0fd40d6ca3e80446f010e67686d7ade44a985595"
