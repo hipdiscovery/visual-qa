@@ -1,16 +1,20 @@
 {
-  "requestId": "leaderboard-subs-rewards-polish-20261002-final",
+  "requestId": "leaderboard-compact-support-community-20261002",
   "target": "hipdiscovery",
   "path": "/leaderboard",
-  "selector": ".sup-leaderboard-shell",
+  "selector": "main",
   "deploymentProbes": [
     {
-      "path": "/js/pages/supporters.js",
-      "gitBlobSha": "9571e39acceed317f7acbb44bc76e115cb5dfa7d"
+      "path": "/supporters.html",
+      "gitBlobSha": "a2f9770441e9e343c76aa77fccf30ff5355b0042"
     },
     {
       "path": "/css/pages/supporters.css",
-      "gitBlobSha": "67e78ddab6e36cf8238e981f59ec8beb1ba878d6"
+      "gitBlobSha": "07beeb07d1432df9d8b611f7c68f3046f9d129f5"
+    },
+    {
+      "path": "/js/pages/supporters.js",
+      "gitBlobSha": "8df23dca4b83ab141a912de00b96594ea50093bd"
     }
   ],
   "viewports": [
@@ -23,5 +27,5 @@
     "mobile-small"
   ],
   "fullPage": true,
-  "waitMs": 1700
+  "waitMs": 1800
 }
