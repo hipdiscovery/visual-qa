@@ -1,16 +1,20 @@
 {
-  "requestId": "leaderboard-profiles-empty-states-20261001-final",
+  "requestId": "leaderboard-community-polish-20261001",
   "target": "hipdiscovery",
   "path": "/leaderboard",
   "selector": "#sup-points",
   "deploymentProbes": [
     {
       "path": "/js/pages/supporters.js",
-      "gitBlobSha": "94358133f718bea83f49053185ac3cfd19184724"
+      "gitBlobSha": "5f195c0c90b876137ef1d9c58988410ba0a0751c"
     },
     {
       "path": "/css/pages/supporters.css",
-      "gitBlobSha": "c114af8cdc01d6aa49426ba5d92e01562bc1a7d7"
+      "gitBlobSha": "c656a51a35a5bed4391a9f3c8701b45435c219ce"
+    },
+    {
+      "path": "/supporters.html",
+      "gitBlobSha": "0299b207820d9671200fab48e5dac1e4d7a4ba43"
     }
   ],
   "viewports": [
@@ -23,5 +27,5 @@
     "mobile-small"
   ],
   "fullPage": true,
-  "waitMs": 1200
+  "waitMs": 1400
 }
