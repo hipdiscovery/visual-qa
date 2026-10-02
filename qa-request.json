@@ -1,8 +1,8 @@
 {
-  "requestId": "home-balanced-first-viewport-pass1-20261002",
+  "requestId": "home-layout-metrics-pass1-20261002",
   "target": "hipdiscovery",
   "path": "/",
-  "selector": "#hero-games",
+  "selector": ".hero-content",
   "deploymentProbes": [
     {
       "path": "/css/pages/home.css",
@@ -11,11 +11,8 @@
   ],
   "viewports": [
     "desktop-owner",
-    "desktop-compact",
-    "desktop-narrow",
-    "mobile",
-    "mobile-small"
+    "desktop-compact"
   ],
   "fullPage": false,
-  "waitMs": 1200
+  "waitMs": 800
 }
