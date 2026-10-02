@@ -1,105 +1,27 @@
 {
-  "requestId": "merch-launch-ready-final-r2-20261002",
+  "requestId": "leaderboard-point-boss-throne-20261002",
   "target": "hipdiscovery",
-  "path": "/merch",
-  "selector": ".merch-catalog",
+  "path": "/leaderboard",
+  "selector": ".sup-points-card--boss",
   "deploymentProbes": [
     {
-      "path": "/css/pages/merch.css",
-      "gitBlobSha": "59ea656e0ef8b11f21e314a24a0f639cb6724d32"
+      "path": "/css/pages/supporters.css",
+      "gitBlobSha": "5671ecdccf7230651ca1d9edbe5d095bcfb50e33"
     },
     {
-      "path": "/js/pages/merch.js",
-      "gitBlobSha": "46dc69f4bdacfed46171c0ae6928f028dc8ed8c5"
+      "path": "/js/pages/supporters.js",
+      "gitBlobSha": "6b3e91a6d1bfc0397973efa7dfc02320ff308d37"
     }
   ],
   "viewports": [
     "desktop-owner",
+    "desktop-compact",
+    "desktop-narrow",
     "tablet",
+    "mobile-large",
+    "mobile",
     "mobile-small"
   ],
   "fullPage": true,
-  "waitMs": 500,
-  "journeys": [
-    {
-      "name": "launch-state",
-      "steps": [
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"mens-premium-tee\"] [data-open-product]",
-          "label": "Open remote product"
-        },
-        {
-          "action": "hover",
-          "selector": "[data-checkout-status]",
-          "label": "Checkout pending status"
-        },
-        {
-          "action": "click",
-          "selector": "[data-dialog-close]",
-          "label": "Close remote product"
-        }
-      ]
-    },
-    {
-      "name": "contrast-color-controls",
-      "steps": [
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-color=\"400\"]",
-          "label": "Black contrast hoodie"
-        },
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"contrast-hoodie\"] [data-open-product]",
-          "label": "Open contrast hoodie"
-        },
-        {
-          "action": "click",
-          "selector": "[data-detail-color=\"341\"]",
-          "label": "Navy contrast hoodie"
-        },
-        {
-          "action": "click",
-          "selector": "[data-detail-view=\"back\"]",
-          "label": "Back view"
-        },
-        {
-          "action": "click",
-          "selector": "[data-detail-view=\"front\"]",
-          "label": "Front view"
-        },
-        {
-          "action": "click",
-          "selector": "[data-dialog-close]",
-          "label": "Close contrast hoodie"
-        }
-      ]
-    },
-    {
-      "name": "fit-filters-smoke",
-      "steps": [
-        {
-          "action": "click",
-          "selector": "[data-fit-filter=\"Men\"]",
-          "label": "Men filter"
-        },
-        {
-          "action": "click",
-          "selector": "[data-fit-filter=\"Women\"]",
-          "label": "Women filter"
-        },
-        {
-          "action": "click",
-          "selector": "[data-fit-filter=\"Unisex\"]",
-          "label": "Unisex filter"
-        },
-        {
-          "action": "click",
-          "selector": "[data-fit-filter=\"All\"]",
-          "label": "All fits"
-        }
-      ]
-    }
-  ]
+  "waitMs": 1600
 }
