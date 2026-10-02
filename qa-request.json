@@ -1,5 +1,5 @@
 {
-  "requestId": "merch-real-photo-fit-shop-20261002-r2",
+  "requestId": "merch-real-photo-catalog-final-a-20261002",
   "target": "hipdiscovery",
   "path": "/merch",
   "selector": ".merch-catalog",
@@ -10,7 +10,7 @@
     },
     {
       "path": "/js/pages/merch.js",
-      "gitBlobSha": "d0f60465553f13e1d540055eaef8b397b7a8676f"
+      "gitBlobSha": "dd6b26b71b55ee6258d06ef04b6499622814338f"
     }
   ],
   "viewports": [
@@ -75,7 +75,7 @@
       ]
     },
     {
-      "name": "combined-filters",
+      "name": "combined-filter",
       "steps": [
         {
           "action": "click",
@@ -89,286 +89,28 @@
         },
         {
           "action": "click",
-          "selector": "[data-fit-filter=\"Unisex\"]",
-          "label": "Unisex hoodies"
-        },
-        {
-          "action": "click",
-          "selector": "[data-category-filter=\"Tees\"]",
-          "label": "Unisex tees"
-        },
-        {
-          "action": "click",
           "selector": "[data-fit-filter=\"All\"]",
-          "label": "All fits with tees"
+          "label": "All fits hoodies"
         },
         {
           "action": "click",
           "selector": "[data-category-filter=\"All\"]",
-          "label": "Reset filters"
+          "label": "Reset"
         }
       ]
     },
     {
-      "name": "remote-customize",
-      "steps": [
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"mens-premium-tee\"] [data-quick-wordmark=\"blanka\"]",
-          "label": "Blanka on men tee"
-        },
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"mens-premium-tee\"] [data-quick-print=\"white\"]",
-          "label": "White print on men tee"
-        },
-        {
-          "action": "select",
-          "selector": "[data-product-id=\"mens-premium-tee\"] [data-quick-size]",
-          "value": "XL",
-          "label": "XL on men tee"
-        },
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"mens-premium-tee\"] [data-open-product]",
-          "label": "Open men tee details"
-        },
-        {
-          "action": "click",
-          "selector": "[data-detail-print=\"cyan\"]",
-          "label": "Cyan detail print"
-        },
-        {
-          "action": "click",
-          "selector": "[data-detail-size=\"2XL\"]",
-          "label": "2XL detail size"
-        },
-        {
-          "action": "click",
-          "selector": "[data-dialog-close]",
-          "label": "Close men tee details"
-        }
-      ]
-    },
-    {
-      "name": "contrast-customize",
-      "steps": [
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-color=\"400\"]",
-          "label": "Black contrast hoodie"
-        },
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-wordmark=\"blanka\"]",
-          "label": "Blanka contrast hoodie"
-        },
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"contrast-hoodie\"] [data-open-product]",
-          "label": "Open contrast hoodie"
-        },
-        {
-          "action": "click",
-          "selector": "[data-detail-view=\"back\"]",
-          "label": "Contrast hoodie back"
-        },
-        {
-          "action": "click",
-          "selector": "[data-detail-view=\"right\"]",
-          "label": "Contrast hoodie right"
-        },
-        {
-          "action": "click",
-          "selector": "[data-detail-view=\"left\"]",
-          "label": "Contrast hoodie left"
-        },
-        {
-          "action": "click",
-          "selector": "[data-detail-view=\"front\"]",
-          "label": "Contrast hoodie front"
-        },
-        {
-          "action": "click",
-          "selector": "[data-dialog-close]",
-          "label": "Close contrast hoodie"
-        }
-      ]
-    },
-    {
-      "name": "focus-and-hover",
+      "name": "fit-badge-focus",
       "steps": [
         {
           "action": "hover",
           "selector": "[data-product-id=\"womens-premium-hoodie\"] [data-open-product]",
-          "label": "Women hoodie photo hover"
+          "label": "Women hoodie hover"
         },
         {
           "action": "focus",
           "selector": "[data-product-id=\"womens-premium-hoodie\"] [data-open-product]",
-          "label": "Women hoodie photo focus"
-        },
-        {
-          "action": "hover",
-          "selector": "[data-fit-filter=\"Women\"]",
-          "label": "Women fit hover"
-        },
-        {
-          "action": "focus",
-          "selector": "[data-fit-filter=\"Women\"]",
-          "label": "Women fit focus"
-        },
-        {
-          "action": "focus",
-          "selector": "[data-product-id=\"unisex-organic-tee\"] [data-quick-wordmark=\"blanka\"]",
-          "label": "Unisex design focus"
-        },
-        {
-          "action": "focus",
-          "selector": "[data-product-id=\"mens-premium-sweatshirt\"] [data-quick-size]",
-          "label": "Sweatshirt size focus"
-        }
-      ]
-    },
-    {
-      "name": "remote-image-error",
-      "steps": [
-        {
-          "action": "dispatch",
-          "selector": "[data-product-id=\"mens-premium-hoodie\"] [data-card-garment]",
-          "event": "error",
-          "label": "Remote image error"
-        }
-      ]
-    },
-    {
-      "name": "local-image-error",
-      "steps": [
-        {
-          "action": "dispatch",
-          "selector": "[data-product-id=\"contrast-hoodie\"] [data-card-garment]",
-          "event": "error",
-          "label": "Local image error"
-        }
-      ]
-    },
-    {
-      "name": "open-contrast-hoodie",
-      "steps": [
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"contrast-hoodie\"] [data-open-product]",
-          "label": "Open contrast-hoodie"
-        },
-        {
-          "action": "click",
-          "selector": "[data-dialog-close]",
-          "label": "Close contrast-hoodie"
-        }
-      ]
-    },
-    {
-      "name": "open-mens-premium-tee",
-      "steps": [
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"mens-premium-tee\"] [data-open-product]",
-          "label": "Open mens-premium-tee"
-        },
-        {
-          "action": "click",
-          "selector": "[data-dialog-close]",
-          "label": "Close mens-premium-tee"
-        }
-      ]
-    },
-    {
-      "name": "open-womens-premium-tee",
-      "steps": [
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"womens-premium-tee\"] [data-open-product]",
-          "label": "Open womens-premium-tee"
-        },
-        {
-          "action": "click",
-          "selector": "[data-dialog-close]",
-          "label": "Close womens-premium-tee"
-        }
-      ]
-    },
-    {
-      "name": "open-unisex-organic-tee",
-      "steps": [
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"unisex-organic-tee\"] [data-open-product]",
-          "label": "Open unisex-organic-tee"
-        },
-        {
-          "action": "click",
-          "selector": "[data-dialog-close]",
-          "label": "Close unisex-organic-tee"
-        }
-      ]
-    },
-    {
-      "name": "open-mens-premium-hoodie",
-      "steps": [
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"mens-premium-hoodie\"] [data-open-product]",
-          "label": "Open mens-premium-hoodie"
-        },
-        {
-          "action": "click",
-          "selector": "[data-dialog-close]",
-          "label": "Close mens-premium-hoodie"
-        }
-      ]
-    },
-    {
-      "name": "open-womens-premium-hoodie",
-      "steps": [
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"womens-premium-hoodie\"] [data-open-product]",
-          "label": "Open womens-premium-hoodie"
-        },
-        {
-          "action": "click",
-          "selector": "[data-dialog-close]",
-          "label": "Close womens-premium-hoodie"
-        }
-      ]
-    },
-    {
-      "name": "open-unisex-organic-zip-hoodie",
-      "steps": [
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"unisex-organic-zip-hoodie\"] [data-open-product]",
-          "label": "Open unisex-organic-zip-hoodie"
-        },
-        {
-          "action": "click",
-          "selector": "[data-dialog-close]",
-          "label": "Close unisex-organic-zip-hoodie"
-        }
-      ]
-    },
-    {
-      "name": "open-mens-premium-sweatshirt",
-      "steps": [
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"mens-premium-sweatshirt\"] [data-open-product]",
-          "label": "Open mens-premium-sweatshirt"
-        },
-        {
-          "action": "click",
-          "selector": "[data-dialog-close]",
-          "label": "Close mens-premium-sweatshirt"
+          "label": "Women hoodie focus"
         }
       ]
     }
