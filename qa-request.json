@@ -1,22 +1,25 @@
 {
-  "requestId": "merch-mobile-title-final-20261002",
+  "requestId": "home-approved-artwork-postcommit-20261002",
   "target": "hipdiscovery",
-  "path": "/merch",
-  "selector": ".merch-catalog",
+  "path": "/",
+  "selector": ".hero-content",
   "deploymentProbes": [
     {
-      "path": "/css/pages/merch.css",
-      "gitBlobSha": "ccc8e171f596ba162de8c762e18dbb7799bfa875"
+      "path": "/css/pages/home.css",
+      "gitBlobSha": "e49aad7c8ee8b491f218543f66cf8afe377bb120"
     },
     {
-      "path": "/js/pages/merch.js",
-      "gitBlobSha": "1691ef8269c5104d0420132b7d195697ebbd0636"
+      "path": "/index.html",
+      "gitBlobSha": "0e7efbb9c76efb7b770fd8823d86125ec5d2987a"
     }
   ],
   "viewports": [
+    "desktop-owner",
+    "desktop-compact",
+    "desktop-narrow",
     "mobile",
     "mobile-small"
   ],
-  "fullPage": true,
-  "waitMs": 550
+  "fullPage": false,
+  "waitMs": 1200
 }
