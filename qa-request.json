@@ -1,111 +1,21 @@
 {
-  "requestId": "merch-reliability-final-20261002",
+  "requestId": "home-balanced-first-viewport-pass2-20261002",
   "target": "hipdiscovery",
-  "path": "/merch",
-  "selector": ".merch-catalog",
+  "path": "/",
+  "selector": ".hero-content",
   "deploymentProbes": [
     {
-      "path": "/js/pages/merch.js",
-      "gitBlobSha": "acdef195073bc44b2927f71b9ba6f5ad79ca31ff"
+      "path": "/css/pages/home.css",
+      "gitBlobSha": "5e35235edb95969d00703a651473c361e0cc3fd8"
     }
   ],
   "viewports": [
     "desktop-owner",
     "desktop-compact",
-    "tablet",
-    "mobile-large",
+    "desktop-narrow",
     "mobile",
     "mobile-small"
   ],
-  "fullPage": true,
-  "waitMs": 650,
-  "journeys": [
-    {
-      "name": "launch-and-remote-product",
-      "steps": [
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"mens-premium-tee\"] [data-open-product]",
-          "label": "Open remote product"
-        },
-        {
-          "action": "hover",
-          "selector": "[data-checkout-status]",
-          "label": "Ordering pending status"
-        },
-        {
-          "action": "click",
-          "selector": "[data-dialog-close]",
-          "label": "Close remote product"
-        }
-      ]
-    },
-    {
-      "name": "supplier-image-failover",
-      "steps": [
-        {
-          "action": "dispatch",
-          "selector": "[data-product-id=\"mens-premium-tee\"] [data-card-garment]",
-          "event": "error",
-          "label": "Primary supplier image fails"
-        },
-        {
-          "action": "dispatch",
-          "selector": "[data-product-id=\"mens-premium-tee\"] [data-card-garment]",
-          "event": "error",
-          "label": "Fallback supplier image fails"
-        }
-      ]
-    },
-    {
-      "name": "filters-and-contrast",
-      "steps": [
-        {
-          "action": "click",
-          "selector": "[data-fit-filter=\"Men\"]",
-          "label": "Men filter"
-        },
-        {
-          "action": "click",
-          "selector": "[data-fit-filter=\"Women\"]",
-          "label": "Women filter"
-        },
-        {
-          "action": "click",
-          "selector": "[data-fit-filter=\"Unisex\"]",
-          "label": "Unisex filter"
-        },
-        {
-          "action": "click",
-          "selector": "[data-fit-filter=\"All\"]",
-          "label": "All fits"
-        },
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-color=\"400\"]",
-          "label": "Black contrast hoodie"
-        },
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"contrast-hoodie\"] [data-open-product]",
-          "label": "Open contrast hoodie"
-        },
-        {
-          "action": "click",
-          "selector": "[data-detail-color=\"341\"]",
-          "label": "Navy contrast hoodie"
-        },
-        {
-          "action": "click",
-          "selector": "[data-detail-view=\"back\"]",
-          "label": "Back view"
-        },
-        {
-          "action": "click",
-          "selector": "[data-dialog-close]",
-          "label": "Close contrast hoodie"
-        }
-      ]
-    }
-  ]
+  "fullPage": false,
+  "waitMs": 1000
 }
