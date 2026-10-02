@@ -1,21 +1,27 @@
 {
-  "requestId": "home-balanced-first-viewport-pass3-20261002",
+  "requestId": "leaderboard-subs-rewards-polish-20261002",
   "target": "hipdiscovery",
-  "path": "/",
-  "selector": ".hero-content",
+  "path": "/leaderboard",
+  "selector": "#sup-points",
   "deploymentProbes": [
     {
-      "path": "/css/pages/home.css",
-      "gitBlobSha": "5434dd596a156b9e39d436c17cd55a3e8962b305"
+      "path": "/js/pages/supporters.js",
+      "gitBlobSha": "dec85f77c40f41b356b04f4373ca07fc0a6523a9"
+    },
+    {
+      "path": "/css/pages/supporters.css",
+      "gitBlobSha": "f3549d8e67fcac3da78aa2aabad9c945c6a63303"
     }
   ],
   "viewports": [
     "desktop-owner",
     "desktop-compact",
     "desktop-narrow",
+    "tablet",
+    "mobile-large",
     "mobile",
     "mobile-small"
   ],
-  "fullPage": false,
-  "waitMs": 1000
+  "fullPage": true,
+  "waitMs": 1700
 }
