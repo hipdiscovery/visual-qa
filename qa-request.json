@@ -1,12 +1,12 @@
 {
-  "requestId": "home-balanced-first-viewport-pass2-20261002",
+  "requestId": "home-balanced-first-viewport-pass3-20261002",
   "target": "hipdiscovery",
   "path": "/",
   "selector": ".hero-content",
   "deploymentProbes": [
     {
       "path": "/css/pages/home.css",
-      "gitBlobSha": "5e35235edb95969d00703a651473c361e0cc3fd8"
+      "gitBlobSha": "5434dd596a156b9e39d436c17cd55a3e8962b305"
     }
   ],
   "viewports": [
