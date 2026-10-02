@@ -1,16 +1,12 @@
 {
-  "requestId": "leaderboard-point-boss-throne-20261002",
+  "requestId": "leaderboard-bottom-match-top-20261002",
   "target": "hipdiscovery",
   "path": "/leaderboard",
-  "selector": ".sup-points-card--boss",
+  "selector": "#sup-points",
   "deploymentProbes": [
     {
       "path": "/css/pages/supporters.css",
-      "gitBlobSha": "5671ecdccf7230651ca1d9edbe5d095bcfb50e33"
-    },
-    {
-      "path": "/js/pages/supporters.js",
-      "gitBlobSha": "6b3e91a6d1bfc0397973efa7dfc02320ff308d37"
+      "gitBlobSha": "1940e42ea0f180a9b47fae4c5fdc52299e8b73b2"
     }
   ],
   "viewports": [
@@ -23,5 +19,5 @@
     "mobile-small"
   ],
   "fullPage": true,
-  "waitMs": 1600
+  "waitMs": 1500
 }
