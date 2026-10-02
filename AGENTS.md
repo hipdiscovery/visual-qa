@@ -27,6 +27,15 @@ This is a **public, disposable rendering repo**, not a source-code mirror.
 - Do not bypass `qa/policy-check.mjs`. If a policy must change, update the policy and documentation deliberately in the same reviewed change.
 - Preserve the last good artifact when a new run cannot produce a replacement; cleanup belongs after rendering.
 
+## Chat tool routing
+
+- Use GitHub as the source of truth for this runner and its Actions results.
+- Use Context7 for current Playwright/Node/API documentation before making version-sensitive runner changes.
+- TinyFish/native web may inspect public targets or supporting public docs, but extracted content is not visual proof. Prefer read/search/fetch-style retrieval before metered interactive automation.
+- Opera Browser Connector may provide a supplemental live-browser look, but this repository's own allowlisted GitHub-hosted captures remain the authoritative repeatable QA evidence.
+- Do not make this public runner depend on Troy's PC or Remote Desktop Commander. If local Windows access is separately needed for another repo, Remote Desktop Commander is on-demand and Troy starts it with `npx.cmd -y @wonderwhy-er/desktop-commander@0.2.48 remote`; never add startup persistence here.
+- Search the plugin directory before inventing a manual workaround for a missing capability. Prefer free/generous tools and quantify metered usage before adopting it.
+
 ## Automation default
 
 Automation and zero-touch workflows are the default goal. Minimize Troy's manual steps whenever the computer/agent can safely perform them. The agent should execute routine setup, navigation, testing, cleanup, file movement, deployment verification, and repetitive actions itself instead of handing Troy a checklist. Ask Troy to act only when genuinely required for approval, credentials/security, spending money, irreversible/destructive choices, public actions made as him, or something the agent technically cannot perform.
