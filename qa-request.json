@@ -1,5 +1,5 @@
 {
-  "requestId": "merch-real-photo-catalog-final-a-20261002",
+  "requestId": "merch-real-photo-catalog-final-b-20261002",
   "target": "hipdiscovery",
   "path": "/merch",
   "selector": ".merch-catalog",
@@ -10,7 +10,7 @@
     },
     {
       "path": "/js/pages/merch.js",
-      "gitBlobSha": "dd6b26b71b55ee6258d06ef04b6499622814338f"
+      "gitBlobSha": "291d1c2fdc0811de8a28197d731a5b03198f827a"
     }
   ],
   "viewports": [
