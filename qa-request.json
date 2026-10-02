@@ -1,12 +1,12 @@
 {
-  "requestId": "home-before-spacing-fix-20261002",
+  "requestId": "home-balanced-first-viewport-pass1-20261002",
   "target": "hipdiscovery",
   "path": "/",
   "selector": "#hero-games",
   "deploymentProbes": [
     {
       "path": "/css/pages/home.css",
-      "gitBlobSha": "9fb6e6ecad918a40538d38316c62f2abcbf4bd39"
+      "gitBlobSha": "63226336b8a8962eab2bd95f08fbd23f0e288165"
     }
   ],
   "viewports": [
