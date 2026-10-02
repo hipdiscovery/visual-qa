@@ -1,23 +1,21 @@
 {
-  "requestId": "leaderboard-bottom-match-top-20261002",
+  "requestId": "home-before-spacing-fix-20261002",
   "target": "hipdiscovery",
-  "path": "/leaderboard",
-  "selector": "#sup-points",
+  "path": "/",
+  "selector": "#hero-games",
   "deploymentProbes": [
     {
-      "path": "/css/pages/supporters.css",
-      "gitBlobSha": "1940e42ea0f180a9b47fae4c5fdc52299e8b73b2"
+      "path": "/css/pages/home.css",
+      "gitBlobSha": "9fb6e6ecad918a40538d38316c62f2abcbf4bd39"
     }
   ],
   "viewports": [
     "desktop-owner",
     "desktop-compact",
     "desktop-narrow",
-    "tablet",
-    "mobile-large",
     "mobile",
     "mobile-small"
   ],
-  "fullPage": true,
-  "waitMs": 1500
+  "fullPage": false,
+  "waitMs": 1200
 }
