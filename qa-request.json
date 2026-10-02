@@ -1,8 +1,8 @@
 {
-  "requestId": "leaderboard-subs-rewards-polish-20261002-v3",
+  "requestId": "leaderboard-subs-rewards-polish-20261002-final",
   "target": "hipdiscovery",
   "path": "/leaderboard",
-  "selector": "#sup-points",
+  "selector": ".sup-leaderboard-shell",
   "deploymentProbes": [
     {
       "path": "/js/pages/supporters.js",
@@ -10,7 +10,7 @@
     },
     {
       "path": "/css/pages/supporters.css",
-      "gitBlobSha": "f73b7f5ca6f5280767f67abc7096784e8f48cf45"
+      "gitBlobSha": "67e78ddab6e36cf8238e981f59ec8beb1ba878d6"
     }
   ],
   "viewports": [
