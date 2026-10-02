@@ -1,5 +1,5 @@
 {
-  "requestId": "merch-real-photo-fit-shop-20261002",
+  "requestId": "merch-real-photo-fit-shop-20261002-r2",
   "target": "hipdiscovery",
   "path": "/merch",
   "selector": ".merch-catalog",
@@ -11,10 +11,6 @@
     {
       "path": "/js/pages/merch.js",
       "gitBlobSha": "d0f60465553f13e1d540055eaef8b397b7a8676f"
-    },
-    {
-      "path": "/merch.html",
-      "gitBlobSha": "5d71b3a6029b281beeadf797d72281541bfb836a"
     }
   ],
   "viewports": [
