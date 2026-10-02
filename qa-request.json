@@ -1,25 +1,24 @@
 {
-  "requestId": "home-approved-artwork-postcommit-20261002",
+  "requestId": "merch-hero-showcase-final-20261002",
   "target": "hipdiscovery",
-  "path": "/",
-  "selector": ".hero-content",
+  "path": "/merch",
+  "selector": ".merch-shop-head",
   "deploymentProbes": [
     {
-      "path": "/css/pages/home.css",
-      "gitBlobSha": "e49aad7c8ee8b491f218543f66cf8afe377bb120"
+      "path": "/merch.html",
+      "gitBlobSha": "cdb2b46a69f888daab3dc382e0c19d5aed347df7"
     },
     {
-      "path": "/index.html",
-      "gitBlobSha": "0e7efbb9c76efb7b770fd8823d86125ec5d2987a"
+      "path": "/css/pages/merch.css",
+      "gitBlobSha": "73bbbca35dabcff21e48fe04a1d3249040f2486a"
     }
   ],
   "viewports": [
     "desktop-owner",
     "desktop-compact",
-    "desktop-narrow",
     "mobile",
     "mobile-small"
   ],
-  "fullPage": false,
-  "waitMs": 1200
+  "fullPage": true,
+  "waitMs": 550
 }
