@@ -1,103 +1,59 @@
 {
-  "requestId": "merch-13-product-details-final-20261002",
+  "requestId": "merch-launch-ready-final-20261002",
   "target": "hipdiscovery",
   "path": "/merch",
   "selector": ".merch-catalog",
   "deploymentProbes": [
     {
       "path": "/css/pages/merch.css",
-      "gitBlobSha": "0bbe8f8260b61aaab19f8f13ef8daa31e6711901"
+      "gitBlobSha": "59ea656e0ef8b11f21e314a24a0f639cb6724d32"
     },
     {
       "path": "/js/pages/merch.js",
-      "gitBlobSha": "cb3c50586c9e40473be82eaebc12c4fdec4c6af1"
+      "gitBlobSha": "46dc69f4bdacfed46171c0ae6928f028dc8ed8c5"
     }
   ],
   "viewports": [
     "desktop-owner",
-    "desktop-compact",
     "tablet",
-    "mobile-large",
-    "mobile",
     "mobile-small"
   ],
-  "fullPage": false,
+  "fullPage": true,
   "waitMs": 500,
   "journeys": [
     {
-      "name": "mens-tee-customize",
+      "name": "launch-state",
       "steps": [
         {
-          "action": "click",
-          "selector": "[data-product-id=\"mens-premium-tee\"] [data-quick-wordmark=\"blanka\"]",
-          "label": "Men tee Blanka"
-        },
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"mens-premium-tee\"] [data-quick-print=\"white\"]",
-          "label": "Men tee white print"
-        },
-        {
-          "action": "select",
-          "selector": "[data-product-id=\"mens-premium-tee\"] [data-quick-size]",
-          "value": "XL",
-          "label": "Men tee XL"
+          "action": "focus",
+          "selector": "[data-launch-chip]",
+          "label": "Launch status"
         },
         {
           "action": "click",
           "selector": "[data-product-id=\"mens-premium-tee\"] [data-open-product]",
-          "label": "Open men tee"
+          "label": "Open remote product"
+        },
+        {
+          "action": "focus",
+          "selector": "[data-checkout-status]",
+          "label": "Checkout pending status"
         },
         {
           "action": "click",
           "selector": "[data-dialog-close]",
-          "label": "Close men tee"
+          "label": "Close remote product"
         }
       ]
     },
     {
-      "name": "womens-hoodie-detail",
+      "name": "contrast-color-controls",
       "steps": [
         {
           "action": "click",
-          "selector": "[data-product-id=\"womens-premium-hoodie\"] [data-open-product]",
-          "label": "Open women hoodie"
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-color=\"400\"]",
+          "label": "Black contrast hoodie"
         },
-        {
-          "action": "click",
-          "selector": "[data-detail-size=\"2XL\"]",
-          "label": "Women hoodie 2XL"
-        },
-        {
-          "action": "click",
-          "selector": "[data-dialog-close]",
-          "label": "Close women hoodie"
-        }
-      ]
-    },
-    {
-      "name": "unisex-side-pocket-detail",
-      "steps": [
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"unisex-side-pocket-hoodie\"] [data-open-product]",
-          "label": "Open unisex side pocket hoodie"
-        },
-        {
-          "action": "click",
-          "selector": "[data-detail-wordmark=\"blanka\"]",
-          "label": "Unisex Blanka"
-        },
-        {
-          "action": "click",
-          "selector": "[data-dialog-close]",
-          "label": "Close unisex hoodie"
-        }
-      ]
-    },
-    {
-      "name": "contrast-multiview",
-      "steps": [
         {
           "action": "click",
           "selector": "[data-product-id=\"contrast-hoodie\"] [data-open-product]",
@@ -105,13 +61,18 @@
         },
         {
           "action": "click",
+          "selector": "[data-detail-color=\"341\"]",
+          "label": "Navy contrast hoodie"
+        },
+        {
+          "action": "click",
           "selector": "[data-detail-view=\"back\"]",
-          "label": "Contrast hoodie back"
+          "label": "Back view"
         },
         {
           "action": "click",
           "selector": "[data-detail-view=\"front\"]",
-          "label": "Contrast hoodie front"
+          "label": "Front view"
         },
         {
           "action": "click",
@@ -121,17 +82,27 @@
       ]
     },
     {
-      "name": "trucker-detail",
+      "name": "fit-filters-smoke",
       "steps": [
         {
           "action": "click",
-          "selector": "[data-product-id=\"trucker-hat\"] [data-open-product]",
-          "label": "Open trucker hat"
+          "selector": "[data-fit-filter=\"Men\"]",
+          "label": "Men filter"
         },
         {
           "action": "click",
-          "selector": "[data-dialog-close]",
-          "label": "Close trucker hat"
+          "selector": "[data-fit-filter=\"Women\"]",
+          "label": "Women filter"
+        },
+        {
+          "action": "click",
+          "selector": "[data-fit-filter=\"Unisex\"]",
+          "label": "Unisex filter"
+        },
+        {
+          "action": "click",
+          "selector": "[data-fit-filter=\"All\"]",
+          "label": "All fits"
         }
       ]
     }
