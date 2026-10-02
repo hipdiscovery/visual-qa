@@ -1,27 +1,107 @@
 {
-  "requestId": "leaderboard-compact-support-community-20261002-final",
+  "requestId": "merch-storefront-redesign-final-20261002",
   "target": "hipdiscovery",
-  "path": "/leaderboard",
-  "selector": "main",
+  "path": "/merch",
+  "selector": ".merch-catalog",
   "deploymentProbes": [
     {
-      "path": "/css/pages/supporters.css",
-      "gitBlobSha": "4876897f597f412f70054f4fce03f4aaae98589f"
+      "path": "/css/pages/merch.css",
+      "gitBlobSha": "360d21073c1c747f6afe6f0b29137de78b6cc8cc"
     },
     {
-      "path": "/js/pages/supporters.js",
-      "gitBlobSha": "891159a68f90e501b0218a2c9ad832105768b2d7"
+      "path": "/js/pages/merch.js",
+      "gitBlobSha": "1691ef8269c5104d0420132b7d195697ebbd0636"
     }
   ],
   "viewports": [
     "desktop-owner",
     "desktop-compact",
-    "desktop-narrow",
     "tablet",
-    "mobile-large",
     "mobile",
     "mobile-small"
   ],
   "fullPage": true,
-  "waitMs": 1800
+  "waitMs": 650,
+  "journeys": [
+    {
+      "name": "filters",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "[data-category-filter=\"Hoodies\"]",
+          "label": "Hoodies"
+        },
+        {
+          "action": "click",
+          "selector": "[data-fit-filter=\"Women\"]",
+          "label": "Women hoodies"
+        },
+        {
+          "action": "click",
+          "selector": "[data-fit-filter=\"All\"]",
+          "label": "All fits"
+        },
+        {
+          "action": "click",
+          "selector": "[data-category-filter=\"All\"]",
+          "label": "All products"
+        }
+      ]
+    },
+    {
+      "name": "customizer",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"mens-premium-tee\"] [data-open-product]",
+          "label": "Open product"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-wordmark=\"blanka\"]",
+          "label": "Blanka design"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-print=\"white\"]",
+          "label": "White print"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-size=\"XL\"]",
+          "label": "XL size"
+        },
+        {
+          "action": "click",
+          "selector": "[data-dialog-close]",
+          "label": "Close product"
+        }
+      ]
+    },
+    {
+      "name": "contrast-hoodie",
+      "steps": [
+        {
+          "action": "click",
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-open-product]",
+          "label": "Open contrast hoodie"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-color=\"400\"]",
+          "label": "Black hoodie"
+        },
+        {
+          "action": "click",
+          "selector": "[data-detail-view=\"back\"]",
+          "label": "Back view"
+        },
+        {
+          "action": "click",
+          "selector": "[data-dialog-close]",
+          "label": "Close hoodie"
+        }
+      ]
+    }
+  ]
 }
