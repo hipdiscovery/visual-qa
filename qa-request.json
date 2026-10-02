@@ -1,16 +1,20 @@
 {
-  "requestId": "leaderboard-community-polish-20261001-final3",
+  "requestId": "leaderboard-community-polish-20261001-v2",
   "target": "hipdiscovery",
   "path": "/leaderboard",
   "selector": "#sup-points",
   "deploymentProbes": [
     {
-      "path": "/js/pages/supporters.js",
-      "gitBlobSha": "fad69ced09cc9f61fe3320a4e7e449ec3f3a250e"
+      "path": "/supporters.html",
+      "gitBlobSha": "f2a1d62674c6faf657c724e7a9973144584b6fc7"
     },
     {
       "path": "/css/pages/supporters.css",
-      "gitBlobSha": "6fbef20acded41dae80f8f4982bb8755e88cba4a"
+      "gitBlobSha": "0fd40d6ca3e80446f010e67686d7ade44a985595"
+    },
+    {
+      "path": "/js/pages/supporters.js",
+      "gitBlobSha": "733568570c8592f7ff840ef352ed61ac63adafbd"
     }
   ],
   "viewports": [
