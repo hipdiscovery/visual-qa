@@ -1,5 +1,5 @@
 {
-  "requestId": "merch-real-photo-catalog-referrer-final-20261002",
+  "requestId": "merch-13-product-catalog-final-20261002",
   "target": "hipdiscovery",
   "path": "/merch",
   "selector": ".merch-catalog",
@@ -10,7 +10,7 @@
     },
     {
       "path": "/js/pages/merch.js",
-      "gitBlobSha": "d0407414ee67d803da2c17fb3c01546a162ce87d"
+      "gitBlobSha": "cb3c50586c9e40473be82eaebc12c4fdec4c6af1"
     }
   ],
   "viewports": [
@@ -66,6 +66,11 @@
           "action": "click",
           "selector": "[data-category-filter=\"Sweatshirts\"]",
           "label": "Sweatshirts"
+        },
+        {
+          "action": "click",
+          "selector": "[data-category-filter=\"Hats\"]",
+          "label": "Hats"
         },
         {
           "action": "click",
