@@ -1,13 +1,9 @@
 {
-  "requestId": "leaderboard-compact-support-community-20261002",
+  "requestId": "leaderboard-compact-support-community-20261002-v2",
   "target": "hipdiscovery",
   "path": "/leaderboard",
   "selector": "main",
   "deploymentProbes": [
-    {
-      "path": "/supporters.html",
-      "gitBlobSha": "a2f9770441e9e343c76aa77fccf30ff5355b0042"
-    },
     {
       "path": "/css/pages/supporters.css",
       "gitBlobSha": "07beeb07d1432df9d8b611f7c68f3046f9d129f5"
