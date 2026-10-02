@@ -1,13 +1,9 @@
 {
-  "requestId": "merch-hero-showcase-final-20261002",
+  "requestId": "merch-hero-showcase-final-b-20261002",
   "target": "hipdiscovery",
   "path": "/merch",
   "selector": ".merch-shop-head",
   "deploymentProbes": [
-    {
-      "path": "/merch.html",
-      "gitBlobSha": "cdb2b46a69f888daab3dc382e0c19d5aed347df7"
-    },
     {
       "path": "/css/pages/merch.css",
       "gitBlobSha": "73bbbca35dabcff21e48fe04a1d3249040f2486a"
