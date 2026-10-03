@@ -1,16 +1,16 @@
 {
-  "requestId": "merch-commerce-details-final-20261002",
+  "requestId": "merch-commerce-details-final-b-20261002",
   "target": "hipdiscovery",
   "path": "/merch",
   "selector": ".merch-catalog",
   "deploymentProbes": [
     {
       "path": "/css/pages/merch.css",
-      "gitBlobSha": "aff3bc061efc319789f132518ae571d4413e91e7"
+      "gitBlobSha": "277807ee1b12583a2191218adac23ce6c6601ff1"
     },
     {
       "path": "/js/pages/merch.js",
-      "gitBlobSha": "b17599875c5fbabd5935a144a782cb3ba191bd75"
+      "gitBlobSha": "71772805d5e6a62066f2b682e98260be8142891e"
     }
   ],
   "viewports": [
