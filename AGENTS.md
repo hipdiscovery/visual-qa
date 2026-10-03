@@ -6,7 +6,7 @@
 - Start every task from the latest `master`, work directly on `master`, and commit finished work directly to `master`.
 - Never use a tool or workflow that requires creating a side branch. Choose a direct-to-`master` path instead.
 - If a pre-existing non-`master` branch is discovered, inspect its unique work, reconcile any still-valid changes onto current `master`, then remove that branch. Do not leave branch-only work behind and do not keep the branch as an archive.
-- **`AGENTS.md` is the only agent instruction contract.** Do not add or recreate `AGENTS.md`, `CODEX.md`, `CHATGPT.md`, `.claude/`, `.codex/`, or any vendor-specific instruction mirror. Put shared instructions here; put deeper product/engineering documentation in neutral docs referenced from here.
+- **`AGENTS.md` is the only agent instruction contract.** Do not add or recreate `CLAUDE.md`, `CODEX.md`, `CHATGPT.md`, `.claude/`, `.codex/`, `.agents/`, or any vendor-specific instruction mirror. Put shared instructions here; put deeper product/engineering documentation in neutral docs referenced from here.
 - Git history is the archive. Do not create handoff/checkpoint files, old-version folders, backup copies, or dormant “just in case” code.
 ## Chat tool routing
 
