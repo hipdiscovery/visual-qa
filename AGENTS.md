@@ -17,6 +17,15 @@
 - Do not make this public runner depend on Troy's PC or Remote Desktop Commander. If local Windows access is separately needed for another repo, Remote Desktop Commander is on-demand and Troy starts it with `npx.cmd -y @wonderwhy-er/desktop-commander@0.2.48 remote`; never add startup persistence here.
 - Search the plugin directory before inventing a manual workaround for a missing capability. Prefer free/generous tools and quantify metered usage before adopting it.
 
+## Root-cause incident protocol
+
+- **Every real failure must be closed at the cause, not only at the symptom.** This includes failed builds/tests/deploys, runtime errors, regressions, broken automation, and repeated manual-repair incidents.
+- Read the **first real failing command/assertion/log line** before changing code. Identify both the technical root cause and the process/guard gap that allowed it through.
+- Fix the cause while preserving intended working behavior. Never weaken a true safety or functional contract merely to make a check green; if the test/fixture is wrong, correct it and make its preconditions self-validating.
+- Add recurrence prevention in the same incident at the right layer: a focused regression test, invariant/guard, shared source of truth, safer fixture/helper, dedupe/idempotence protection, or neutral documentation update. A symptom-only patch is incomplete.
+- Verify in order: the **exact failed check first**, then the repo's relevant complete gate, then the exact resulting current-`master` deploy/build/runtime check when applicable. Do not stack unrelated fixes while the incident is still unverified.
+- If a process gap contributed, update `AGENTS.md` and/or the relevant neutral project documentation in the same incident so the next agent does not repeat it.
+
 ## Automation default
 
 Automation and zero-touch workflows are the default goal. Minimize Troy's manual steps whenever the computer/agent can safely perform them. The agent should execute routine setup, navigation, testing, cleanup, file movement, deployment verification, and repetitive actions itself instead of handing Troy a checklist. Ask Troy to act only when genuinely required for approval, credentials/security, spending money, irreversible/destructive choices, public actions made as him, or something the agent technically cannot perform.
