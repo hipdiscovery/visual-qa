@@ -1,5 +1,14 @@
 # Visual QA agent contract
 
+## Non-negotiable Git rule: `master` only
+
+- **`master` is the only remote working branch.** Do not create, push, use, or leave any other remote branch — no `main`, feature, fix, review, task, preview, agent, temporary, or backup branches.
+- Start every repository task from the latest `master` and commit finished work directly to `master`.
+- A local throwaway branch/worktree is acceptable only if it is never pushed and its finished work is reconciled into `master` before the task ends.
+- If an existing non-`master` remote branch contains unique work, reconcile that work into current `master` before deleting it. Never discard branch-only work just to make the branch list clean.
+- Keep `.github/workflows/master-only.yml` enabled. It automatically absorbs a safe linear accidental branch into `master`, deletes branches already contained in `master`, and preserves/flags diverged branches instead of losing work.
+- Git history is the archive. Do not create handoff/checkpoint files, old-version folders, backup copies, version-suffixed duplicates, `.claude/` rule trees, or dormant “just in case” code.
+
 This is a **public, disposable rendering repo**, not a source-code mirror.
 
 - Never copy private source, configuration, credentials, cookies, auth headers, API keys, signed URLs, private preview URLs, user data, or screenshots containing private information into this repo.
@@ -40,13 +49,6 @@ This is a **public, disposable rendering repo**, not a source-code mirror.
 
 Automation and zero-touch workflows are the default goal. Minimize Troy's manual steps whenever the computer/agent can safely perform them. The agent should execute routine setup, navigation, testing, cleanup, file movement, deployment verification, and repetitive actions itself instead of handing Troy a checklist. Ask Troy to act only when genuinely required for approval, credentials/security, spending money, irreversible/destructive choices, public actions made as him, or something the agent technically cannot perform.
 
-## Git default: `master` only
-
-- The primary/default branch is **`master`**. Do not use `main`.
-- Do not create or keep long-lived side branches on GitHub.
-- Finish the task completely (run tests/checks as appropriate), then commit and push to **`master`**.
-- Integrate any useful unfinished remote-branch work into `master`, then delete the extras — side branches must not pile up.
-- Prefer automation / zero-touch (see above when present).
 
 ## Honest horizontal-scroll diagnostics
 
