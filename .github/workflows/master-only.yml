@@ -1,0 +1,48 @@
+name: Enforce master-only branches
+
+on:
+  create:
+  push:
+    branches-ignore:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  master-only:
+    if: github.event_name == 'push' || (github.event.ref_type == 'branch' && github.event.ref != 'master')
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Reconcile branch into master
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ github.event_name == 'create' && github.event.ref || github.ref_name }}
+        run: |
+          set -euo pipefail
+          if [[ "$BRANCH" == "master" || -z "$BRANCH" ]]; then exit 0; fi
+          work="$(mktemp -d)"
+          cd "$work"
+          git init -q
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git"
+          git fetch -q --no-tags origin "+refs/heads/master:refs/remotes/origin/master" "+refs/heads/${BRANCH}:refs/remotes/origin/side"
+          master_sha="$(git rev-parse refs/remotes/origin/master)"
+          branch_sha="$(git rev-parse refs/remotes/origin/side)"
+          if [[ "$branch_sha" == "$master_sha" ]] || git merge-base --is-ancestor "$branch_sha" "$master_sha"; then
+            echo "Branch has no work missing from master."
+          elif git merge-base --is-ancestor "$master_sha" "$branch_sha"; then
+            echo "Fast-forwarding master to preserve branch work."
+            git push -q origin "${branch_sha}:refs/heads/master"
+          else
+            echo "::error::${BRANCH} diverged from master. Preserving it so no work is lost. Reconcile it into master, then remove the branch."
+            exit 1
+          fi
+          if [[ "$BRANCH" == "main" ]]; then
+            echo "::warning::main is still the repository default branch. master has been synchronized, but GitHub will not allow this workflow to delete the default branch."
+            exit 0
+          fi
+          git push -q origin --delete "$BRANCH"
+          echo "Deleted non-master branch: $BRANCH"
