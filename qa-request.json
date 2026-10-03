@@ -1,12 +1,12 @@
 {
-  "requestId": "merch-commerce-details-final-b-20261002",
+  "requestId": "merch-commerce-details-final-c-20261002",
   "target": "hipdiscovery",
   "path": "/merch",
   "selector": ".merch-catalog",
   "deploymentProbes": [
     {
       "path": "/css/pages/merch.css",
-      "gitBlobSha": "277807ee1b12583a2191218adac23ce6c6601ff1"
+      "gitBlobSha": "8df548f344ec391c96d67f8229075c18607c73e0"
     },
     {
       "path": "/js/pages/merch.js",
@@ -28,8 +28,8 @@
       "steps": [
         {
           "action": "click",
-          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-color=\"400\"]",
-          "label": "Black garment"
+          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-color=\"341\"]",
+          "label": "Navy garment"
         },
         {
           "action": "click",
