@@ -1,41 +1,13 @@
 # Visual QA agent contract
 
-## Non-negotiable Git rule: `master` only
+## Non-negotiable repository rules
 
-- **`master` is the only remote working branch.** Do not create, push, use, or leave any other remote branch — no `main`, feature, fix, review, task, preview, agent, temporary, or backup branches.
-- Start every repository task from the latest `master` and commit finished work directly to `master`.
-- A local throwaway branch/worktree is acceptable only if it is never pushed and its finished work is reconciled into `master` before the task ends.
-- If an existing non-`master` remote branch contains unique work, reconcile that work into current `master` before deleting it. Never discard branch-only work just to make the branch list clean.
-- Keep `.github/workflows/master-only.yml` enabled. It automatically absorbs a safe linear accidental branch into `master`, deletes branches already contained in `master`, and preserves/flags diverged branches instead of losing work.
-- Git history is the archive. Do not create handoff/checkpoint files, old-version folders, backup copies, version-suffixed duplicates, `.claude/` rule trees, or dormant “just in case” code.
-
-This is a **public, disposable rendering repo**, not a source-code mirror.
-
-- Never copy private source, configuration, credentials, cookies, auth headers, API keys, signed URLs, private preview URLs, user data, or screenshots containing private information into this repo.
-- Only add a target after confirming its rendered URL is intentionally public and safe for anonymous viewing.
-- Keep target base URLs hard-coded in `qa/targets.json`. Do not add arbitrary URL input.
-- Keep QA requests path-only. Do not add query-string or header support as a shortcut.
-- Do not commit generated screenshots or reports. They belong only in the short-lived Actions artifact.
-- A visual change is verified only after an agent actually looks at the screenshots.
-- **Final visual approval means exhaustive impacted-state coverage, not a representative spot-check.** Before approval, inventory everything the change can visibly affect: the edited surface, every changed/new control, every resulting state or screen, nested controls revealed by those states, loading/empty/error/disabled states when applicable, and every responsive breakpoint that can change the composition. Exercise and inspect all of them. If a button opens a panel and that panel contains more changed buttons, the child states are part of the same required QA pass.
-- Use `journeys` in `qa-request.json` for changed interactive flows and visual states. Cover clicks plus any changed hover, focus, and controlled error states that have distinct visuals. Every named journey must reach its expected controls; the runner captures evidence after each step and fails the pass if a selector cannot be reached, a visible image is broken, or the page develops horizontal overflow.
-- Do not call a UI **visually approved**, **fully tested**, **done**, or **100%** from the initial viewport alone. Automated diagnostics are supporting evidence; spacing, hierarchy, alignment, crop/fit, text wrapping, visual balance, and polish must still be judged from every impacted screenshot.
-- Final coverage must be impact-based and complete. Test every distinct reachable visual state affected by the change. When combinations themselves alter layout or appearance, cover those combinations too; do not hide behind one happy-path example.
-- Troy's own later test is acceptance feedback, not the QA system. The agent should have already found and fixed bad spacing, wrapping, clipping, broken art, unreachable controls, and inconsistent states before asking him to look.
-- For targets requiring freshness, probe the exact public CSS/JS/HTML bytes changed by the private source commit and wait for their Git blob SHA(s) to match before opening the browser. Never copy private source or commit SHAs into this public repo.
-- Prefer viewport screenshots during iteration. Use full-page capture only when the task requires whole-page composition review.
-- Request only the viewports relevant to an iteration; use the full standard matrix for final responsive verification.
-- Keep the runner dependency-light. Use the Chrome already installed on GitHub's Ubuntu runner; do not download a browser on every run.
-- Do not add PR-triggered execution. Public pull requests must never cause this workflow to run with elevated permissions.
-- Keep workflow permissions minimal. The render job must remain `permissions: {}`; only the separate cleanup job may receive `actions: write`. Browser traffic stays read-only (GET/HEAD) and must never be given authentication material.
-- Each new run should purge prior QA artifacts/runs; one-day artifact retention is only a fallback.
-- After manual inspection, delete any downloaded artifact ZIPs and extracted screenshot directories from the agent's local/container workspace before completing the task. Screenshots are temporary QA evidence, not durable project files.
-- If cleanup or visual rendering cannot be verified, say so. Do not claim a visual pass from source inspection alone.
-- Capture the ordinary viewport before scrolling to a focus selector; focused screenshots are a second, separate view.
-- Keep deployment probes small and byte-stable. The runner enforces a 5 MiB cap per probe.
-- Do not bypass `qa/policy-check.mjs`. If a policy must change, update the policy and documentation deliberately in the same reviewed change.
-- Preserve the last good artifact when a new run cannot produce a replacement; cleanup belongs after rendering.
-
+- **`master` is the only branch, local or remote.** Do not create, check out, push, keep, or leave any other branch — no `main`, feature, fix, review, task, preview, agent, temporary, backup, or throwaway branches.
+- Start every task from the latest `master`, work directly on `master`, and commit finished work directly to `master`.
+- Never use a tool or workflow that requires creating a side branch. Choose a direct-to-`master` path instead.
+- If a pre-existing non-`master` branch is discovered, inspect its unique work, reconcile any still-valid changes onto current `master`, then remove that branch. Do not leave branch-only work behind and do not keep the branch as an archive.
+- **`AGENTS.md` is the only agent instruction contract.** Do not add or recreate `AGENTS.md`, `CODEX.md`, `CHATGPT.md`, `.claude/`, `.codex/`, or any vendor-specific instruction mirror. Put shared instructions here; put deeper product/engineering documentation in neutral docs referenced from here.
+- Git history is the archive. Do not create handoff/checkpoint files, old-version folders, backup copies, or dormant “just in case” code.
 ## Chat tool routing
 
 - Use GitHub as the source of truth for this runner and its Actions results.
