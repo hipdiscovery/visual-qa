@@ -1,5 +1,13 @@
 # Visual QA agent contract
 
+## No GitHub Actions
+
+- GitHub Actions is intentionally not part of this repository's workflow. Do not add, restore, enable, dispatch, or depend on `.github/workflows/`.
+- GitHub is for `master` source/history and release storage only. Run tests, builds, packaging, and validation locally on an authorized computer or on the product's existing non-GitHub platform when applicable.
+- Branch hygiene is enforced by the master-only agent rules, local updater/preflight scripts, and the scheduled ChatGPT GitHub audit — not by hosted runners.
+- If local/runtime verification is unavailable, say exactly what was not run; do not substitute a GitHub Action.
+
+
 ## Non-negotiable repository rules
 
 - **`master` is the only branch, local or remote.** Do not create, check out, push, keep, or leave any other branch — no `main`, feature, fix, review, task, preview, agent, temporary, backup, or throwaway branches.
