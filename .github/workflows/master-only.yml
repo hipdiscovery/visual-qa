@@ -13,9 +13,9 @@ jobs:
   master-only:
     if: github.event_name == 'push' || (github.event.ref_type == 'branch' && github.event.ref != 'master')
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 4
     steps:
-      - name: Reconcile branch into master
+      - name: Reconcile branch and sweep stale branches
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -23,26 +23,40 @@ jobs:
           BRANCH: ${{ github.event_name == 'create' && github.event.ref || github.ref_name }}
         run: |
           set -euo pipefail
-          if [[ "$BRANCH" == "master" || -z "$BRANCH" ]]; then exit 0; fi
+          if [[ -z "$BRANCH" || "$BRANCH" == "master" ]]; then exit 0; fi
           work="$(mktemp -d)"
           cd "$work"
           git init -q
           git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git"
-          git fetch -q --no-tags origin "+refs/heads/master:refs/remotes/origin/master" "+refs/heads/${BRANCH}:refs/remotes/origin/side"
+          git fetch -q --no-tags origin '+refs/heads/*:refs/remotes/origin/*'
+          default_branch="$(curl -fsSL -H "Authorization: Bearer ${GH_TOKEN}" -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2022-11-28' "https://api.github.com/repos/${REPO}" | python -c 'import json,sys; print(json.load(sys.stdin)["default_branch"])')"
           master_sha="$(git rev-parse refs/remotes/origin/master)"
-          branch_sha="$(git rev-parse refs/remotes/origin/side)"
-          if [[ "$branch_sha" == "$master_sha" ]] || git merge-base --is-ancestor "$branch_sha" "$master_sha"; then
-            echo "Branch has no work missing from master."
-          elif git merge-base --is-ancestor "$master_sha" "$branch_sha"; then
-            echo "Fast-forwarding master to preserve branch work."
-            git push -q origin "${branch_sha}:refs/heads/master"
-          else
-            echo "::error::${BRANCH} diverged from master. Preserving it so no work is lost. Reconcile it into master, then remove the branch."
-            exit 1
+          diverged=0
+          if git show-ref --verify --quiet "refs/remotes/origin/${BRANCH}"; then
+            branch_sha="$(git rev-parse "refs/remotes/origin/${BRANCH}")"
+            if [[ "$branch_sha" == "$master_sha" ]] || git merge-base --is-ancestor "$branch_sha" "$master_sha"; then
+              echo "${BRANCH}: no unique work missing from master."
+            elif git merge-base --is-ancestor "$master_sha" "$branch_sha"; then
+              echo "${BRANCH}: fast-forwarding master so branch work is preserved."
+              git push -q origin "${branch_sha}:refs/heads/master"
+              master_sha="$branch_sha"
+            else
+              echo "::error::${BRANCH} diverged from master. Preserving it so no work can be lost."
+              diverged=1
+            fi
           fi
-          if [[ "$BRANCH" == "main" ]]; then
-            echo "::warning::main is still the repository default branch. master has been synchronized, but GitHub will not allow this workflow to delete the default branch."
-            exit 0
+          while IFS= read -r candidate; do
+            [[ -z "$candidate" || "$candidate" == "master" || "$candidate" == "HEAD" ]] && continue
+            [[ "$candidate" == "$default_branch" ]] && continue
+            ref="refs/remotes/origin/${candidate}"
+            git show-ref --verify --quiet "$ref" || continue
+            candidate_sha="$(git rev-parse "$ref")"
+            if [[ "$candidate_sha" == "$master_sha" ]] || git merge-base --is-ancestor "$candidate_sha" "$master_sha"; then
+              echo "Deleting stale branch already contained in master: ${candidate}"
+              git push -q origin --delete "$candidate" || true
+            fi
+          done < <(git for-each-ref refs/remotes/origin --format='%(refname:strip=3)')
+          if [[ "$default_branch" != "master" ]]; then
+            echo "::warning::Repository default branch is '${default_branch}', not 'master'. Change the GitHub repository default to master; the guard will keep master synchronized meanwhile."
           fi
-          git push -q origin --delete "$BRANCH"
-          echo "Deleted non-master branch: $BRANCH"
+          exit "$diverged"
