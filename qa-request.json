@@ -1,16 +1,12 @@
 {
-  "requestId": "merch-commerce-details-final-c-20261002",
+  "requestId": "home-mobile-hero-compact-20261004",
   "target": "hipdiscovery",
-  "path": "/merch",
-  "selector": ".merch-catalog",
+  "path": "/",
+  "selector": ".hero",
   "deploymentProbes": [
     {
-      "path": "/css/pages/merch.css",
-      "gitBlobSha": "8df548f344ec391c96d67f8229075c18607c73e0"
-    },
-    {
-      "path": "/js/pages/merch.js",
-      "gitBlobSha": "71772805d5e6a62066f2b682e98260be8142891e"
+      "path": "/css/pages/home-live.css",
+      "gitBlobSha": "2add915fe8337eb5ef79fab466ac847fb131b531"
     }
   ],
   "viewports": [
@@ -20,83 +16,6 @@
     "mobile",
     "mobile-small"
   ],
-  "fullPage": true,
-  "waitMs": 700,
-  "journeys": [
-    {
-      "name": "quick-card-customization",
-      "steps": [
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-color=\"341\"]",
-          "label": "Navy garment"
-        },
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-print=\"white\"]",
-          "label": "White print"
-        },
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"contrast-hoodie\"] [data-quick-wordmark=\"blanka\"]",
-          "label": "Blanka design"
-        }
-      ]
-    },
-    {
-      "name": "premium-tee-product-detail",
-      "steps": [
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"mens-premium-tee\"] [data-open-product]",
-          "label": "Open premium tee"
-        },
-        {
-          "action": "click",
-          "selector": "[data-detail-wordmark=\"blanka\"]",
-          "label": "Blanka design"
-        },
-        {
-          "action": "click",
-          "selector": "[data-detail-print=\"white\"]",
-          "label": "White print"
-        },
-        {
-          "action": "click",
-          "selector": "[data-detail-size=\"XL\"]",
-          "label": "XL size"
-        }
-      ]
-    },
-    {
-      "name": "contrast-hoodie-product-detail",
-      "steps": [
-        {
-          "action": "click",
-          "selector": "[data-product-id=\"contrast-hoodie\"] [data-open-product]",
-          "label": "Open contrast hoodie"
-        },
-        {
-          "action": "click",
-          "selector": "[data-detail-color=\"400\"]",
-          "label": "Black garment"
-        },
-        {
-          "action": "click",
-          "selector": "[data-detail-print=\"white\"]",
-          "label": "White print"
-        },
-        {
-          "action": "click",
-          "selector": "[data-detail-size=\"XL\"]",
-          "label": "XL size"
-        },
-        {
-          "action": "click",
-          "selector": "[data-detail-view=\"back\"]",
-          "label": "Back view"
-        }
-      ]
-    }
-  ]
+  "fullPage": false,
+  "waitMs": 1200
 }
