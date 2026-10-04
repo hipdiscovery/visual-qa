@@ -15,6 +15,16 @@ Applies to ChatGPT, Codex, Grok, Muse and other assistants. Load this contract e
 - **Continuity:** keep one primary chat. Necessary transfers get one cumulative copyable handoff: outcome/latest feedback, decisions/reasons, repo/ref/commit and installation, files/evidence, completed work/checks, unverified stages/blockers and exact next action. Require an updated return handoff and indicate when chat can resume. Preserve useful failed approaches. Use Git history/existing neutral docs/issues, not duplicate handoff files or compulsory milestone transfers.
 - **Communication:** use short, plain outcomes with actual verification and installed/deployed status. Show concise progress; use temporary status where suitable. Do not hand routine coordination or available verification to the owner. Surface significant unresolved failures and genuine decisions.
 
+## File size and chat-only maintainability
+
+These are owner-selected engineering budgets, not provider upload limits or guarantees of complete AI context. For new hand-maintained source, tests and documentation, begin splitting at 16 KiB (16,384 UTF-8 bytes) or 250 lines; hard ceiling 24 KiB (24,576 bytes) or 400 lines, whichever is reached first. Root AGENTS.md: target 8 KiB/120 lines, ceiling 12 KiB/200 lines; keep core owner rules there and link focused specialist guides. Follow stricter applicable repository limits.
+
+Split by coherent responsibility, with clear names, interfaces and a short navigation index where useful. Keep related behavior together; avoid arbitrary numbered fragments, tiny-file proliferation, code minification, removed guidance or shortened identifiers to evade limits. Preserve behavior and run affected checks after extraction. Measure bytes and lines automatically with existing local validation when practical; no hosted Actions or metered monitor is needed. New-project validation must fail on unapproved over-limit hand-maintained files.
+
+Existing oversized files are legacy debt, not permission to enlarge them. Do not apply a blind repository-wide split: when touching one, safely reduce/extract the relevant responsibility or document a narrow temporary exception with reason and target; never delete useful work to meet a number. Generated/vendor files, lockfiles, media, datasets and compiled outputs are exempt from hand-maintained limits; keep them out of routine AI reads and offer scoped source/query access. Exceptions must be explicit and cannot be self-granted merely for convenience.
+
+Read relevant files in bounded chunks, inspect imports/call sites and check for truncation before editing; smaller files do not guarantee full context or tool access. Maintain one source of truth per rule/configuration, descriptive modules and a concise README map with exact local validation commands. Do not impose an arbitrary total-project file-count limit.
+
 ## No GitHub Actions
 
 - GitHub Actions is intentionally not part of this repository's workflow. Do not add, restore, enable, dispatch, or depend on `.github/workflows/`.
