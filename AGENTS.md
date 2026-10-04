@@ -108,3 +108,7 @@ For an unfamiliar API, platform capability, quota, auth flow, scraping surface, 
 
 When removing a feature, remove everything that exists only for it after any required one-time migration: modules, imports, constants, state, tests, docs, helper scripts, fixtures, comments, UI copy, and scheduler hooks. Search the current tree for old names/symbols/routes/files before calling removal complete. Preserve independently useful shared functionality. Git history is the archive.
 
+
+## Installed local file-budget check
+
+Before committing hand-maintained changes, run `python tools/checkFileSizes.py` (Windows: `py -3 tools/checkFileSizes.py`; systems with only python3: `python3 tools/checkFileSizes.py`). This offline read-only checker inspects tracked and unignored new supported text files. Run it alongside existing project checks; it does not replace them. `tools/fileSizeBaseline.json` records the measured inherited oversized files: neither bytes nor lines may grow. Remove a baseline entry when refactoring below its limit; do not regenerate/increase it to bypass a failure. Generated/dependency exclusions are explicitly listed in the checker; reviewed provenance is required before changing them. An exception requires the reason, bound, validation and removal condition established above. No hosted Actions or background monitoring is needed.

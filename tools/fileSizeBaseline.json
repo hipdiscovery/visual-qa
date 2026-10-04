@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "reason": "Inherited oversized files preserved at installation; no growth permitted.",
+  "removalCondition": "Remove each entry once the file is below both applicable hard ceilings.",
+  "legacy": {
+    "AGENTS.md": {
+      "bytes": 17216,
+      "lines": 114
+    },
+    "qa/run.mjs": {
+      "bytes": 39310,
+      "lines": 901
+    }
+  }
+}
