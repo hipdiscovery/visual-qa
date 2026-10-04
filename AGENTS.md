@@ -1,5 +1,17 @@
 # Visual QA agent contract
 
+## Cross-agent operating contract
+
+These owner rules apply to every assistant working here, including ChatGPT, Codex, Grok and Muse. `AGENTS.md` is the repository's shared entrypoint; client-specific project instructions handle conversation/mode preferences, not a competing engineering contract. A tool that does not discover this file automatically must be directed to read it before repository work. Never assume another assistant sees this chat or has the same tools.
+
+- **Hands-off outcome:** automate recurring manual steps and prevent recurring corrections. Own implementation, appropriate verification, integration and cleanup. Make routine engineering decisions; ask the owner for consequential spending, public actions, meaningful data loss, product direction or substantial visual choices. Preserve all existing safety and product contracts below.
+- **Chat-first capability check:** prefer the current chat and assume metered work-mode allowance may be unavailable. Inspect actual tools, connectors, files and permissions; discover relevant capabilities when supported and try reasonable available routes before escalation. Coding, screenshots, complexity and unfamiliarity alone do not require another mode. Complete independent work here. Escalate only for a concrete missing capability or a substantial reliability/effort advantage after considering usage; explain the exact remaining action. Do not claim access, a mode transfer or a test that did not occur.
+- **Prepare as a specialist:** each new session reads current `master`, this file, relevant specialist docs, affected code/tests and overlapping work. Investigate material knowledge gaps with current authoritative sources before acting. Scale research to uncertainty and consequence; reuse verified evidence instead of repeating extensive research for familiar tasks. Research is preparation, not proof of expertise or working behavior.
+- **Sustainable resource use:** prefer existing local/on-device, event-driven and non-usage-billed capabilities when suitable. Verify limits and terms; free is not automatically unlimited. Respect authorized allowances, avoid upgrades/overages, and examine AI/tool, API, build, hosting, storage and monitoring costs together. Cache safely, batch work, suppress duplicate requests and bound retries. Seek improvements that reduce several costs/failure points without weakening necessary verification. Delegate only when supported, authorized and materially beneficial; concurrent owner-started chats do not require spawning extra agents.
+- **Self-correct:** investigate and fix routine failures within scope rather than asking the owner to choose a backend remedy. Repair the cause and add proportionate recurrence prevention; verify the original failure and surrounding behavior. Use bounded recovery and existing signals. Do not hide errors, weaken valid checks or promise failures can never recur. New recurring monitors require authorization and should notify only on meaningful actionable changes.
+- **Communication:** keep results short, plain and outcome-first. State what changed, what was actually verified and whether it is installed/deployed. Do not make the owner coordinate implementation or manually verify what available tools can verify. Surface a concrete decision or blocker when action is needed; do not conceal significant unresolved failures.
+- **Compact continuity:** keep one primary conversation when practical. Transfer only when useful or required. Provide one cumulative, self-contained handoff with outcome/latest feedback, essential decisions and reasons, repository/ref/commit and installation location, relevant files/evidence, completed work, actual checks, unverified behavior/blockers and the exact scoped next action. The receiving execution agent must return the same updated summary, including GitHub-versus-live status, and state when ordinary chat can resume. Preserve useful failed approaches only when they prevent repeated mistakes. Use Git history and existing neutral docs/issues for durable state; do not create redundant handoff files or force a new chat at every milestone.
+
 ## No GitHub Actions
 
 - GitHub Actions is intentionally not part of this repository's workflow. Do not add, restore, enable, dispatch, or depend on `.github/workflows/`.
@@ -18,10 +30,10 @@
 - Git history is the archive. Do not create handoff/checkpoint files, old-version folders, backup copies, or dormant “just in case” code.
 ## Chat tool routing
 
-- Use GitHub as the source of truth for this runner and its Actions results.
+- Use GitHub as the source of truth for this runner source; retain actual locally produced QA evidence without depending on Actions.
 - Use Context7 for current Playwright/Node/API documentation before making version-sensitive runner changes.
 - TinyFish/native web may inspect public targets or supporting public docs, but extracted content is not visual proof. Prefer read/search/fetch-style retrieval before metered interactive automation.
-- Opera Browser Connector may provide a supplemental live-browser look, but this repository's own allowlisted GitHub-hosted captures remain the authoritative repeatable QA evidence.
+- Opera Browser Connector may provide a supplemental live-browser look, but this repository's own allowlisted locally produced captures remain the authoritative repeatable QA evidence.
 - Do not make this public runner depend on Troy's PC or Remote Desktop Commander. If local Windows access is separately needed for another repo, Remote Desktop Commander is on-demand and Troy starts it with `npx.cmd -y @wonderwhy-er/desktop-commander@0.2.48 remote`; never add startup persistence here.
 - Search the plugin directory before inventing a manual workaround for a missing capability. Prefer free/generous tools and quantify metered usage before adopting it.
 
@@ -56,8 +68,8 @@ Automation and zero-touch workflows are the default goal. Minimize Troy's manual
 
 - `qa/run.mjs`: check read-only browser navigation, allowlisted targets, viewport capture, deployment-byte probes, request bounds and errors before marking a render pass.
 - `qa/targets.json`, `qa-request.json`: never accept arbitrary destinations, private access tokens or unsafe new targets; test malformed and unexpected route values.
-- `qa/cleanup.mjs`: preserve the last good artifact when a replacement fails; avoid unbounded Actions storage.
-- `qa/policy-check.mjs` and `.github/workflows/visual-qa.yml`: keep minimal permissions, manual execution, bounded short-lived artifacts, and public-only content. Recheck policy on any workflow change.
+- `qa/cleanup.mjs`: preserve the last good artifact when a replacement fails; bound local artifact storage and retention.
+- `qa/policy-check.mjs`: preserve the allowlist, manual execution, bounded short-lived artifacts and public-only content. Run policy validation locally; do not restore the retired `.github/workflows/visual-qa.yml`.
 - Do not claim screenshots were reviewed if an agent only confirmed that the runner produced files.
 
 
