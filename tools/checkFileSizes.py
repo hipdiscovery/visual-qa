@@ -22,13 +22,17 @@ def limits(name):
 
 
 def measure(data):
-    return {"bytes": len(data), "lines": len(data.decode("utf-8-sig").splitlines())}
+    return {"bytes": len(data), "lines": len(data.decode("utf-8-sig").splitlines()),
+            "normalizedBytes": len(data.replace(b"\r\n", b"\n"))}
 
 
 def decision(name, size, legacy=None):
     soft_bytes, soft_lines, hard_bytes, hard_lines = limits(name)
     if size["bytes"] > hard_bytes or size["lines"] > hard_lines:
-        if legacy and size["bytes"] <= legacy["bytes"] and size["lines"] <= legacy["lines"]:
+        if (legacy and size["bytes"] <= legacy["bytes"]
+                and size["lines"] <= legacy["lines"]
+                and size.get("normalizedBytes", size["bytes"])
+                <= legacy.get("normalizedBytes", legacy["bytes"])):
             return "legacy"
         return "fail"
     if size["bytes"] >= soft_bytes or size["lines"] >= soft_lines:

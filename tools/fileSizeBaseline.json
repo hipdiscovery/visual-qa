@@ -1,15 +1,17 @@
 {
   "version": 1,
-  "reason": "Inherited oversized files preserved at installation; no growth permitted.",
+  "reason": "Inherited oversized files: no normalized-content or line growth; byte envelope permits Git LF/CRLF conversion only.",
   "removalCondition": "Remove each entry once the file is below both applicable hard ceilings.",
   "legacy": {
     "AGENTS.md": {
-      "bytes": 17216,
-      "lines": 114
+      "bytes": 17330,
+      "lines": 114,
+      "normalizedBytes": 17216
     },
     "qa/run.mjs": {
       "bytes": 39310,
-      "lines": 901
+      "lines": 901,
+      "normalizedBytes": 38409
     }
   }
 }
