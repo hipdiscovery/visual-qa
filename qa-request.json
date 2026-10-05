@@ -1,12 +1,12 @@
 {
-  "requestId": "merch-official-previews-20261005",
+  "requestId": "merch-premium-storefront-20261005",
   "target": "hipdiscovery",
   "path": "/merch",
   "selector": ".merch-catalog",
   "deploymentProbes": [
     {
-      "path": "/js/pages/merch.js",
-      "gitBlobSha": "3b8c7e4b6518ae11dc63faebc911b6233f016a86"
+      "path": "/css/pages/merch-premium.css",
+      "gitBlobSha": "a7674c140bf0d68e4eff727a88463736a86d8b77"
     }
   ],
   "viewports": [
@@ -18,10 +18,10 @@
     "mobile-small"
   ],
   "fullPage": true,
-  "waitMs": 1600,
+  "waitMs": 1800,
   "journeys": [
     {
-      "name": "official-product-preview",
+      "name": "premium-product-detail",
       "captureSelector": ".merch-detail-dialog",
       "steps": [
         {"action": "click", "selector": ".merch-card[data-product-id='mens-premium-tee'] [data-open-product]", "label": "Open premium tee"},
@@ -29,7 +29,7 @@
       ]
     },
     {
-      "name": "product-bag",
+      "name": "premium-bag",
       "captureSelector": ".merch-cart-dialog",
       "steps": [
         {"action": "click", "selector": ".merch-card[data-product-id='mens-premium-hoodie'] [data-open-product]", "label": "Open hoodie"},
@@ -38,7 +38,7 @@
       ]
     },
     {
-      "name": "responsive-filters",
+      "name": "premium-filters",
       "captureSelector": ".merch-catalog",
       "steps": [
         {"action": "click", "selector": "[data-category-filter='Hoodies']", "label": "Show hoodies"},
