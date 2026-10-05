@@ -1,21 +1,46 @@
 {
-  "requestId": "home-mobile-hero-compact-20261004",
+  "requestId": "merch-live-checkout-final-20261004",
   "target": "hipdiscovery",
-  "path": "/",
-  "selector": ".hero",
+  "path": "/merch",
+  "selector": ".merch-catalog",
   "deploymentProbes": [
     {
-      "path": "/css/pages/home-live.css",
-      "gitBlobSha": "2add915fe8337eb5ef79fab466ac847fb131b531"
+      "path": "/js/pages/merch.js",
+      "gitBlobSha": "4a2a74e9a1f972060b54e3302c63f6dba6005f6d"
     }
   ],
   "viewports": [
     "desktop-owner",
     "desktop-compact",
     "tablet",
+    "mobile-large",
     "mobile",
     "mobile-small"
   ],
-  "fullPage": false,
-  "waitMs": 1200
+  "fullPage": true,
+  "waitMs": 1200,
+  "journeys": [
+    {
+      "name": "product-bag-edit",
+      "captureSelector": ".merch-detail-dialog",
+      "steps": [
+        {"action": "click", "selector": ".merch-card[data-product-id='mens-premium-tee'] [data-open-product]", "label": "Open premium tee"},
+        {"action": "click", "selector": "[data-detail-size='XL']", "label": "Choose XL"},
+        {"action": "click", "selector": "[data-checkout-button]", "label": "Add to bag"},
+        {"action": "click", "selector": "[data-cart-inc]", "label": "Increase quantity"},
+        {"action": "click", "selector": "[data-cart-edit]", "label": "Edit bag item"},
+        {"action": "click", "selector": "[data-detail-size='L']", "label": "Change to L"},
+        {"action": "click", "selector": "[data-checkout-button]", "label": "Update bag"}
+      ]
+    },
+    {
+      "name": "responsive-filters",
+      "captureSelector": ".merch-catalog",
+      "steps": [
+        {"action": "click", "selector": "[data-category-filter='Hoodies']", "label": "Show hoodies"},
+        {"action": "click", "selector": "[data-fit-filter='Women']", "label": "Show women's hoodies"},
+        {"action": "click", "selector": "[data-reset-filters]", "label": "Reset filters"}
+      ]
+    }
+  ]
 }
