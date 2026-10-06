@@ -1,12 +1,16 @@
 {
-  "requestId": "merch-premium-storefront-20261005",
+  "requestId": "merch-research-polish-20261006",
   "target": "hipdiscovery",
   "path": "/merch",
   "selector": ".merch-catalog",
   "deploymentProbes": [
     {
-      "path": "/css/pages/merch-premium.css",
-      "gitBlobSha": "a7674c140bf0d68e4eff727a88463736a86d8b77"
+      "path": "/css/pages/merch-commerce.css",
+      "gitBlobSha": "c2a13e116888fe877f384c07f446838420241563"
+    },
+    {
+      "path": "/js/pages/merch-buying.js",
+      "gitBlobSha": "025ccb548a0a9af9238e511c84488c954c0a329b"
     }
   ],
   "viewports": [
@@ -18,31 +22,38 @@
     "mobile-small"
   ],
   "fullPage": true,
-  "waitMs": 1800,
+  "waitMs": 1000,
   "journeys": [
     {
-      "name": "premium-product-detail",
+      "name": "fit-guidance-pdp",
       "captureSelector": ".merch-detail-dialog",
       "steps": [
-        {"action": "click", "selector": ".merch-card[data-product-id='mens-premium-tee'] [data-open-product]", "label": "Open premium tee"},
+        {"action": "click", "selector": ".merch-card[data-product-id='womens-premium-tee'] [data-open-product]", "label": "Open women's premium tee"},
+        {"action": "click", "selector": "[data-detail-size='L']", "label": "Choose L"}
+      ]
+    },
+    {
+      "name": "shipping-returns-pdp",
+      "captureSelector": ".merch-detail-dialog",
+      "steps": [
+        {"action": "click", "selector": ".merch-card[data-product-id='mens-premium-hoodie'] [data-open-product]", "label": "Open men's hoodie"},
         {"action": "click", "selector": "[data-detail-size='XL']", "label": "Choose XL"}
       ]
     },
     {
-      "name": "premium-bag",
+      "name": "bag-no-surprises",
       "captureSelector": ".merch-cart-dialog",
       "steps": [
-        {"action": "click", "selector": ".merch-card[data-product-id='mens-premium-hoodie'] [data-open-product]", "label": "Open hoodie"},
-        {"action": "click", "selector": "[data-detail-size='L']", "label": "Choose L"},
+        {"action": "click", "selector": ".merch-card[data-product-id='mens-premium-tee'] [data-open-product]", "label": "Open premium tee"},
+        {"action": "click", "selector": "[data-detail-size='M']", "label": "Choose M"},
         {"action": "click", "selector": "[data-checkout-button]", "label": "Add to bag"}
       ]
     },
     {
-      "name": "premium-filters",
+      "name": "size-filter",
       "captureSelector": ".merch-catalog",
       "steps": [
-        {"action": "click", "selector": "[data-category-filter='Hoodies']", "label": "Show hoodies"},
-        {"action": "click", "selector": "[data-fit-filter='Women']", "label": "Show women's hoodies"},
+        {"action": "click", "selector": "[data-size-filter='5XL']", "label": "Filter 5XL"},
         {"action": "click", "selector": "[data-reset-filters]", "label": "Reset filters"}
       ]
     }
