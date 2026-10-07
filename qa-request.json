@@ -1,16 +1,20 @@
 {
-  "requestId": "merch-research-polish-20261006",
+  "requestId": "merch-variant-buying-flow-20261006",
   "target": "hipdiscovery",
   "path": "/merch",
-  "selector": ".merch-catalog",
+  "selector": ".merch-shop-head",
   "deploymentProbes": [
     {
-      "path": "/css/pages/merch-commerce.css",
-      "gitBlobSha": "c2a13e116888fe877f384c07f446838420241563"
+      "path": "/js/pages/merch-buying.js",
+      "gitBlobSha": "8ba5f06f02308b7840975b8d1b8fc0288147b657"
     },
     {
-      "path": "/js/pages/merch-buying.js",
-      "gitBlobSha": "025ccb548a0a9af9238e511c84488c954c0a329b"
+      "path": "/js/pages/merch-experience.js",
+      "gitBlobSha": "a7edead83ce438b00cbf0878f5eb30c6cf6a8e8c"
+    },
+    {
+      "path": "/css/pages/merch-experience.css",
+      "gitBlobSha": "667739f46fb554ee4e9a17e3ebcdb5f56e78d39d"
     }
   ],
   "viewports": [
@@ -22,8 +26,23 @@
     "mobile-small"
   ],
   "fullPage": true,
-  "waitMs": 1000,
+  "waitMs": 2600,
   "journeys": [
+    {
+      "name": "hero-next-look",
+      "captureSelector": ".merch-shop-head",
+      "steps": [
+        {"action": "click", "selector": "[data-hero-next]", "label": "Show next featured look"}
+      ]
+    },
+    {
+      "name": "catalog-variant-discovery",
+      "captureSelector": ".merch-catalog",
+      "steps": [
+        {"action": "click", "selector": ".merch-card[data-product-id='mens-premium-tee'] [data-open-product]", "label": "Open premium tee"},
+        {"action": "click", "selector": "[data-dialog-close]", "label": "Return to collection"}
+      ]
+    },
     {
       "name": "fit-guidance-pdp",
       "captureSelector": ".merch-detail-dialog",
@@ -33,28 +52,12 @@
       ]
     },
     {
-      "name": "shipping-returns-pdp",
-      "captureSelector": ".merch-detail-dialog",
-      "steps": [
-        {"action": "click", "selector": ".merch-card[data-product-id='mens-premium-hoodie'] [data-open-product]", "label": "Open men's hoodie"},
-        {"action": "click", "selector": "[data-detail-size='XL']", "label": "Choose XL"}
-      ]
-    },
-    {
-      "name": "bag-no-surprises",
+      "name": "bag-buying-flow",
       "captureSelector": ".merch-cart-dialog",
       "steps": [
-        {"action": "click", "selector": ".merch-card[data-product-id='mens-premium-tee'] [data-open-product]", "label": "Open premium tee"},
-        {"action": "click", "selector": "[data-detail-size='M']", "label": "Choose M"},
+        {"action": "click", "selector": ".merch-card[data-product-id='mens-premium-hoodie'] [data-open-product]", "label": "Open men's hoodie"},
+        {"action": "click", "selector": "[data-detail-size='L']", "label": "Choose L"},
         {"action": "click", "selector": "[data-checkout-button]", "label": "Add to bag"}
-      ]
-    },
-    {
-      "name": "size-filter",
-      "captureSelector": ".merch-catalog",
-      "steps": [
-        {"action": "click", "selector": "[data-size-filter='5XL']", "label": "Filter 5XL"},
-        {"action": "click", "selector": "[data-reset-filters]", "label": "Reset filters"}
       ]
     }
   ]
