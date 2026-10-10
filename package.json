@@ -8,5 +8,8 @@
   },
   "dependencies": {
     "playwright-core": "1.63.0"
+  },
+  "scripts": {
+    "test:agent-policy": "node tools/check-agent-policy.mjs"
   }
 }
