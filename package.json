@@ -11,7 +11,7 @@
   },
   "scripts": {
     "qa": "node qa/local.mjs",
-    "test": "node qa/policy-check.mjs && node tools/check-agent-policy.mjs && python tools/checkFileSizes.py",
+    "test": "node qa/policy-check.mjs && node tools/check-agent-policy.mjs && node tools/run-file-size-check.mjs",
     "verify": "npm test",
     "test:agent-policy": "node tools/check-agent-policy.mjs"
   }
