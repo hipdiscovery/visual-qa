@@ -1,6 +1,6 @@
 # Security model
 
-This repository is intentionally public. Treat **every committed byte, workflow log, screenshot, diagnostic, and Actions artifact as potentially public**.
+This repository is intentionally public. Treat **every committed byte and every generated screenshot/diagnostic as potentially shareable** even though execution is local.
 
 ## Never store or accept
 
@@ -12,30 +12,34 @@ This repository is intentionally public. Treat **every committed byte, workflow 
 - browser profiles from a real user machine
 - arbitrary URLs supplied by untrusted input
 
-The runner has no feature for custom headers, cookies, localStorage injection, login automation, or arbitrary base URLs. Do not add one.
+The runner has no feature for custom headers, cookies, localStorage injection, login automation, persisted browser profiles, or arbitrary base URLs. Do not add one.
 
-Deployment freshness uses hashes of public assets the site already serves. The request stores only a public path and its Git blob SHA; it does not copy private source content or a private repository commit SHA into this repo. Each probe is capped at 5 MiB.
+Deployment freshness uses hashes of public assets the site already serves. The request stores only a public path and its Git blob SHA; it does not copy private source content into this repository. Each probe is capped at 5 MiB.
 
 ## Target isolation
 
 Targets are explicitly allowlisted in `qa/targets.json`. Requests select a target key plus a plain URL path. The runner rejects protocol-relative paths, query strings, fragments, credentials, non-HTTPS final navigation, and final hosts outside the target allowlist.
 
-The browser uses a fresh context for every viewport with no persisted browser profile. Service workers are blocked. All HTTP(S) page traffic is limited to GET/HEAD, main-frame navigation is confined to the target allowlist, non-web network schemes are blocked, and loopback/link-local/private-network destinations are blocked both when written as literal IPs (including IPv4-mapped IPv6) and when a hostname resolves to them.
+The browser uses a fresh context for every viewport with no persisted profile. Service workers are blocked. HTTP(S) page traffic is limited to GET/HEAD, main-frame navigation is confined to the target allowlist, non-web schemes are blocked, and loopback/link-local/private-network destinations are blocked both as literal IPs and after DNS resolution.
 
-The render job has `permissions: {}` and is deliberately isolated from repository write permissions. A separate cleanup job runs only after rendering and alone receives `actions: write`; it passes its scoped token only to the cleanup script. Cleanup refuses to remove the previous result unless the current run already produced its own artifact. HTTP error pages and common bot/interstitial challenges are treated as failed QA rather than successful renders.
+Hip Native Bridge may start Visual QA as a normal local process, but Visual QA must not receive Bridge session tokens, logged-in browser state, private-file access, or other privileged capabilities. The narrow renderer and the privileged control bridge are separate trust boundaries by design.
 
 ## Output lifecycle
 
-Generated screenshots/reports are never committed to Git. Before uploading the current result, the workflow deletes prior QA artifacts and prior completed Visual QA runs. The current artifact additionally expires after one day if no later run occurs.
+Generated screenshots/reports are written to ignored local `out/`. A new run removes the previous `out/` before rendering. After review, delete downloaded/copied QA evidence from local workspaces; it is disposable verification evidence, not a project asset.
 
-Diagnostic console/page-error text is truncated and scrubbed for URLs, labeled secrets, bearer tokens, common GitHub/AWS credential formats, and JWT-shaped values before it reaches an artifact. This is defense in depth; targets must still never expose secrets client-side.
+Diagnostic console/page-error text is truncated and scrubbed for URLs, labeled secrets, bearer tokens, common GitHub/AWS credential formats, and JWT-shaped values before it reaches reports. This is defense in depth; targets must still never expose secrets client-side.
 
-If something sensitive is ever exposed, delete the affected Actions run/artifact immediately and rotate/revoke the exposed credential at its source. GitHub history is not a secrets store.
+If sensitive information appears in local QA output, delete that output immediately and rotate/revoke the exposed credential at its source.
 
-## Supply-chain and policy guard
+## Supply chain and policy guard
 
-`playwright-core` is exact-version pinned and integrity-locked in `package-lock.json`; lifecycle scripts are disabled during installation. The upload action is pinned by full commit SHA. Every runner/config change triggers Visual QA, and `qa/policy-check.mjs` fails closed if critical workflow permissions, triggers, retention, target safety, or dependency-integrity rules drift.
+`playwright-core` is exact-version pinned and integrity-locked in `package-lock.json`; installation should use `npm ci --ignore-scripts --no-audit --no-fund`. `qa/policy-check.mjs` verifies QA scripts parse, focused contracts pass, GitHub Actions remain absent, the browser dependency remains pinned, and every target stays public/HTTPS/allowlisted with mandatory deployment probes.
+
+The local launcher discovers installed Chrome, Microsoft Edge, or Chromium on macOS, Windows, and Linux. `CHROME_BIN` may explicitly select a browser executable. The launcher never downloads a browser, browser profile, or remote automation binary.
 
 ## Repository rules
 
-The repository currently has no GitHub ruleset. Public users still cannot execute this workflow in the upstream repository through pull requests because PR triggers are forbidden by policy and only collaborators with write access can push/dispatch. If additional people are ever granted write access, enable a GitHub branch ruleset for `main` requiring pull-request review/CODEOWNERS before merge; the connected GitHub integration used to build this runner can read rulesets but cannot administer them.
+No GitHub Actions are permitted in this repository. Rendering and verification run locally through `npm run qa` and `npm run verify`.
+
+Public repository visibility is acceptable only because the runner contains no private source or credentials and cannot authenticate to private targets. If that changes, stop and redesign the boundary rather than adding secrets to this repository.
