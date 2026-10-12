@@ -1,21 +1,53 @@
 # HipDiscovery Visual QA
 
-Public, disposable browser QA for **publicly reachable UI only**.
+Local, disposable browser QA for **publicly reachable UI only**.
 
-This repository does **not** contain HipDiscovery's private application or website source. It is a small GitHub-hosted runner that opens an allowlisted public URL in a fresh Chrome session, captures representative screenshots, records lightweight layout/runtime diagnostics, and makes the result available briefly for an agent to inspect. For HipDiscovery, it renders the public Cloudflare Pages origin (`hipdiscovery-com.pages.dev`) because the custom domain's bot challenge correctly blocks hosted headless browsers; both origins serve the same Pages deployment.
+This repository does not contain HipDiscovery's private application or website source. It opens an allowlisted public URL in a fresh Chromium-family browser session, captures representative screenshots, records lightweight layout/runtime diagnostics, and writes short-lived evidence to local `out/`.
+
+## Why this stays separate from Hip Native Bridge
+
+Hip Native Bridge is the privileged local control plane: it can operate the real browser, files, processes, Git repositories, and desktop. Visual QA is intentionally narrower and disposable: it renders only allowlisted public pages in fresh isolated browser contexts and produces repeatable viewport/journey evidence.
+
+Keeping them separate avoids giving the QA harness Bridge permissions, avoids adding Playwright to the Bridge runtime, and keeps public rendering independent from logged-in browser state. When Hip Bridge is available it may start this runner like any other local project/process, but Visual QA never receives Bridge tokens, credentials, browser profiles, or private source.
+
+## Install and verify
+
+```text
+npm ci --ignore-scripts --no-audit --no-fund
+npm run verify
+```
+
+`playwright-core` is exact-version pinned. The runner uses an already installed Chrome, Microsoft Edge, or Chromium. Set `CHROME_BIN` only when automatic discovery cannot find the browser you want.
+
+## Run a visual pass
+
+Edit `qa-request.json`, then run:
+
+```text
+npm run qa -- qa-request.json
+```
+
+The runner removes the previous local `out/`, renders the request, and writes:
+
+- viewport screenshots;
+- optional focused/full-page screenshots;
+- interaction-journey screenshots;
+- `report.json` with diagnostics;
+- `summary.md` with the compact result.
+
+The evidence is disposable. Inspect every impacted screenshot, then delete local copies when the review is complete. Do not commit `out/`.
 
 ## Normal agent workflow
 
-1. Make the real UI change in its source repository and let the public deployment/preview become reachable.
-2. Add one or more `deploymentProbes` for the public CSS/JS/HTML assets changed by the private source commit. Use the private repo's Git blob SHA for each asset; only the hashes and public paths are copied here.
-3. The `Visual QA` workflow waits until those exact public asset bytes are live, then renders the requested page.
-4. Download the single `visual-qa-<run id>` artifact.
-5. **Actually inspect every impacted screenshot.** The JSON diagnostics are a second layer, not a replacement for visual judgement.
-6. For interactive changes, define `journeys` that exercise every changed/new control and every distinct resulting visual state, including nested controls revealed by earlier steps. Final approval is not a landing-page spot-check.
-7. Review all responsive layouts that the change can affect. If a state changes composition at a breakpoint, that state must be exercised at that breakpoint.
-8. Iterate in the source repo if anything looks wrong; rerun the impacted states until the full affected surface is clean.
+1. Make the real UI change in its source repository and wait for the public deployment/preview to become reachable.
+2. Add one or more `deploymentProbes` for the public CSS/JS/HTML assets changed by the private source commit. Use the private repo's Git blob SHA for each asset; only hashes and public paths belong here.
+3. Run `npm run qa -- qa-request.json`. The runner waits until those exact public asset bytes are live, then renders the requested page.
+4. Inspect every impacted screenshot. JSON diagnostics are a second layer, not a replacement for visual judgement.
+5. For interactive changes, define `journeys` that exercise every changed/new control and each distinct resulting state, including nested controls revealed by earlier steps.
+6. Review every responsive layout the change can affect. If composition changes at a breakpoint, exercise that state at that breakpoint.
+7. Iterate in the source repo until the full affected surface is clean.
 
-After a render produces its own artifact, a separate narrowly privileged cleanup job deletes older Visual QA artifacts and completed runs. If rendering fails before a replacement artifact exists, the previous result is preserved. The browser/render job has no repository permissions. The current artifact has a one-day fallback retention period, so generated screenshots do not become a permanent public archive. After the agent finishes manual review, any downloaded ZIPs and extracted screenshot folders in its local/container workspace must also be deleted; those files are disposable QA evidence, not project assets.
+For HipDiscovery, the target may use the public Cloudflare Pages origin when the custom domain's bot challenge blocks isolated automation. The deployment probes ensure the QA pass still verifies the exact deployed bytes requested.
 
 ## Standard HipDiscovery viewports
 
@@ -24,7 +56,7 @@ After a render produces its own artifact, a separate narrowly privileged cleanup
 - `mobile`: 375 × 900
 - `mobile-small`: 320 × 900
 
-Optional breakpoint probes are also configured for `mobile-large` (430 × 932), `tablet` (768 × 1024), and `desktop-narrow` (1024 × 768). Only request the viewports relevant to the current change; the four standard sizes remain the normal final pass, while the optional sizes are useful when a layout crosses mobile/tablet/compact-desktop breakpoints.
+Optional breakpoint probes are configured for `mobile-large` (430 × 932), `tablet` (768 × 1024), and `desktop-narrow` (1024 × 768). Request only the viewports relevant to the current change; use all affected breakpoints for final approval.
 
 ## Request format
 
@@ -55,24 +87,25 @@ Optional breakpoint probes are also configured for `mobile-large` (430 × 932), 
 ```
 
 - `target` must exist in `qa/targets.json`.
-- HipDiscovery requests require `deploymentProbes`. Probe only public assets the target already serves. The runner computes the Git blob SHA from the deployed bytes and waits for an exact match, so no private commit SHA or source content is copied into this public repo.
-- `path` must be a plain path. Query strings, fragments, credentials, protocol-relative URLs, and arbitrary hosts are rejected.
-- `selector` is optional. The normal viewport screenshot is captured **before** any scrolling; when a selector is supplied, the runner then scrolls it into view, lets its images settle, and captures a separate focused screenshot.
-- `journeys` is optional and is the required mechanism for changed interactive flows. Each journey starts from a fresh page load, performs its steps in order, captures the viewport after every step, optionally captures `captureSelector`, and fails if a step cannot be reached, a visible image breaks, or horizontal overflow appears. Supported state actions are `click`, `hover`, `focus`, and allowlisted `dispatch` events (`error`, `load`, `input`, `change`) so changed hover/focus/failure visuals can be reviewed too.
-- Final visual approval requires a deliberate impact inventory first: every changed/new control, every distinct resulting state/screen, nested changed controls, relevant loading/empty/error/disabled states, and every responsive breakpoint that can change the composition. Representative sampling is not final approval.
+- HipDiscovery requests require `deploymentProbes`. Probe only public assets the target already serves. The runner computes the Git blob SHA from deployed bytes and waits for an exact match, so no private source is copied here.
+- `path` must be a plain root-relative path. Query strings, fragments, credentials, protocol-relative URLs, and arbitrary hosts are rejected.
+- `selector` is optional. The normal viewport screenshot is captured before selector scrolling; a focused screenshot is then captured when requested.
+- `journeys` is optional and is the required mechanism for changed interactive flows. Each journey starts from a fresh page load, performs steps in order, captures after every step, and fails on unreachable steps, visible broken images, or horizontal overflow. Supported actions are `click`, `hover`, `focus`, `select`, and allowlisted `dispatch` events (`error`, `load`, `input`, `change`).
 - `fullPage` is optional and defaults to `false`; viewport screenshots are faster and usually better for iterative UI work.
-- `waitMs` is capped to keep runs short.
+- `waitMs` is bounded to keep runs short.
 
 ## Public-repo safety
 
-Read `SECURITY.md` before adding another target. The important rule: **if a value would be unsafe in a public GitHub commit, workflow log, screenshot, or artifact, it does not belong here.**
+Read `SECURITY.md` before adding another target. The core rule is simple: **if a value would be unsafe in a public Git commit or local screenshot/report, it does not belong here.**
 
-This runner intentionally has no support for cookies, auth headers, tokens, private preview URLs, arbitrary URLs, uploaded source trees, or secrets.
+The runner intentionally has no support for cookies, auth headers, tokens, private preview URLs, arbitrary URLs, uploaded source trees, secrets, or persisted user browser profiles. It blocks private/link-local network destinations and limits page traffic to safe read-only browser requests.
 
-Deployment probes are capped at 5 MiB each to prevent accidental large downloads. Use byte-stable public assets (normally CSS/JS; HTML only when the edge does not rewrite it).
+Deployment probes are capped at 5 MiB each. Use byte-stable public assets, normally CSS/JS and HTML only when the edge does not rewrite it.
 
-## Self-protection
+## Verification and maintenance
 
-Runner/config changes trigger a separate fast `Visual QA Policy` workflow instead of replaying an old browser request. Explicit `qa-request.json` changes (or a manual dispatch) trigger browser rendering. `qa/policy-check.mjs` verifies the JavaScript parses and enforces the repository's security contract: no PR/scheduled triggers, render permissions stay empty, only cleanup gets `actions: write`, artifact retention stays one day, action dependencies stay commit-pinned, targets remain HTTPS/allowlisted, deployment probes remain mandatory, and the Playwright package matches its integrity-locked package lock.
+`npm run verify` checks JavaScript syntax, focused QA contracts, cross-platform browser discovery, target safety, dependency integrity, the no-GitHub-Actions rule, agent policy, and file budgets.
 
-Each viewport report also records the actual HTTP(S) hostnames contacted while rendering. This is observational rather than a brittle third-party CDN allowlist: private/link-local destinations are still blocked, while legitimate public CDN/API hosts can evolve without silently breaking visual QA.
+`qa/run.mjs` is a legacy oversized file under a no-growth baseline. New work should continue extracting focused modules rather than growing it. The goal is to reduce that exception over time without destabilizing the renderer.
+
+Automated diagnostics are hints. Final visual approval still requires looking at the screenshots.
