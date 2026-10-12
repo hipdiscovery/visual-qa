@@ -10,6 +10,9 @@
     "playwright-core": "1.63.0"
   },
   "scripts": {
+    "qa": "node qa/local.mjs",
+    "test": "node qa/policy-check.mjs && node tools/check-agent-policy.mjs && python tools/checkFileSizes.py",
+    "verify": "npm test",
     "test:agent-policy": "node tools/check-agent-policy.mjs"
   }
 }
