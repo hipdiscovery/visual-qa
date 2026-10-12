@@ -13,8 +13,8 @@ function candidates(env = process.env, platform = process.platform) {
   if (platform === "win32") {
     const roots = [env.PROGRAMFILES, env["ProgramFiles(x86)"], env.LOCALAPPDATA].filter(Boolean);
     return explicit.concat(roots.flatMap(root => [
-      path.join(root, "Google", "Chrome", "Application", "chrome.exe"),
-      path.join(root, "Microsoft", "Edge", "Application", "msedge.exe")
+      path.win32.join(root, "Google", "Chrome", "Application", "chrome.exe"),
+      path.win32.join(root, "Microsoft", "Edge", "Application", "msedge.exe")
     ]));
   }
   return explicit.concat([
