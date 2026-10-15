@@ -1,0 +1,20 @@
+{
+  "repository": "hipdiscovery/visual-qa",
+  "branch": "master",
+  "folder": "visual-qa",
+  "title": "Visual QA",
+  "sourceFolder": "Project",
+  "mainFile": "Visual QA.cmd",
+  "updateFile": "Update Visual QA.cmd",
+  "launch": {
+    "kind": "command",
+    "command": [
+      "npm.cmd",
+      "run",
+      "qa",
+      "--",
+      "qa-request.json"
+    ]
+  },
+  "updateDescription": "Source updated. Run npm ci --ignore-scripts --no-audit --no-fund if dependencies changed."
+}
