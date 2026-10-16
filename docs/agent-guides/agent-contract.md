@@ -1,26 +1,42 @@
 # HipDiscovery Agent Contract
 
-Contract version: 2026-10-11
+Contract version: 2026-10-16
 Canonical source: `hipdiscovery/stream-bot/docs/agent-guides/agent-contract.md`.
 
-This neutral file is the stable local discovery path for the shared contract. `AGENTS.md` remains this repository's only repo-specific agent instruction contract. Read the canonical source when cross-repo access is available; if it is not, these minimum rules still apply.
+This neutral file is the stable local fallback for the shared contract. Root `AGENTS.md` owns repository-specific branch, deployment, product, security, and verification rules. Read the canonical source when cross-repo access is available; if it is not, these minimum rules still apply.
 
 ## Required minimum
 
-- Work from current `master`; no side branches, force-pushes, GitHub Actions, or vendor instruction mirrors. Re-fetch shared/hot files before writing and reconcile concurrent changes.
-- Authorized updates require implementation and verified delivery to current master, not only a plan. Discover supported GitHub writes, use complete current content and SHA, and report the actual commit link or exact failed operation; file budgets do not establish connector payload limits.
-- Prefer chat-only execution and existing/free/local resources first. Metered Work requires owner approval for the exact missing operation. Paid options may be proposed only when materially better; explain why the free route falls short and the expected cost, then get approval before enabling them.
-- Carry the owner's latest accepted corrections and unfinished goal across chats, then verify them against current source/runtime. Make routine reversible decisions from established direction instead of re-asking settled questions.
-- Root `AGENTS.md`, current `master`, the canonical contract and latest accepted owner direction outrank dated specialist notes. Closed PR/branch references and expired one-shot actions are historical only; do not revive them. Git history is the normal handoff; use an existing issue only when it already owns an incident.
-- For improve/review/audit requests, investigate root cause, related failure paths and meaningful adjacent improvements. Do not stop after the first obvious patch when closely related defects remain, and do not replace a working product with speculative architecture.
-- New or increased recurring metered work, paid services, or material provider-meter increases require a cost card before implementation and owner approval before enabling. Cost-neutral reuse/replacement and bounded one-off reads do not require a full cost card; never guess usage, and state `not measured` plus the exact measurement/formula when unknown.
-- For concise user-facing cost reports, list each touched meter on its own line as `**Meter:** +/-delta per day/month (current usage) / provider limit` when known, then give **Recommendation:** Yes/No. Keep unrelated N/A meters out of the way.
-- When a repository has usage/quota instrumentation or a budget model, every metered change must update that tracker/model and focused tests in the same change for every safely representable touched meter. Prefer existing counters/provider analytics; do not add self-metering reads/writes that materially consume or distort the resource. Otherwise use a deterministic design bound or `not measured` plus the exact formula/source needed.
-- Every automation documents one owner, trigger, cadence, idempotency/dedupe, retry/backoff, failure recovery, and usage impact. Prefer events/webhooks → existing schedule → cached/change-fingerprint reads → polling only when necessary.
-- Publishing/mutations are repeat-safe: deterministic identity/hash/state/lease as appropriate; important delivery follows **detect → validate → claim/queue → send → confirm → record** and handles partial failures. When dedupe state stores rendered/owner-facing output, persist a local formatter/policy version separately from the upstream source revision and bump it when formatting semantics change so current source can repair stale copy.
-- External APIs document source/endpoint, auth, quota, cadence, cache/fingerprint, timeout/retry, and failure behavior. Prefer official/free structured sources and bounded requests.
-- Recurring AI must document model, calls/day/month, allowance/cost, and why deterministic code is insufficient. Keep AI out of hot paths when deterministic logic works.
-- Completion requires real-output Verification at the relevant layer; tests/builds alone do not prove Discord/Twitch/site/app/deployment behavior. Run the exact failed check first, then the relevant full gate, and distinguish committed, tested, built, installed, deployed and runtime-confirmed stages.
-- Preserve safety, data, history, useful logging, retries, health checks and recovery. Cross-repo retirement must trace all callers/health/usage/UI/docs. Git history is the archive.
-- Finished work leaves no placeholder TODOs, dead code, duplicate implementations, abandoned experiments or unexplained temporary bypasses. Keep comments for non-obvious invariants rather than narrating obvious code.
-- New hand-maintained source/tests/docs should begin splitting at 16 KiB or 250 logical lines and stay below 24 KiB or 400 lines unless a narrower justified repo exception exists. Root `AGENTS.md` targets 8 KiB/120 lines with a 12 KiB/200-line ceiling. Generated/vendor/media/data outputs are exempt only by actual provenance.
+- Start from the repository's current canonical delivery branch and current source/tests/docs/runtime. Follow root `AGENTS.md` for branch, CI, release, and deployment policy. Re-fetch shared/hot files before writing, preserve concurrent unrelated work, and never overwrite newer work merely to simplify a task.
+- Authorized fixes/improvements require implementation and verified delivery when supported, not only a plan. Prefer chat-only execution and existing/free/local resources; get owner approval before new paid or materially increased recurring metered work.
+- Current validated repository/runtime state plus the latest accepted owner direction outrank stale chats, screenshots, incident notes, or expired one-shot instructions. Make routine reversible decisions from established direction instead of re-asking settled questions.
+- Investigate root cause, related failure paths, reliability, UX, maintainability, performance, security, and meaningful adjacent improvements within scope. Do not replace a working product with speculative architecture.
+- Keep automation repeat-safe and bounded. Document owner/trigger/cadence/dedupe/retry/recovery/usage for recurring work. Prefer events or existing schedules over new polling.
+- External APIs and recurring AI need explicit source/model, auth/permissions, cadence, quota/cost, timeout/retry, cache/fingerprint, and failure behavior. Deterministic logic should stay deterministic.
+- Completion requires real-output verification at the relevant layer. Distinguish edited, tested, built, installed, committed, pushed, deployed, and runtime-confirmed states; never claim a stronger stage than was observed.
+- Preserve safety, data, history, credentials, useful logging, retries, health checks, and recovery. Git history is the archive; do not create backup/checkpoint/handoff files or dormant duplicate implementations for routine work.
+- Finished work leaves no placeholder TODOs, dead code, abandoned experiments, unexplained temporary bypasses, or unnecessary scratch created by the task.
+
+## Durable learning and chat recovery
+
+- Treat chats as useful but disposable context. Durable project state belongs in the repository, tests, configuration, maintained guidance, Git history, and validated runtime/deployment state.
+- Leave implementation work recoverable at natural response boundaries whenever practical. Promptly commit/deliver coherent validated work according to repo policy instead of waiting for a future closeout request. Do not commit a known-broken, speculative, partially tested, or temporary debugging state merely to make the tree look clean.
+- Learn from explicit owner feedback, accepted corrections, recurring preferences, and observed outcomes. Classify every lesson before recording it: cross-repo, repository-wide, feature-specific, environment-specific, or one-task-only.
+- A clear direct owner statement may be sufficient when scope is clear; repetition increases confidence but is not required. Brainstorming, questions, tentative experiments, guesses, and unconfirmed observations are not durable rules.
+- Record only lessons likely to improve future decisions. Prefer adaptable intent, outcomes, invariants, and decision criteria over freezing today's exact implementation/provider/version/layout/workaround unless that detail is itself a verified requirement.
+- Guidance is living, not append-only. When newer accepted direction or stronger evidence supersedes a rule in the same scope, edit, replace, narrow, or remove the stale rule and update related tests/docs/configuration. Do not preserve contradictory notes as equal truth just because they are old.
+- If a potential durable lesson is materially ambiguous, confirm its scope before recording it. Otherwise keep it out of canonical guidance until evidence improves. Never put secrets, credentials, sensitive personal facts, or transient diagnostics into agent guidance.
+- On a new chat, recover from current repo guidance, canonical branch/history, tests/configuration, deployment/runtime state, then relevant prior context. Prefer newer validated durable state over an older conflicting chat unless the owner explicitly reasserts the older direction.
+
+## Close out chat workflow
+
+When the owner says `close out chat workflow`, `close out the chat`, asks whether the chat is safe to delete, or uses equivalent wording, perform a final project-state audit rather than only summarizing:
+
+1. Re-read the current goal, accepted corrections, root `AGENTS.md`, current canonical branch, recent relevant commits, and runtime/deployment state.
+2. Finish routine authorized work that can still be completed with available tools; do not substitute an issue/TODO/handoff note for executable work.
+3. Audit for validated-but-undelivered work, unresolved conflicts, intentional experiments, forgotten temporary edits, and concurrent unrelated changes. Deliver coherent validated work; do not commit a knowingly bad experiment just to obtain a clean tree.
+4. Run/confirm the relevant focused checks, broader gate, and real-output/build/install/deploy/runtime verification required by the task. State unobserved stages precisely.
+5. Audit durable learning: promote only established reusable lessons, classify scope, update the canonical rule instead of appending duplicates, and correct/remove stale guidance when superseded. Leave tentative ideas unrecorded.
+6. Remove abandoned experiments and disposable task artifacts after their evidence is no longer needed while preserving unknown/concurrent work and required evidence.
+7. Re-fetch the canonical branch and verify exact delivered commits/content and deployed/runtime SHA where relevant. Do not create a ceremonial closeout commit or handoff file when there is no legitimate durable change.
+8. Say **safe to delete** only when no unique actionable requirement, accepted decision, unresolved blocker, or reusable lesson exists solely in the chat. If something remains, name the exact item, why it remains unresolved, what evidence/action is still required, and where the recoverable state lives.
