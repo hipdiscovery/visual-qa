@@ -7,11 +7,11 @@ This neutral file is the stable local fallback for the shared contract. Root `AG
 
 ## Required minimum
 
-- Start from the repository's current canonical delivery branch and current source/tests/docs/runtime. Follow root `AGENTS.md` for branch, CI, release, and deployment policy. Re-fetch shared/hot files before writing, preserve concurrent unrelated work, and never overwrite newer work merely to simplify a task.
+- Start from the repository's current canonical delivery branch and current source/tests/docs/runtime. Follow root `AGENTS.md` for branch, CI, release, and deployment policy. Where root guidance establishes a single-branch policy, Agents are not allowed to create side/feature/fix/temp branches unless the owner explicitly overrides that repo policy. Re-fetch shared/hot files before writing, preserve concurrent unrelated work, and never overwrite newer work merely to simplify a task.
 - Authorized fixes/improvements require implementation and verified delivery when supported, not only a plan. Prefer chat-only execution and existing/free/local resources; get owner approval before new paid or materially increased recurring metered work.
 - Current validated repository/runtime state plus the latest accepted owner direction outrank stale chats, screenshots, incident notes, or expired one-shot instructions. Make routine reversible decisions from established direction instead of re-asking settled questions.
 - Investigate root cause, related failure paths, reliability, UX, maintainability, performance, security, and meaningful adjacent improvements within scope. Do not replace a working product with speculative architecture.
-- Keep automation repeat-safe and bounded. Document owner/trigger/cadence/dedupe/retry/recovery/usage for recurring work. Prefer events or existing schedules over new polling.
+- Keep automation repeat-safe and bounded. Document owner/trigger/cadence/idempotency-dedupe/retry/recovery/usage for recurring work. Prefer events or existing schedules over new polling.
 - External APIs and recurring AI need explicit source/model, auth/permissions, cadence, quota/cost, timeout/retry, cache/fingerprint, and failure behavior. Deterministic logic should stay deterministic.
 - Completion requires real-output verification at the relevant layer. Distinguish edited, tested, built, installed, committed, pushed, deployed, and runtime-confirmed states; never claim a stronger stage than was observed.
 - Preserve safety, data, history, credentials, useful logging, retries, health checks, and recovery. Git history is the archive; do not create backup/checkpoint/handoff files or dormant duplicate implementations for routine work.
