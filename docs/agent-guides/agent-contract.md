@@ -1,12 +1,13 @@
 # HipDiscovery Agent Contract
 
-Contract version: 2026-10-16
+Contract version: 2026-10-23
 Canonical source: `hipdiscovery/Backend-Work/docs/agent-guides/agent-contract.md`.
 
 This neutral file is the stable local fallback for the shared contract. Root `AGENTS.md` owns repository-specific branch, deployment, product, security, and verification rules. Read the canonical source when cross-repo access is available; if it is not, these minimum rules still apply.
 
 ## Required minimum
 
+- Requested repository file edits and commits, including public repositories, need no repeat approval. Public messages, product releases and unrelated public account actions retain separate authorization requirements.
 - Start from the repository's current canonical delivery branch and current source/tests/docs/runtime. Follow root `AGENTS.md` for branch, CI, release, and deployment policy. Where root guidance establishes a single-branch policy, Agents are not allowed to create side/feature/fix/temp branches unless the owner explicitly overrides that repo policy. Re-fetch shared/hot files before writing, preserve concurrent unrelated work, and never overwrite newer work merely to simplify a task.
 - Authorized fixes/improvements require implementation and verified delivery when supported, not only a plan. Prefer chat-only execution and existing/free/local resources; get owner approval before new paid or materially increased recurring metered work.
 - Current validated repository/runtime state plus the latest accepted owner direction outrank stale chats, screenshots, incident notes, or expired one-shot instructions. Make routine reversible decisions from established direction instead of re-asking settled questions.

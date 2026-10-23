@@ -1,44 +1,38 @@
 # Visual QA agent contract
 
-Read `docs/agent-guides/agent-contract.md` before making changes. It points to the canonical cross-repo contract for metered usage, automation ownership, idempotency, API/AI use, verification, reliability, and maintainability. This root `AGENTS.md` is the only repo-specific agent instruction contract.
+Read `docs/agent-guides/agent-contract.md`, `SECURITY.md` and current source/request/tests before changing behavior. This is the only repository-specific agent entrypoint; neutral specialist guidance belongs in `docs/`.
 
-## Repository invariants
+## Working rules
 
-- GitHub `master` is the only branch. Start from current `master`, preserve concurrent unrelated work, and commit finished work directly to `master`; never force-push.
-- No GitHub Actions. Do not add, restore, enable, dispatch, or depend on `.github/workflows/`; run validation locally or on the product's existing non-GitHub runtime.
-- Do not create `CLAUDE.md`, `CODEX.md`, `CHATGPT.md`, `.claude/`, `.codex/`, `.agents/`, nested `AGENTS.md`, or vendor-specific mirrors. Neutral specialist guidance belongs under `docs/`.
-- Run `node tools/check-agent-policy.mjs` before committing agent-policy changes.
-- Git history is the archive; do not add backup/checkpoint/handoff files or dormant old implementations.
+- Work directly on current `master`, preserve concurrent edits and recheck remote state before delivery. Requested public repository file edits/commits are authorized without another prompt. Never force-push, create side branches or add/run GitHub Actions.
+- Own implementation, focused checks, review and cleanup; concise reporting does not reduce investigation. Prefer existing/free/local tools. Public messages, product releases, sensitive access expansion, spending and destructive user-data changes retain separate authorization.
+- No vendor instruction mirrors, backup/checkpoint copies or abandoned experiments. Git preserves history.
 
-## Product boundary
+## Product and trust boundaries
 
-- This repository is a narrow, local, disposable browser-QA harness for allowlisted public pages. It is not a general browser agent and must never gain private-site authentication or arbitrary navigation.
-- Keep it separate from `hipdiscovery/HipNativeBridge`. Hip Native Bridge is the privileged control plane for a real browser, files, processes, Git, and desktop input; Visual QA provides isolated repeatable viewport/journey evidence. Bridge may start this runner as a local process, but Visual QA must not receive Bridge tokens, private file access, logged-in browser profiles, or desktop-control privileges.
-- `qa/run.mjs` is a legacy oversized file under a no-growth baseline. Prefer extracting focused modules and shrinking the exception instead of adding more logic directly to it.
+- This is a local runner for allowlisted public pages, not an authenticated browser agent. Keep private source, owner details, credentials, headers/cookies, signed/private URLs and real profiles out of requests, outputs and commits.
+- The privileged companion is `hipdiscovery/Hip-MCP` (formerly HipNativeBridge). It may launch this process but must not pass Bridge tokens, private-file privileges, browser profiles or desktop capabilities into this harness.
+- `qa/targets.json` owns HTTPS host allowlists, viewport names and mandatory public deployment probes. Preserve literal-IP and DNS-resolved private-network blocking, GET/HEAD restrictions, bounded responses, blocked service workers and navigation guards. Never add an arbitrary URL/header/session escape hatch.
 
-## Evidence boundaries
+## Source and execution
 
-Run `npm test` for policy and runner regressions; `npm run qa` is a separate real-browser capture. A successful capture proves only the target, viewport and journey actually exercised. Compare the recorded deployment identity with the intended release, inspect screenshots, and report omitted states or unavailable audio explicitly. Keep private project context and credentials out of this public harness.
+- `qa/local.mjs` uses `qa/browser-executable.mjs` to discover an installed browser, sets `CHROME_BIN` and imports `qa/run.mjs`. Discovery uses Node built-ins; rendering requires exact-version/integrity-locked `playwright-core`. Do not download another browser or loosen the dependency pin to make a test pass.
+- Run from the repository root: `npm ci --ignore-scripts --no-audit --no-fund`, then `npm run qa -- <request.json>`. Inspect the request first: `qa/run.mjs` removes the previous root `out/` before validation/capture. Serialize runs sharing a checkout; retain necessary prior evidence outside `out/` before another run.
+- Requests use safe IDs, a target key, plain root-relative paths, configured viewports, selectors, bounded waits and journeys. Current limits are 1–4 public probes of 5 MiB each, 1–20 journeys and 100 total steps. Inspect current validation before changing bounds.
+- Probes compare deployed bytes using the Git blob SHA, not raw SHA-1/SHA-256. Use the source repository's canonical blob respecting its line endings. A mismatch is stale/different delivery, not permission to omit the probe. Never copy private source here.
+- `qa/run.mjs` has a no-growth size baseline. Extract coherent modules rather than extending its legacy exception.
 
-Interactive changes require exhaustive impacted-state coverage through bounded `journeys`: hover, focus, selection, expanded controls and loading/error recovery. Nested changed controls and their child states are part of the same required QA pass. Report any state the allowlisted harness cannot exercise; do not infer its result from the initial screenshot.
+## Coverage and evidence
 
-## Chat tool routing
+- Interactive changes require exhaustive impacted-state coverage: every changed control plus loading/error/expanded/selected states at affected breakpoints. Nested controls and their child states are part of the same required QA pass. Use supported click/hover/focus/select/allowlisted-dispatch journeys; report states the harness cannot exercise.
+- Inspect every impacted screenshot and report for long content, keyboard/focus, images, composition and async layout shifts. Generated files, runner success or quiet diagnostics alone are not visual approval or full state coverage.
+- `qa/diagnostic-policy.mjs` classifies intentional horizontal-scroll children only when their overflow ancestor is contained. Preserve real parent/page overflow, hidden/clip risks, broken images and JavaScript errors; never blanket-ignore classes/offscreen controls.
+- `qa/visual-diff-review.mjs` compares screenshot file bytes only, not perceptual/pixel quality, accessibility or audio. Use `docs/visual-diff-workflow.md` and `docs/visual-review-scorecard.md` when relevant.
+- Keep `out/` ignored/task-local. Remove disposable evidence after review without deleting the only useful failure evidence or another task's output.
 
-- Use GitHub as source of truth for runner source and keep generated QA evidence local/disposable.
-- Use Context7 for current Playwright/Node/API documentation before version-sensitive runner changes.
-- Native/live browser tools may supplement inspection, but this repository's own allowlisted local captures are the authoritative repeatable public-browser evidence.
-- Search installed plugins before inventing a workaround for a missing capability. Prefer free/local tools and quantify metered usage before adopting it.
+## Verification and tool access
 
-## Honest horizontal-scroll diagnostics
-
-- A deliberately scrollable horizontal rail can place children partly beyond the viewport; flag those as **intentional scroll children**, not actionable viewport-edge collisions, only when a real scrollable overflow-X ancestor is itself contained in the viewport. Preserve genuine page/parent overflow, hidden/clip risks, broken images, and JavaScript errors as separate findings.
-- Read classified counts and inspect the actual screenshot, including visible/active chips and mobile touch/keyboard accessibility. A quiet edge-collision count does not prove the composition looks good.
-- Do not blanket-ignore filter classes or all offscreen controls: other pages and broken containers still need warnings.
-
-## File-level quality checks
-
-- `qa/run.mjs`: check read-only browser navigation, allowlisted targets, viewport capture, deployment-byte probes, request bounds, journeys, diagnostics, and errors before marking a render pass.
-- `qa/local.mjs`, `qa/browser-executable.mjs`: keep local launch cross-platform and dependency-free; prefer installed Chrome/Edge/Chromium and explicit `CHROME_BIN` over downloading another browser.
-- `qa/targets.json`, `qa-request.json`: never accept arbitrary destinations, private access tokens, or unsafe new targets; test malformed and unexpected route values.
-- `qa/policy-check.mjs`: preserve the allowlist, local-only execution, dependency pin, focused tests, and the absence of GitHub Actions.
-- Do not claim screenshots were reviewed if an agent only confirmed that the runner produced files.
+- `npm test` / `npm run verify` runs syntax/policy, focused contracts, agent policy and Python size checks. `npm run qa` is a separate real-browser gate. Run `git diff --check`; instruction-policy edits require `node tools/check-agent-policy.mjs`.
+- On Windows, the current size wrapper may select a nonworking `python3` Store alias before reaching `py`. If it fails, run `node qa/policy-check.mjs`, `node tools/check-agent-policy.mjs` and `py -3 tools/checkFileSizes.py` explicitly and report the wrapper failure separately. Equivalent constituent checks do not mean the npm wrapper passed.
+- Use current official Playwright/Node documentation or an available documentation tool for version-sensitive changes. Context7 is optional; an unavailable plugin must not block safe source work or be invented as callable.
+- Instruction-only changes need source/command/policy checks, not a new capture/deployment. Keep source validation, capture, visual review and remote delivery distinct.
