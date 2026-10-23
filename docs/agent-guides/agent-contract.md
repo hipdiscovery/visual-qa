@@ -18,6 +18,10 @@ This neutral file is the stable local fallback for the shared contract. Root `AG
 - Preserve safety, data, history, credentials, useful logging, retries, health checks, and recovery. Git history is the archive; do not create backup/checkpoint/handoff files or dormant duplicate implementations for routine work.
 - Finished work leaves no placeholder TODOs, dead code, abandoned experiments, unexplained temporary bypasses, or unnecessary scratch created by the task.
 
+## Free/local tool selection
+
+Use existing repository checks, installed runtimes and bounded local diagnostics first. Add an optional tool only to close a demonstrated verification gap; check compatibility, maintenance, license and any network/data/usage impact. Do not turn an uninstalled tool into a required gate, replace stable architecture or expose private data to obtain a passing report.
+
 ## Durable learning and chat recovery
 
 - Treat chats as useful but disposable context. Durable project state belongs in the repository, tests, configuration, maintained guidance, Git history, and validated runtime/deployment state.

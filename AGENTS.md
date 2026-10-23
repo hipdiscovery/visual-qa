@@ -29,6 +29,9 @@ Read `docs/agent-guides/agent-contract.md`, `SECURITY.md` and current source/req
 - `qa/diagnostic-policy.mjs` classifies intentional horizontal-scroll children only when their overflow ancestor is contained. Preserve real parent/page overflow, hidden/clip risks, broken images and JavaScript errors; never blanket-ignore classes/offscreen controls.
 - `qa/visual-diff-review.mjs` compares screenshot file bytes only, not perceptual/pixel quality, accessibility or audio. Use `docs/visual-diff-workflow.md` and `docs/visual-review-scorecard.md` when relevant.
 - Keep `out/` ignored/task-local. Remove disposable evidence after review without deleting the only useful failure evidence or another task's output.
+- Diagnose intermittent browser failures with a bounded local Playwright context trace when necessary; retain it only on failure. The request schema currently has no tracing field: do not invent one or weaken validation. Trace only the same allowlisted public surface, keep traces task-local and inspect them for sensitive data before sharing.
+- Reuse installed-browser discovery and existing diagnostics before adding another scanner or browser. If an accessibility gap requires an available local scanner, preserve all navigation/network guards and treat results as supplemental; manual keyboard/focus, labels, contrast and responsive state inspection remain required.
+- Browser screenshots/traces cannot verify native application controls or audible output. Report those omitted surfaces explicitly instead of expanding this harness into a privileged/native or authenticated runner.
 
 ## Verification and tool access
 
