@@ -1,7 +1,7 @@
 # HipDiscovery Agent Contract
 
 Contract version: 2026-10-16
-Canonical source: `hipdiscovery/stream-bot/docs/agent-guides/agent-contract.md`.
+Canonical source: `hipdiscovery/Backend-Work/docs/agent-guides/agent-contract.md`.
 
 This neutral file is the stable local fallback for the shared contract. Root `AGENTS.md` owns repository-specific branch, deployment, product, security, and verification rules. Read the canonical source when cross-repo access is available; if it is not, these minimum rules still apply.
 

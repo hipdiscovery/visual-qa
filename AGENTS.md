@@ -16,6 +16,12 @@ Read `docs/agent-guides/agent-contract.md` before making changes. It points to t
 - Keep it separate from `hipdiscovery/HipNativeBridge`. Hip Native Bridge is the privileged control plane for a real browser, files, processes, Git, and desktop input; Visual QA provides isolated repeatable viewport/journey evidence. Bridge may start this runner as a local process, but Visual QA must not receive Bridge tokens, private file access, logged-in browser profiles, or desktop-control privileges.
 - `qa/run.mjs` is a legacy oversized file under a no-growth baseline. Prefer extracting focused modules and shrinking the exception instead of adding more logic directly to it.
 
+## Evidence boundaries
+
+Run `npm test` for policy and runner regressions; `npm run qa` is a separate real-browser capture. A successful capture proves only the target, viewport and journey actually exercised. Compare the recorded deployment identity with the intended release, inspect screenshots, and report omitted states or unavailable audio explicitly. Keep private project context and credentials out of this public harness.
+
+Interactive changes require exhaustive impacted-state coverage through bounded `journeys`: hover, focus, selection, expanded controls and loading/error recovery. Nested changed controls and their child states are part of the same required QA pass. Report any state the allowlisted harness cannot exercise; do not infer its result from the initial screenshot.
+
 ## Chat tool routing
 
 - Use GitHub as source of truth for runner source and keep generated QA evidence local/disposable.

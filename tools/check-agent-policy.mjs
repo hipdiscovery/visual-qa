@@ -32,7 +32,7 @@ if (!existsSync(join(ROOT, SHARED))) {
 } else {
   const shared = readFileSync(join(ROOT, SHARED), "utf8");
   if (!/Contract version:\s*\d{4}-\d{2}-\d{2}/.test(shared)) problems.push("shared contract must carry a dated contract version");
-  if (!shared.includes("hipdiscovery/stream-bot/docs/agent-guides/agent-contract.md")) problems.push("shared contract must identify the canonical stream-bot source");
+  if (!shared.includes("hipdiscovery/Backend-Work/docs/agent-guides/agent-contract.md")) problems.push("shared contract must identify the canonical Backend-Work source");
   for (const phrase of ["Metered", "Automation", "idempot", "API", "AI", "Verification"]) {
     if (!shared.toLowerCase().includes(phrase.toLowerCase())) problems.push(`shared contract missing policy marker: ${phrase}`);
   }
