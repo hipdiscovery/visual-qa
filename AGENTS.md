@@ -33,6 +33,6 @@ Read `docs/agent-guides/agent-contract.md`, `SECURITY.md` and current source/req
 ## Verification and tool access
 
 - `npm test` / `npm run verify` runs syntax/policy, focused contracts, agent policy and Python size checks. `npm run qa` is a separate real-browser gate. Run `git diff --check`; instruction-policy edits require `node tools/check-agent-policy.mjs`.
-- On Windows, the current size wrapper may select a nonworking `python3` Store alias before reaching `py`. If it fails, run `node qa/policy-check.mjs`, `node tools/check-agent-policy.mjs` and `py -3 tools/checkFileSizes.py` explicitly and report the wrapper failure separately. Equivalent constituent checks do not mean the npm wrapper passed.
+- The size wrapper probes for working Python 3 (Windows prefers `py -3`) and skips missing/broken aliases. Once the checker starts, its failure is final; do not retry another interpreter to hide a budget error. `npm test` includes launcher regression tests. Direct diagnosis may use `py -3 tools/checkFileSizes.py` on Windows; report any wrapper failure separately.
 - Use current official Playwright/Node documentation or an available documentation tool for version-sensitive changes. Context7 is optional; an unavailable plugin must not block safe source work or be invented as callable.
 - Instruction-only changes need source/command/policy checks, not a new capture/deployment. Keep source validation, capture, visual review and remote delivery distinct.
