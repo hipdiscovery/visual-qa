@@ -8,6 +8,13 @@ Read `docs/agent-guides/agent-contract.md`, `SECURITY.md` and current source/req
 - Own implementation, focused checks, review and cleanup; concise reporting does not reduce investigation. Prefer existing/free/local tools. Public messages, product releases, sensitive access expansion, spending and destructive user-data changes retain separate authorization.
 - No vendor instruction mirrors, backup/checkpoint copies or abandoned experiments. Git preserves history.
 
+## Clarity and three-audience change gate
+
+- Remove redundant slogans, explanatory filler and low-value labels. If purpose, next action or state becomes unclear without them, redesign the layout, hierarchy and affordances from first principles instead of explaining a confusing UI. Keep necessary visible input labels, accessible names, status/error/safety information and contextual help.
+- Favor recognition over recall, familiar wording, clear primary actions, progressive disclosure of rare options and recoverable errors. Do not hide frequent actions for the sake of minimalism; inspect responsive, loading, empty, error and keyboard states.
+- Every modification must improve **user experience** (task clarity and accessibility), **developer experience** (maintainable contracts, tests and diagnostics), and **AI-agent experience** (discoverable ownership, concise current instructions and repeatable verification). Identify a concrete benefit for each; preserve existing functionality, integrations and data. If any perspective regresses, revise before completing.
+
+
 ## Product and trust boundaries
 
 - This is a local runner for allowlisted public pages, not an authenticated browser agent. Keep private source, owner details, credentials, headers/cookies, signed/private URLs and real profiles out of requests, outputs and commits.
