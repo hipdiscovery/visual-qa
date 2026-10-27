@@ -5,6 +5,7 @@ import contextlib
 import json
 import os
 from pathlib import Path
+import stat
 import subprocess
 import sys
 
@@ -21,7 +22,13 @@ def run(command, root, capture=False):
 def safePath(path):
     path = Path(os.path.abspath(path))
     for part in (path, *path.parents):
-        if part.is_symlink() or (hasattr(part, "is_junction") and part.is_junction()):
+        try:
+            metadata = part.lstat()
+        except FileNotFoundError:
+            continue
+        # lstat exposes Windows junction tags since Python 3.8; is_junction needs 3.12.
+        if (stat.S_ISLNK(metadata.st_mode)
+                or getattr(metadata, "st_reparse_tag", 0) == 0xA0000003):
             raise RuntimeError("Owner paths must not contain directory links.")
     return path
 

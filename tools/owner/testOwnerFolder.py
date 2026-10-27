@@ -1,10 +1,13 @@
 """Offline tests for owner setup, update refusal and launcher preservation."""
 
 import importlib.util
+import os
 from pathlib import Path
 import subprocess
 import tempfile
+from types import SimpleNamespace
 import unittest
+from unittest import mock
 
 spec = importlib.util.spec_from_file_location("ownerFolder", Path(__file__).with_name("ownerFolder.py"))
 owner = importlib.util.module_from_spec(spec)
@@ -67,13 +70,80 @@ class OwnerTests(unittest.TestCase):
             owner.setup(self.root, self.config, target)
         self.assertEqual((target / "notes.txt").read_text(), "keep")
 
-    def test_directory_link_refused(self):
-        if hasattr(Path, "is_junction") and __import__("os").name == "nt":
-            link = self.base / "linked"
-            subprocess.run(["cmd", "/c", "mklink", "/J", str(link), str(self.root)],
-                           check=True, capture_output=True)
+    @unittest.skipUnless(os.name == "nt", "Real Windows junction")
+    def test_directory_junction_refused(self):
+        link = self.base / "linked"
+        subprocess.run(["cmd", "/d", "/c", "mklink", "/J", str(link), str(self.root)],
+                       check=True, capture_output=True)
+        self.addCleanup(link.rmdir)
+        for target in (link, link / "missing"):
             with self.assertRaisesRegex(RuntimeError, "links"):
-                owner.safePath(link / "missing")
+                owner.safePath(target)
+        self.root.rmdir()
+        with self.assertRaisesRegex(RuntimeError, "links"):
+            owner.safePath(link / "missing")
+
+    def test_junction_metadata_refused_before_launcher_write(self):
+        original = Path.lstat
+        def metadata(path):
+            if path == self.base:
+                return SimpleNamespace(st_mode=0o40755, st_file_attributes=0x410,
+                                       st_reparse_tag=0xA0000003)
+            return original(path)
+        # Only Windows filesystem metadata is simulated, not the safety decision.
+        with mock.patch.object(Path, "lstat", metadata):
+            with self.assertRaisesRegex(RuntimeError, "links"):
+                owner.refresh(self.root, self.config)
+        self.assertFalse((self.base / "Open Example.cmd").exists())
+        self.assertFalse((self.base / "Update Example.cmd").exists())
+
+    def test_nonexistent_descendant_of_junction_metadata_refused(self):
+        original = Path.lstat
+        def metadata(path):
+            if path == self.root:
+                return SimpleNamespace(st_mode=0o40755, st_file_attributes=0x410,
+                                       st_reparse_tag=0xA0000003)
+            return original(path)
+        with mock.patch.object(Path, "lstat", metadata):
+            with self.assertRaisesRegex(RuntimeError, "links"):
+                owner.safePath(self.root / "missing" / "child")
+
+    @unittest.skipIf(os.name == "nt", "Windows uses junction fixture without symlink privilege")
+    def test_symlink_and_dangling_symlink_refused(self):
+        link = self.base / "linked"
+        link.symlink_to(self.root, target_is_directory=True)
+        for target in (link, link / "missing"):
+            with self.assertRaisesRegex(RuntimeError, "links"):
+                owner.safePath(target)
+        self.root.rmdir()
+        with self.assertRaisesRegex(RuntimeError, "links"):
+            owner.safePath(link / "missing")
+
+    def test_plain_missing_destination_allowed(self):
+        target = self.root / "missing" / "child"
+        self.assertEqual(owner.safePath(target), target)
+
+    def test_non_link_windows_metadata_allowed(self):
+        original = Path.lstat
+        def metadata(path):
+            if path == self.base:
+                return SimpleNamespace(st_mode=0o40755, st_file_attributes=0x410,
+                                       st_reparse_tag=0x9000001A)
+            return original(path)
+        with mock.patch.object(Path, "lstat", metadata):
+            owner.refresh(self.root, self.config)
+        self.assertTrue((self.base / "Open Example.cmd").is_file())
+
+    def test_unreadable_metadata_stops_before_launcher_write(self):
+        original = Path.lstat
+        def metadata(path):
+            if path == self.base:
+                raise PermissionError("Cannot inspect owner directory")
+            return original(path)
+        with mock.patch.object(Path, "lstat", metadata):
+            with self.assertRaises(PermissionError):
+                owner.refresh(self.root, self.config)
+        self.assertFalse((self.base / "Open Example.cmd").exists())
 
     def test_origin_mismatch(self):
         self.init()
