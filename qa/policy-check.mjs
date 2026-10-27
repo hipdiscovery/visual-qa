@@ -22,7 +22,9 @@ for (const testFile of [
   "qa/browser-executable.test.mjs",
   "qa/diagnostic-policy.test.mjs",
   "qa/visual-diff-review.test.mjs",
-  "qa/journey-contract.test.mjs"
+  "qa/journey-contract.test.mjs",
+  "qa/page-settle.test.mjs",
+  "qa/output-preservation.test.mjs"
 ]) {
   const contract = spawnSync(process.execPath, [testFile], { encoding: "utf8" });
   if (contract.status !== 0) fail(`${testFile} failed: ${contract.stderr || contract.stdout}`);
