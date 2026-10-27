@@ -24,7 +24,7 @@ Read `docs/agent-guides/agent-contract.md`, `SECURITY.md` and current source/req
 ## Source and execution
 
 - `qa/local.mjs` uses `qa/browser-executable.mjs` to discover an installed browser, sets `CHROME_BIN` and imports `qa/run.mjs`. Discovery uses Node built-ins; rendering requires exact-version/integrity-locked `playwright-core`. Do not download another browser or loosen the dependency pin to make a test pass.
-- Run from the repository root: `npm ci --ignore-scripts --no-audit --no-fund`, then `npm run qa -- <request.json>`. Inspect the request first: `qa/run.mjs` removes the previous root `out/` before validation/capture. Serialize runs sharing a checkout; retain necessary prior evidence outside `out/` before another run.
+- Run from the repository root: `npm ci --ignore-scripts --no-audit --no-fund`, then `npm run qa -- <request.json>`. Inspect the request first: `qa/run.mjs` preserves earlier `out/` until request and public deployment probes pass, then replaces it before capture. Serialize runs sharing a checkout; retain necessary prior evidence outside `out/` before another run.
 - Requests use safe IDs, a target key, plain root-relative paths, configured viewports, selectors, bounded waits and journeys. Current limits are 1–4 public probes of 5 MiB each, 1–20 journeys and 100 total steps. Inspect current validation before changing bounds.
 - Probes compare deployed bytes using the Git blob SHA, not raw SHA-1/SHA-256. Use the source repository's canonical blob respecting its line endings. A mismatch is stale/different delivery, not permission to omit the probe. Never copy private source here.
 - `qa/run.mjs` has a no-growth size baseline. Extract coherent modules rather than extending its legacy exception.
