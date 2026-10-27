@@ -26,7 +26,7 @@ Hip Native Bridge may start Visual QA as a normal local process, but Visual QA m
 
 ## Output lifecycle
 
-Generated screenshots/reports are written to ignored local `out/`. A new run removes the previous `out/` before rendering. After review, delete downloaded/copied QA evidence from local workspaces; it is disposable verification evidence, not a project asset.
+Generated screenshots/reports are written to ignored local `out/`. Invalid requests or failed deployment preflight preserve earlier `out/`; a validated capture replaces it before rendering. After review, delete downloaded/copied QA evidence from local workspaces; it is disposable verification evidence, not a project asset.
 
 Diagnostic console/page-error text is truncated and scrubbed for URLs, labeled secrets, bearer tokens, common GitHub/AWS credential formats, and JWT-shaped values before it reaches reports. This is defense in depth; targets must still never expose secrets client-side.
 
