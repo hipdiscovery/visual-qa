@@ -26,7 +26,7 @@
     "mobile-small"
   ],
   "fullPage": true,
-  "waitMs": 2600,
+  "waitMs": 2400,
   "journeys": [
     {
       "name": "hero-next-look",
