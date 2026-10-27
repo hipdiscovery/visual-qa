@@ -5,6 +5,7 @@ import dns from "node:dns/promises";
 import { createHash } from "node:crypto";
 import { chromium } from "playwright-core";
 import { pageErrorIssues, classifyEdgeCollisions } from "./diagnostic-policy.mjs";
+import { settlePageImages } from "./page-settle.mjs";
 
 const ROOT = process.cwd();
 const OUT = path.join(ROOT, "out");
@@ -13,13 +14,13 @@ const requestPath = process.argv[2] || "qa-request.json";
 const targets = JSON.parse(fs.readFileSync(path.join(ROOT, "qa/targets.json"), "utf8"));
 const request = JSON.parse(fs.readFileSync(path.resolve(ROOT, requestPath), "utf8"));
 
-fs.rmSync(OUT, { recursive: true, force: true });
-fs.mkdirSync(OUT, { recursive: true });
-
+let outputPrepared = false;
 function fail(message) {
-  const payload = { ok: false, error: String(message), generatedAt: new Date().toISOString() };
-  fs.writeFileSync(path.join(OUT, "fatal.json"), JSON.stringify(payload, null, 2));
-  fs.writeFileSync(path.join(OUT, "summary.md"), `# Visual QA failed\n\n${String(message)}\n`);
+  if (outputPrepared) {
+    const payload = { ok: false, error: String(message), generatedAt: new Date().toISOString() };
+    fs.writeFileSync(path.join(OUT, "fatal.json"), JSON.stringify(payload, null, 2));
+    fs.writeFileSync(path.join(OUT, "summary.md"), `# Visual QA failed\n\n${String(message)}\n`);
+  }
   console.error(message);
   process.exit(2);
 }
@@ -312,21 +313,10 @@ const url = new URL(request.path, base);
 if (!targetAllows(target, url.toString())) fail("Resolved target URL is outside the allowlist.");
 
 const deployment = await waitForDeploymentProbes(target, request.deploymentProbes || null);
-
-async function settlePageImages(page, timeoutMs = 1800) {
-  await page.evaluate(async timeout => {
-    if (document.fonts?.ready) await document.fonts.ready.catch(() => {});
-    const pending = [...document.images].filter(img => !img.complete);
-    if (!pending.length) return;
-    await Promise.race([
-      Promise.all(pending.map(img => new Promise(resolve => {
-        img.addEventListener("load", resolve, { once: true });
-        img.addEventListener("error", resolve, { once: true });
-      }))),
-      new Promise(resolve => setTimeout(resolve, timeout))
-    ]);
-  }, timeoutMs).catch(() => {});
-}
+// Preserve earlier evidence until inputs and deployed bytes are validated.
+fs.rmSync(OUT, { recursive: true, force: true });
+fs.mkdirSync(OUT, { recursive: true });
+outputPrepared = true;
 
 async function journeyHealth(page) {
   return page.evaluate(() => {
@@ -357,7 +347,13 @@ async function runJourneys(page, viewportName, targetUrl) {
     const result = { name: journey.name, steps: [], ok: true };
     await page.goto(targetUrl.toString(), { waitUntil: "domcontentloaded", timeout: 20000 });
     await page.waitForLoadState("load", { timeout: 8000 }).catch(() => {});
-    await settlePageImages(page);
+    const initialAssets = await settlePageImages(page);
+    if (!initialAssets.ready) {
+      result.ok = false;
+      result.steps.push({ index: 0, error: initialAssets.reason });
+      journeys.push(result);
+      continue;
+    }
     if (waitMs) await page.waitForTimeout(waitMs);
 
     for (let i = 0; i < journey.steps.length; i++) {
@@ -389,7 +385,8 @@ async function runJourneys(page, viewportName, targetUrl) {
         } else if (step.action === "select") {
           await locator.selectOption(step.value, { timeout: 6000 });
         }
-        await settlePageImages(page, 1400);
+        const assets = await settlePageImages(page, 1400);
+        if (!assets.ready) throw new Error(assets.reason);
         await page.waitForTimeout(250);
 
         const stepSlug = String(i + 1).padStart(2, "0");
@@ -560,7 +557,8 @@ try {
       fail(`Final navigation left the allowlist: ${safeUrl(page.url())}`);
     }
 
-    await settlePageImages(page);
+    const assets = await settlePageImages(page);
+    if (!assets.ready) criticalIssues.push(assets.reason);
 
     const waitMs = request.waitMs ?? 700;
     if (waitMs) await page.waitForTimeout(waitMs);
@@ -607,9 +605,7 @@ try {
         const cls = [...el.classList].slice(0, 2).map(v => `.${CSS.escape(v)}`).join("");
         return `${el.tagName.toLowerCase()}${cls}`;
       };
-      // Only dismiss offscreen children of a genuinely scrollable,
-      // viewport-contained horizontal rail. Its OWN overflow, clipped
-      // content and any unrelated viewport collision still get reported.
+      // Exclude contained scroll rails, never the page or unrelated collisions.
       const scrollContainerFor = child => {
         for (let parent = child.parentElement; parent && parent !== document.documentElement; parent = parent.parentElement) {
           const over = getComputedStyle(parent).overflowX;
@@ -818,6 +814,9 @@ try {
       }
     }
     if (journeys.some(journey => !journey.ok)) report.ok = false;
+    for (const issue of pageErrorIssues(pageErrors)) {
+      if (!criticalIssues.includes(issue)) { criticalIssues.push(issue); warnings.push(issue); }
+    }
 
     report.results.push({
       viewport: viewportName,
