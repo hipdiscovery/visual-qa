@@ -27,7 +27,7 @@ Edit `qa-request.json`, then run:
 npm run qa -- qa-request.json
 ```
 
-The runner removes the previous local `out/`, renders the request, and writes:
+After validating the request and deployment evidence, the runner replaces its previous local `out/`, renders the request, and writes:
 
 - viewport screenshots;
 - optional focused/full-page screenshots;
