@@ -35,6 +35,18 @@ try {
   assert.equal(loaded.ready, true);
   assert.equal(listeners.size, 0);
 
+  image.complete = false;
+  let resolveFonts;
+  const lateFonts = new Promise(resolve => { resolveFonts = resolve; });
+  globalThis.document = { fonts: { ready: lateFonts }, images: [image] };
+  const expired = await settlePageImages(page, 30);
+  assert.equal(expired.ready, false);
+  resolveFonts();
+  await Promise.resolve();
+  await Promise.resolve();
+  assert.equal(listeners.size, 0,
+    "fonts resolving after the deadline must not attach orphan image listeners");
+
   const unavailable = await settlePageImages({ evaluate: async () => { throw Error("isolated failure"); } }, 10);
   assert.equal(unavailable.ready, false);
 } finally {

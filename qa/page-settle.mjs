@@ -7,6 +7,7 @@ export async function settlePageImages(page, timeoutMs = 1800) {
       let timer;
       const settle = async () => {
         if (document.fonts?.ready) await document.fonts.ready;
+        if (controller.signal.aborted) return false;
         const pending = [...document.images].filter(image => !image.complete);
         await Promise.all(pending.map(image => new Promise(resolve => {
           const done = () => {
