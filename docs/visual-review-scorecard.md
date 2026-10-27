@@ -26,6 +26,14 @@ Review each screenshot for:
 - Image cropping quality
 - Mobile adaptation
 
+## Stress and interaction review
+
+- Judge the real page against the source project's current design tokens and approved visual identity. Fix hierarchy, navigation, alignment and wasted space before polishing type, icons, imagery and transitions; avoid generic template patterns.
+- Include zero/one/many items, unusually long labels, large values, delayed/error/stale states, missing images, open dialogs and nested controls. Use clearly labeled local fixtures, never invented live facts.
+- Inspect desktop, mobile, relevant breakpoint edges, short viewports and enlarged text when supported. Check focus order, keyboard dismissal, touch spacing, safe areas, mobile keyboard overlap and purposeful reduced-motion behavior.
+- For every changed control, verify initial state, action, resulting state and recovery in a browser journey when available. Visually inspect complete affected screenshots; passing diagnostics alone does not establish design quality.
+- Record precisely which states and real-device checks could not be tested. Never expand the runner's public-page safety boundary to force a passing report.
+
 ## Three-pass validation
 
 1. **Break test**
