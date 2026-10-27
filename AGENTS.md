@@ -12,7 +12,7 @@ Read `docs/agent-guides/agent-contract.md`, `SECURITY.md` and current source/req
 
 - Remove redundant slogans, explanatory filler and low-value labels. If purpose, next action or state becomes unclear without them, redesign the layout, hierarchy and affordances from first principles instead of explaining a confusing UI. Keep necessary visible input labels, accessible names, status/error/safety information and contextual help.
 - Favor recognition over recall, familiar wording, clear primary actions, progressive disclosure of rare options and recoverable errors. Do not hide frequent actions for the sake of minimalism; inspect responsive, loading, empty, error and keyboard states.
-- Every modification must improve **user experience** (task clarity and accessibility), **developer experience** (maintainable contracts, tests and diagnostics), and **AI-agent experience** (discoverable ownership, concise current instructions and repeatable verification). Identify a concrete benefit for each; preserve existing functionality, integrations and data. If any perspective regresses, revise before completing.
+- Evaluate **user experience** (task clarity and accessibility), **developer experience** (maintainable contracts, tests and diagnostics), and **AI-agent experience** (discoverable ownership, concise current instructions and repeatable verification). Improve the dimensions relevant to the task; preserving unaffected ones is sufficient. Do not expand scope solely to manufacture benefits for all three. Preserve functionality, accessibility, reliability, integrations and data; verify affected behavior and explain any material tradeoffs.
 
 
 ## Product and trust boundaries
