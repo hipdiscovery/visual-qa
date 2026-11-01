@@ -1,6 +1,6 @@
 # HipDiscovery Agent Contract
 
-Contract version: 2026-10-23
+Contract version: 2026-11-01
 Canonical source: `hipdiscovery/Backend-Work/docs/agent-guides/agent-contract.md`.
 
 This neutral file is the stable local fallback for the shared contract. Root `AGENTS.md` owns repository-specific branch, deployment, product, security, and verification rules. Read the canonical source when cross-repo access is available; if it is not, these minimum rules still apply.
@@ -21,6 +21,12 @@ This neutral file is the stable local fallback for the shared contract. Root `AG
 ## Free/local tool selection
 
 Use existing repository checks, installed runtimes and bounded local diagnostics first. Add an optional tool only to close a demonstrated verification gap; check compatibility, maintenance, license and any network/data/usage impact. Do not turn an uninstalled tool into a required gate, replace stable architecture or expose private data to obtain a passing report.
+
+## Task routing and evidence
+
+- For nontrivial work, identify observable success, constraints and the owning source; choose a bug, feature, refactor or performance path. Use the smallest effective team and existing tested scripts rather than additional bots or polling.
+- Apply relevant verification stages: **LAUNCH** (startup/readiness), **DOCTOR** (health/access), **DRIVE** (real user/CLI/API/storage/publisher behavior), **EVIDENCE** (outputs/readbacks), and **CLEANUP** (only task-owned resources). Instruction-only edits need policy/source/diff review, not an application launch or deployment.
+- Record **PASS** only for observed checks, **FAIL** for defects that need repair/retest, and **BLOCKED** for genuinely missing external gates. Deliver tested commit/paths, commands and results, evidence, unverified checks and risks. Prevent repeated failures through existing architecture, tests and scripts rather than growing agent teams.
 
 ## Durable learning and chat recovery
 
