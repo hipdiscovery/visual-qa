@@ -24,6 +24,7 @@ for (const testFile of [
   "qa/visual-diff-review.test.mjs",
   "qa/journey-contract.test.mjs",
   "qa/page-settle.test.mjs",
+  "qa/network-policy.test.mjs",
   "qa/output-preservation.test.mjs"
 ]) {
   const contract = spawnSync(process.execPath, [testFile], { encoding: "utf8" });

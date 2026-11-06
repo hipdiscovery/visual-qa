@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import net from "node:net";
 import dns from "node:dns/promises";
+import { isBlockedHost, shouldBlockTopLevelNavigation } from "./network-policy.mjs";
 import { createHash } from "node:crypto";
 import { chromium } from "playwright-core";
 import { pageErrorIssues, classifyEdgeCollisions } from "./diagnostic-policy.mjs";
@@ -127,32 +128,6 @@ function validateRequest() {
   if (request.waitMs != null && (!Number.isInteger(request.waitMs) || request.waitMs < 0 || request.waitMs > 2500)) {
     fail("waitMs must be an integer from 0 to 2500.");
   }
-}
-
-function isBlockedHost(hostname) {
-  const host = hostname.toLowerCase().replace(/^\[|\]$/g, "");
-  if (!host) return false;
-  if (host === "localhost" || host.endsWith(".localhost") || host.endsWith(".local")) return true;
-
-  const mappedV4 = host.match(/^::ffff:(\d+\.\d+\.\d+\.\d+)$/i);
-  if (mappedV4) return isBlockedHost(mappedV4[1]);
-
-  const ipVersion = net.isIP(host);
-  if (ipVersion === 4) {
-    const [a, b] = host.split(".").map(Number);
-    if (a === 0 || a === 10 || a === 127 || a >= 224) return true;
-    if (a === 169 && b === 254) return true;
-    if (a === 172 && b >= 16 && b <= 31) return true;
-    if (a === 192 && b === 168) return true;
-    if (a === 100 && b >= 64 && b <= 127) return true;
-    if (a === 198 && (b === 18 || b === 19)) return true;
-  }
-  if (ipVersion === 6) {
-    const compact = host.replace(/^0+/, "");
-    if (host === "::" || host === "::1" || compact === "::1") return true;
-    if (host.startsWith("fc") || host.startsWith("fd") || host.startsWith("fe8") || host.startsWith("fe9") || host.startsWith("fea") || host.startsWith("feb")) return true;
-  }
-  return false;
 }
 
 const hostSafetyCache = new Map();
@@ -487,7 +462,7 @@ try {
     const page = await context.newPage();
     page.setDefaultTimeout(6000);
 
-    await page.route("**/*", async route => {
+    await context.route("**/*", async route => {
       const requestObject = route.request();
       const reqUrl = requestObject.url();
       try {
@@ -504,9 +479,7 @@ try {
           await route.abort("blockedbyclient");
           return;
         }
-        if (requestObject.isNavigationRequest() &&
-            requestObject.frame() === page.mainFrame() &&
-            !targetAllows(target, reqUrl)) {
+        if (shouldBlockTopLevelNavigation(requestObject, reqUrl, target, targetAllows)) {
           await route.abort("blockedbyclient");
           return;
         }
